@@ -1,0 +1,91 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_reader/pages/bookshelf_page.dart';
+import 'package:flutter_reader/pages/category_page.dart';
+import 'package:flutter_reader/pages/home_page.dart';
+import 'package:flutter_reader/pages/me_page.dart';
+
+class TabNavigator extends StatefulWidget {
+  TabNavigator({Key key}) : super(key: key);
+
+  @override
+  _TabNavigatorState createState() {
+    return _TabNavigatorState();
+  }
+}
+
+class _TabNavigatorState extends State<TabNavigator> {
+  //底部图标颜色
+  final _defaultColor = Colors.grey;
+  final _activeColor = Colors.redAccent;
+  int _currentIndex = 0;
+  //页面控制器
+  final PageController _controller = PageController(
+    initialPage: 0,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      body: PageView(
+        controller: _controller,
+        children: <Widget>[
+          BookshelfPage(),
+          HomePage(),
+          CategoryPage(),
+          MePage()
+        ],
+        //静止左右滑动
+        physics: NeverScrollableScrollPhysics(),
+      ),
+      //底部导航栏
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index){
+          _controller.jumpToPage(index);
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        type: BottomNavigationBarType.fixed,
+        items: [
+          _bottomItem(Icons.book, '书架', 0),
+          _bottomItem(Icons.home, '首页', 1),
+          _bottomItem(Icons.category, '分类', 2),
+          _bottomItem(Icons.account_box, '我', 3)
+        ],
+      ),
+    );
+  }
+
+
+  //封装底部item
+  _bottomItem(IconData iconData, String title, int index){
+    return BottomNavigationBarItem(
+      icon: Icon(
+        iconData,
+        color: _defaultColor,
+      ),
+      activeIcon: Icon(
+        iconData,
+        color: _activeColor,
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+            color: _currentIndex != index?_defaultColor:_activeColor
+        ),
+      )
+    );
+  }
+}
