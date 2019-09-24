@@ -7,9 +7,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Center(
-        child: Text(
-            '首页'
+      appBar: AppBar(
+        backgroundColor: Colors.redAccent,
+        title: Text(
+          '首页'
         ),
       ),
     );
