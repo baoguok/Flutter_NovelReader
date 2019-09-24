@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/pages/bookshelf_page.dart';
+import 'package:flutter_reader/pages/book_shelf/bookshelf_page.dart';
 import 'package:flutter_reader/pages/category_page.dart';
 import 'package:flutter_reader/pages/home_page.dart';
 import 'package:flutter_reader/pages/me_page.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabNavigator extends StatefulWidget {
   TabNavigator({Key key}) : super(key: key);
@@ -35,6 +36,7 @@ class _TabNavigatorState extends State<TabNavigator> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(width: 1125, height: 2436)..init(context);
     // TODO: implement build
     return Scaffold(
       body: PageView(
