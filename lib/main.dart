@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       title: '爱看',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.red,
       ),
       home: TabNavigator(),
     );
