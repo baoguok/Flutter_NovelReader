@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reader/pages/book_shelf/bookshelf_page.dart';
 import 'package:flutter_reader/pages/category_page.dart';
 import 'package:flutter_reader/pages/home/home_page.dart';
-import 'package:flutter_reader/pages/me_page.dart';
+import 'package:flutter_reader/pages/me/me_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabNavigator extends StatefulWidget {
