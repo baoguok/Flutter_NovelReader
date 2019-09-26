@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/pages/home/connect_widget.dart';
 import 'package:flutter_reader/pages/home/func_widget.dart';
+import 'package:flutter_reader/pages/home/guess_widget.dart';
 import 'package:flutter_reader/pages/home/hot_widget.dart';
 import 'package:flutter_reader/pages/home/newbook_widget.dart';
 import 'package:flutter_reader/pages/home/recommend_widget.dart';
@@ -71,7 +73,11 @@ class _HomePageState extends State<HomePage> {
         _getIcon('images/推荐@2x.png', '主编推荐'),
         RecommendWidget(),
         _getIcon('images/31_新品@2x.png', '新书抢先'),
-        NewBookWidget()
+        NewBookWidget(),
+        _getOtherIcon('images/喜欢@2x.png', '猜你喜欢', 'images/换一批红@2x.png','换一批'),
+        GuessWidget(),
+        _getIcon('images/联系 (1).png', '联系我们'),
+        ConnectWidget()
       ],
     );
   }
@@ -112,7 +118,62 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: EdgeInsets.only(left: 7),
             child: Text(
-              title
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: ScreenUtil().setSp(55)
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  _getOtherIcon(String leftIcon, String leftTitle, String rightIcon, String rightTitle){
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 7, 0, 7),
+      child: Row(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(left: 7),
+            child: Image(
+              width: ScreenUtil().setWidth(48),
+              height: ScreenUtil().setWidth(48),
+              image: AssetImage(leftIcon),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 7),
+            child: Text(
+                leftTitle,
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: ScreenUtil().setSp(55)
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: ScreenUtil().setWidth(600)),
+            child: Text(
+              rightTitle,
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontSize: ScreenUtil().setSp(40)
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 7),
+            child: InkWell(
+              onTap: (){
+                print('换一批');
+              },
+              child: Image(
+                width: ScreenUtil().setWidth(32),
+                height: ScreenUtil().setWidth(32),
+                image: AssetImage(rightIcon),
+              ),
             ),
           )
         ],
