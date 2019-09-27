@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/pages/category_page.dart';
+import 'package:flutter_reader/pages/category/category_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class bookShelfDetailPage extends StatefulWidget {
