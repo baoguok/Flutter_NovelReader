@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_screenutil: ^0.5.3
   flutter_swiper: ^1.1.6
+  gzx_dropdown_menu: ^1.0.3
 
 dev_dependencies:
   flutter_test:
