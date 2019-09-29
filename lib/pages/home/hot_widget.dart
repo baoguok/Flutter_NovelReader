@@ -15,7 +15,7 @@ class HotWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          _mainItem(context ,'bookImage/book1.jpg', '恐怖的直播到底会发生什么惊奇故事'),
+          _mainItem(context ,'bookImage/book1.jpg', '恐怖直播','恐怖的直播到底会发生什么惊奇故事'),
           Column(
             children: <Widget>[
               _subItem(context, 'adImages/4.jpg', '军装下的温柔', '军装之下有着怎样动人又美好的故事'),
@@ -27,23 +27,35 @@ class HotWidget extends StatelessWidget {
     );
   }
 
-  Widget _mainItem(BuildContext context, String image, String title){
+  Widget _mainItem(BuildContext context, String image, String title, String subTitle){
     return Container(
       child: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(60), ScreenUtil().setHeight(60), 7, 0),
             width: ScreenUtil().setWidth(500),
+            padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(60), ScreenUtil().setHeight(20), 7, 0),
             child: Text(
               title,
-              overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: Color.fromRGBO(100, 100, 100, 1)
+                fontWeight: FontWeight.w500,
+                fontSize: ScreenUtil().setSp(45)
               ),
             ),
           ),
           Container(
-            height: ScreenUtil().setHeight(550),
+            padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(60), ScreenUtil().setHeight(20), 7, 0),
+            width: ScreenUtil().setWidth(500),
+            child: Text(
+              subTitle,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Color.fromRGBO(100, 100, 100, 1),
+                fontSize: ScreenUtil().setSp(35)
+              ),
+            ),
+          ),
+          Container(
+            height: ScreenUtil().setHeight(500),
             margin: EdgeInsets.only(top: 7),
             decoration: BoxDecoration(
               boxShadow: <BoxShadow>[
