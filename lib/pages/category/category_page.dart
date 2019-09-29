@@ -127,7 +127,7 @@ class _CategoryPageState extends State<CategoryPage> {
 //                iconDropDownColor: Theme.of(context).primaryColor,
               ),
               Container(
-                height: ScreenUtil().setHeight(1761),
+                height: ScreenUtil().setHeight(2000),
                 child: ListView(
                   children: <Widget>[
                     _getMainItem('bookImage/book19.jpg', '花前月下', '[已完结]:', '林小峰是村里出了名的大傻子，可是忽然某一天，他重新恢复了神智…各位书友要是觉得《花前月下》还不错的话请不要忘记向您QQ群和微博里的朋友推荐哦！', '都市娱乐', 6128),
