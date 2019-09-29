@@ -33,9 +33,9 @@ class MePage extends StatelessWidget {
               image: AssetImage('images/back1.jpeg'), fit: BoxFit.fitWidth),
           borderRadius: BorderRadius.all(Radius.circular(6))),
       margin: EdgeInsets.fromLTRB(
-          ScreenUtil().setWidth(10),
-          ScreenUtil().setHeight(15),
-          ScreenUtil().setWidth(10),
+          ScreenUtil().setWidth(20),
+          ScreenUtil().setHeight(20),
+          ScreenUtil().setWidth(20),
           ScreenUtil().setHeight(10)),
       width: ScreenUtil().setWidth(1105),
       height: ScreenUtil().setHeight(510),
@@ -48,7 +48,7 @@ class MePage extends StatelessWidget {
   Widget _leftWidget() {
     return Container(
         margin: EdgeInsets.fromLTRB(
-            ScreenUtil().setWidth(150), ScreenUtil().setHeight(60), 0, 0),
+            ScreenUtil().setWidth(80), ScreenUtil().setHeight(60), 0, 0),
         child: Container(
           child: Column(
             children: <Widget>[
@@ -61,20 +61,46 @@ class MePage extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
-                child: Text(
-                  '书币：50',
-                  style: TextStyle(
-                      fontSize: ScreenUtil().setSp(50), color: Colors.black54),
-                ),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(right: ScreenUtil().setWidth(20)),
+                      child: Image(
+                        image: AssetImage('images/64-金币.png'),
+                        width: ScreenUtil().setWidth(60),
+                        height: ScreenUtil().setHeight(70),
+                      ),
+                    ),
+                    Text(
+                      '书币：50',
+                      style: TextStyle(
+                          fontSize: ScreenUtil().setSp(50), color: Colors.black54,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                )
               ),
               Container(
-                margin: EdgeInsets.only(top: ScreenUtil().setHeight(30)),
-                child: Text(
-                  '书券：50',
-                  style: TextStyle(
-                      fontSize: ScreenUtil().setSp(50), color: Colors.black54),
-                ),
-              )
+                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(right: ScreenUtil().setWidth(20)),
+                        child: Image(
+                          image: AssetImage('images/优惠券 (1).png'),
+                          width: ScreenUtil().setWidth(60),
+                          height: ScreenUtil().setHeight(70),
+                        ),
+                      ),
+                      Text(
+                        '书券：50',
+                        style: TextStyle(
+                            fontSize: ScreenUtil().setSp(50), color: Colors.black54,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  )
+              ),
             ],
           ),
         ));
@@ -143,6 +169,7 @@ class MePage extends StatelessWidget {
 
   Widget _topList() {
     return Container(
+      width: ScreenUtil().setWidth(700),
       decoration: BoxDecoration(
         color: Colors.white
       ),
