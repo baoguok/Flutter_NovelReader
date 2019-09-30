@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -28,20 +30,33 @@ class MePage extends StatelessWidget {
   Widget _topBar() {
     return Container(
       decoration: BoxDecoration(
+        border: Border.all(width: 1,color: Colors.black54),
           color: Colors.redAccent,
           image: DecorationImage(
-              image: AssetImage('images/back1.jpeg'), fit: BoxFit.fitWidth),
+              image: AssetImage('images/back1.jpeg',), fit: BoxFit.fitWidth),
           borderRadius: BorderRadius.all(Radius.circular(6))),
       margin: EdgeInsets.fromLTRB(
-          ScreenUtil().setWidth(20),
+          ScreenUtil().setWidth(30),
           ScreenUtil().setHeight(20),
-          ScreenUtil().setWidth(20),
+          ScreenUtil().setWidth(30),
           ScreenUtil().setHeight(10)),
       width: ScreenUtil().setWidth(1105),
-      height: ScreenUtil().setHeight(510),
-      child: Row(
-        children: <Widget>[_leftWidget(), _rightWidget()],
-      ),
+      height: ScreenUtil().setHeight(550),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            child: BackdropFilter(
+              filter: new ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
+              child: new Container(
+                decoration: new BoxDecoration(color: Colors.white.withOpacity(0.0)),
+              ),
+            ),
+          ),
+          Row(
+            children: <Widget>[_leftWidget(), _rightWidget()],
+          ),
+        ],
+      )
     );
   }
 
@@ -109,7 +124,7 @@ class MePage extends StatelessWidget {
   Widget _rightWidget() {
     return Container(
       margin: EdgeInsets.fromLTRB(
-          ScreenUtil().setWidth(380), ScreenUtil().setHeight(100), 0, 0),
+          ScreenUtil().setWidth(350), ScreenUtil().setHeight(100), 0, 0),
       child: Column(
         children: <Widget>[
           Container(
