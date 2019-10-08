@@ -30,7 +30,7 @@ class MePage extends StatelessWidget {
   Widget _topBar() {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(width: 1,color: Colors.black54),
+        border: Border.all(width: 1,color: Colors.black26),
           color: Colors.redAccent,
           image: DecorationImage(
               image: AssetImage('images/back1.jpeg',), fit: BoxFit.fitWidth),
@@ -46,7 +46,7 @@ class MePage extends StatelessWidget {
         children: <Widget>[
           Container(
             child: BackdropFilter(
-              filter: new ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
+              filter: new ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
               child: new Container(
                 decoration: new BoxDecoration(color: Colors.white.withOpacity(0.0)),
               ),
