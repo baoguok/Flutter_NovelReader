@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/pages/home/category/category_page.dart';
+import 'package:flutter_reader/pages/category/category_page.dart';
 import 'package:flutter_reader/pages/home/recharge/recharge_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

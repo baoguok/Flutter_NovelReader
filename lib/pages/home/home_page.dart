@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/pages/home/home_page/connect_widget.dart';
-import 'package:flutter_reader/pages/home/home_page/func_widget.dart';
-import 'package:flutter_reader/pages/home/home_page/guess_widget.dart';
-import 'package:flutter_reader/pages/home/home_page/hot_widget.dart';
-import 'package:flutter_reader/pages/home/home_page/newbook_widget.dart';
-import 'package:flutter_reader/pages/home/home_page/recommend_widget.dart';
-import 'package:flutter_reader/pages/home/home_page/search_bar.dart';
+import 'package:flutter_reader/pages/home/connect_widget.dart';
+import 'package:flutter_reader/pages/home/func_widget.dart';
+import 'package:flutter_reader/pages/home/guess_widget.dart';
+import 'package:flutter_reader/pages/home/hot_widget.dart';
+import 'package:flutter_reader/pages/home/recommend_widget.dart';
+import 'package:flutter_reader/pages/home/search_bar.dart';
 import 'package:flutter_reader/widget/loading_container.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+
+import 'newbook_widget.dart';
 
 
 const APPBAR_SCROLL_OFFSET = 100;
