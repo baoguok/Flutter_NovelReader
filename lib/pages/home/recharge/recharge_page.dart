@@ -95,7 +95,7 @@ class _RechargePageState extends State<RechargePage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(60)),
+            margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
             child: Row(
               children: <Widget>[
                 Container(
@@ -138,7 +138,7 @@ class _RechargePageState extends State<RechargePage> {
       ),
       margin: EdgeInsets.fromLTRB(
           ScreenUtil().setWidth(40),
-          ScreenUtil().setHeight(500),
+          ScreenUtil().setHeight(450),
           ScreenUtil().setWidth(40),
           0),
       height: ScreenUtil().setHeight(1160),
@@ -244,7 +244,7 @@ class _RechargePageState extends State<RechargePage> {
       },
       child: Container(
         width: ScreenUtil().setWidth(1125),
-        height: ScreenUtil().setHeight(126),
+        height: ScreenUtil().setHeight(176),
         color: Colors.redAccent,
         margin: EdgeInsets.only(top: ScreenUtil().setHeight(0)),
         child: Center(

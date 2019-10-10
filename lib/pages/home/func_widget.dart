@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/pages/category/category_page.dart';
+import 'package:flutter_reader/pages/home/check/check_page.dart';
 import 'package:flutter_reader/pages/home/recharge/recharge_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -53,7 +54,7 @@ class _FuncWidgetState extends State<FuncWidget> {
       _item(context, '充值', 'images/充值2@2x.png', _jumpToRecharge),
       _item(context, '分类', 'images/类目 品类 分类 类别.2.png', _jumpToCategory),
       _item(context, '排行榜', 'images/排行榜.png', _jumpToCategory),
-      _item(context, '签到', 'images/签到@2x.png', _jumpToCategory)
+      _item(context, '签到', 'images/签到@2x.png', _jumpToCheck)
     ];
 
 
@@ -97,6 +98,12 @@ class _FuncWidgetState extends State<FuncWidget> {
   _jumpToRecharge(){
     Navigator.push(context, MaterialPageRoute(
       builder: (context) => RechargePage()
+    ));
+  }
+
+  _jumpToCheck(){
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => CheckPage()
     ));
   }
 }
