@@ -198,8 +198,7 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 
-  _buildConditionListWidget(
-      items, void itemOnTap(SortCondition sortCondition)) {
+  _buildConditionListWidget(items, void itemOnTap(SortCondition sortCondition)) {
     return ListView.separated(
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
