@@ -7,6 +7,7 @@ class CustomRadioButton extends StatefulWidget {
     this.buttonSubLables,
     this.buttonValues,
     this.radioButtonValue,
+    this.buttonRemarksLables,
     this.buttonColor,
     this.selectedColor,
     this.hight,
@@ -26,6 +27,8 @@ class CustomRadioButton extends StatefulWidget {
 
   final List<String> buttonSubLables;
 
+  final List<String> buttonRemarksLables;
+
   final Function(dynamic) radioButtonValue;
 
   final Color selectedColor;
@@ -38,13 +41,13 @@ class CustomRadioButton extends StatefulWidget {
 }
 
 class _CustomRadioButtonState extends State<CustomRadioButton> {
-  int currentSelected = 0;
+  int currentSelected = 1;
   String currentSelectedLabel;
 
   @override
   void initState() {
     super.initState();
-    currentSelectedLabel = widget.buttonLables[0];
+    currentSelectedLabel = widget.buttonLables[1];
   }
 
   List<Widget> buildButtonsRow() {
@@ -84,26 +87,39 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
                     child:Text(
                       widget.buttonLables[index],
                       style: TextStyle(
                           color: currentSelectedLabel == widget.buttonLables[index]
                               ? Colors.white
-                              : Colors.redAccent,
+                              : Colors.black54,
                           fontSize: ScreenUtil().setSp(60),
                           fontWeight: FontWeight.w500
                       ),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(30)),
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
                     child: Text(
                       widget.buttonSubLables[index],
                       style: TextStyle(
                           color: currentSelectedLabel == widget.buttonLables[index]
                               ? Colors.white
-                              : Colors.redAccent,
+                              : Colors.black54,
+                          fontSize: ScreenUtil().setSp(40),
+                          fontWeight: FontWeight.w400
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                    child: Text(
+                      widget.buttonRemarksLables[index],
+                      style: TextStyle(
+                        color: currentSelectedLabel == widget.buttonLables[index]
+                            ? Colors.white
+                            : Colors.redAccent,
                           fontSize: ScreenUtil().setSp(40),
                           fontWeight: FontWeight.w400
                       ),
@@ -141,47 +157,63 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
             });
           },
           child: Container(
-              child: Row(
+              child: Column(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
-                    child: Image(
-                      height: ScreenUtil().setWidth(100),
-                      width: ScreenUtil().setWidth(100),
-                      image: AssetImage('images/皇冠-VIP.png'),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
-                    child: Column(
+                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(250),
+                    top: ScreenUtil().setHeight(20)),
+                    child: Row(
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.only(top: ScreenUtil().setHeight(30)),
-                          child:Text(
-                            widget.buttonLables[index],
-                            style: TextStyle(
-                                color: currentSelectedLabel == widget.buttonLables[index]
-                                    ? Colors.white
-                                    : Colors.redAccent,
-                                fontSize: ScreenUtil().setSp(60),
-                                fontWeight: FontWeight.w400
-                            ),
+                          child: Image(
+                            width:ScreenUtil().setWidth(100),
+                            image: AssetImage('images/皇冠-VIP.png'),
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
-                          child: Text(
-                            widget.buttonSubLables[index],
-                            style: TextStyle(
-                                color: currentSelectedLabel == widget.buttonLables[index]
-                                    ? Colors.white
-                                    : Colors.redAccent,
-                                fontSize: ScreenUtil().setSp(60),
-                                fontWeight: FontWeight.w500
-                            ),
+                          margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                child: Text(
+                                  widget.buttonLables[index],
+                                  style: TextStyle(
+                                      color: currentSelectedLabel == widget.buttonLables[index]
+                                          ? Colors.white
+                                          : Colors.black54,
+                                      fontSize: ScreenUtil().setSp(50),
+                                      fontWeight: FontWeight.w400
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  widget.buttonSubLables[index],
+                                  style: TextStyle(
+                                      color: currentSelectedLabel == widget.buttonLables[index]
+                                          ? Colors.white
+                                          : Colors.black54,
+                                      fontSize: ScreenUtil().setSp(50),
+                                      fontWeight: FontWeight.w500
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         )
-                      ],
+                      ]
+                    ),
+                  ),
+                  Container(
+                    child: Text(
+                      widget.buttonRemarksLables[index],
+                      style: TextStyle(
+                          color: currentSelectedLabel == widget.buttonLables[index]
+                              ? Colors.white
+                              : Colors.redAccent,
+                          fontSize: ScreenUtil().setSp(40),
+                          fontWeight: FontWeight.w400
+                      ),
                     ),
                   )
                 ],
@@ -199,3 +231,5 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
     );
   }
 }
+
+
