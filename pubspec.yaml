@@ -27,6 +27,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   gzx_dropdown_menu: ^1.0.3
   intervalprogressbar: ^1.0.1
+  circular_check_box: ^1.0.1
 
 dev_dependencies:
   flutter_test:
