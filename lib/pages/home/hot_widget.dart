@@ -16,7 +16,7 @@ class HotWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          _mainItem(context ,'bookImage/book1.jpg', '恐怖直播','恐怖的直播到底会发生什么惊奇故事'),
+          _mainItem(context ,'bookImage/book21.jpg', '一世情 两生缘','一世的相遇也为了下一次的相遇'),
           Column(
             children: <Widget>[
               _subItem(context, 'adImages/4.jpg', '军装下的温柔', '军装之下有着怎样动人又美好的故事'),
