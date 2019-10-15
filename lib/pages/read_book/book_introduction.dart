@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/pages/read_book/book_content.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
@@ -68,6 +69,16 @@ class _BookInfoPageState extends State<BookInfoPage> {
         child: Row(
           children: <Widget>[
             Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                  color: Colors.black54,
+                  blurRadius: 5.0,
+                  spreadRadius: 1.0,
+                  offset: Offset(-2.0, 2.0),
+                ),
+                ]
+              ),
               margin: EdgeInsets.only(left: ScreenUtil().setWidth(80)),
               width: ScreenUtil().setWidth(400),
               child: Image(
@@ -649,30 +660,40 @@ class _BookInfoPageState extends State<BookInfoPage> {
         ),
           Expanded(
             flex: 1,
-            child: Container(
-              height: ScreenUtil().setHeight(236),
-              decoration: BoxDecoration(
-                color: Colors.redAccent
-              ),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
-                    child: Image(
-                      width: ScreenUtil().setWidth(100),
-                      color: Colors.white,
-                      image: AssetImage('images/看书.png'),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
-                    child: Text('开始阅读',style: TextStyle(
+            child: InkWell(
+              onTap: (){
+                print('开始阅读');
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context){
+                      return BookContentPage();
+                    }
+                ));
+              },
+              child: Container(
+                height: ScreenUtil().setHeight(236),
+                decoration: BoxDecoration(
+                    color: Colors.redAccent
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
+                      child: Image(
+                        width: ScreenUtil().setWidth(100),
                         color: Colors.white,
-                        fontSize: ScreenUtil().setSp(50),
-                      fontWeight: FontWeight.w500
-                    ),),
-                  )
-                ],
+                        image: AssetImage('images/看书.png'),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
+                      child: Text('开始阅读',style: TextStyle(
+                          color: Colors.white,
+                          fontSize: ScreenUtil().setSp(50),
+                          fontWeight: FontWeight.w500
+                      ),),
+                    )
+                  ],
+                ),
               ),
             ),
           )
