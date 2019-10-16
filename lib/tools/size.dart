@@ -1,12 +1,9 @@
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class MySize {
-  static final double leftMargin = 15;
-  static final double rightMargin = 15;
-  static final double titleTextSize = 18;
-  static final double textSizeM = 16;
-  static final double textSizeL = 14;
-  static double homeImageSize = 25;
-
-  static double titleHeight = 48;
-
+  static final double leftMargin = ScreenUtil().setWidth(30);
+  static final double rightMargin = ScreenUtil().setWidth(30);
+  static final double topMargin = ScreenUtil().setHeight(40);
+  static final double bottomMargin = ScreenUtil().setHeight(40);
 }
