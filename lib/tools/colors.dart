@@ -10,7 +10,7 @@ class MyColors{
 
 
   static final Color primary = Color(0xFFFFFFFF);
-  static final Color textPrimaryColor = Color(0xFF33C3A5);
+  static final Color textPrimaryColor = Colors.blueGrey;
 
   static final Color homeTabText = Color(0xFF33C3A5);
   static final Color homeTabGreyText = Color(0xFF606060);
@@ -33,7 +33,7 @@ class MyColors{
   static final Color meRedTextColor = Color(0xFFFF7634);
   static final Color paginationColor = Color(0xFFD8D8D8);
 
-
+  static final Color MyWhite = Color.fromRGBO(255, 255, 255, 0.9);
 
 
 
