@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/pages/read_book/book_catelog.dart';
 import 'package:flutter_reader/pages/read_book/book_content.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -385,22 +386,29 @@ class _BookInfoPageState extends State<BookInfoPage> {
               child: Container(
                 margin: EdgeInsets.only(left: ScreenUtil().setWidth(70)),
                 width: ScreenUtil().setWidth(400),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      child: Text('查看完整目录',
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(45),
-                        color: Colors.redAccent
-                      ),),
-                    ),
-                    Container(
-                      child: Icon(
-                        Icons.chevron_right,
-                        color: Colors.redAccent,
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => BookCatelogPage()
+                    ));
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        child: Text('查看完整目录',
+                          style: TextStyle(
+                              fontSize: ScreenUtil().setSp(45),
+                              color: Colors.redAccent
+                          ),),
                       ),
-                    )
-                  ],
+                      Container(
+                        child: Icon(
+                          Icons.chevron_right,
+                          color: Colors.redAccent,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
