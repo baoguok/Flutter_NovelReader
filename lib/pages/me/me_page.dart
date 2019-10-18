@@ -3,6 +3,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/pages/home/recharge/recharge_page.dart';
+import 'package:flutter_reader/pages/me/consumption_page.dart';
+import 'package:flutter_reader/pages/me/feedback_page.dart';
+import 'package:flutter_reader/pages/me/recharge_recording_page.dart';
+import 'package:flutter_reader/pages/me/vip_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MePage extends StatefulWidget {
@@ -49,14 +53,13 @@ class _MePageState extends State<MePage> {
   Widget _topLabBar(){
     return Container(
       color: Colors.white,
-      height: ScreenUtil().setHeight(1150),
+      height: ScreenUtil().setHeight(1000),
       child: Container(
         child: Column(
           children: <Widget>[
             _iconAndCheck(),
             _coinAndTicket(),
             _advertise(),
-            _func()
           ],
         ),
       ),
@@ -138,7 +141,7 @@ class _MePageState extends State<MePage> {
 
   Widget _coinAndTicket(){
     return Container(
-      margin: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
+      margin: EdgeInsets.only(top: ScreenUtil().setHeight(70)),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -206,8 +209,8 @@ class _MePageState extends State<MePage> {
 
   Widget _advertise(){
     return Container(
-      height: ScreenUtil().setHeight(250),
-      margin: EdgeInsets.only(top: ScreenUtil().setHeight(50),
+      height: ScreenUtil().setHeight(300),
+      margin: EdgeInsets.only(top: ScreenUtil().setHeight(70),
       left: ScreenUtil().setWidth(40),
       right: ScreenUtil().setWidth(40)),
       decoration: BoxDecoration(
@@ -377,8 +380,8 @@ class _MePageState extends State<MePage> {
       height: ScreenUtil().setHeight(304),
         child: Column(
           children: <Widget>[
-            _ListLine(false, 'images/充值.png', '书币充值'),
-            _ListLine(true, 'images/皇冠.png', '开通会员')
+            _ListLine(false, 'images/充值.png', '书币充值', _jumpToRecharge),
+            _ListLine(true, 'images/皇冠.png', '开通会员', _jumpToVipPage)
           ],
         )
     );
@@ -391,10 +394,10 @@ class _MePageState extends State<MePage> {
       height: ScreenUtil().setHeight(609),
       child: Column(
         children: <Widget>[
-          _ListLine(false, 'images/我签到.png', '签到有礼'),
-          _ListLine(false, 'images/记录.png', '充值记录'),
-          _ListLine(false, 'images/钱.png', '消费记录'),
-          _ListLine(true, 'images/兑换.png', '兑换专区'),
+          _ListLine(false, 'images/我签到.png', '签到有礼', _jumpToRecharge),
+          _ListLine(false, 'images/记录.png', '充值记录', _jumpToRechargeRecordPage),
+          _ListLine(false, 'images/钱.png', '消费记录', _jumpToConsumptionPage),
+          _ListLine(true, 'images/兑换.png', '兑换专区', _jumpToRecharge),
         ],
       ),
     );
@@ -407,18 +410,17 @@ class _MePageState extends State<MePage> {
       height: ScreenUtil().setHeight(304),
       child: Column(
         children: <Widget>[
-          _ListLine(false, 'images/手机我.png', '绑定手机'),
-          _ListLine(true, 'images/_意见反馈.png', '意见反馈'),
+          _ListLine(false, 'images/手机我.png', '绑定手机', _jumpToRecharge),
+          _ListLine(true, 'images/_意见反馈.png', '意见反馈', _jumpToFeedbackPage),
         ],
       ),
     );
   }
 
-  Widget _ListLine(bool isBottom, String image, String title){
+  Widget _ListLine(bool isBottom, String image, String title,
+       GestureTapCallback jumpFunc){
     return InkWell(
-      onTap: (){
-        print('点击');
-      },
+      onTap: jumpFunc,
       child: Container(
         child: Row(
           children: <Widget>[
@@ -469,110 +471,35 @@ class _MePageState extends State<MePage> {
     );
   }
 
-
-
-  Widget _leftWidget() {
-    return Container(
-        margin: EdgeInsets.fromLTRB(
-            ScreenUtil().setWidth(80), ScreenUtil().setHeight(60), 0, 0),
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              ClipOval(
-                child: Image(
-                  image: AssetImage('images/userIcon.jpeg'),
-                  width: ScreenUtil().setWidth(200),
-                  height: ScreenUtil().setHeight(200),
-                ),
-              ),
-              Container(
-                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(right: ScreenUtil().setWidth(20)),
-                        child: Image(
-                          image: AssetImage('images/64-金币.png'),
-                          width: ScreenUtil().setWidth(60),
-                          height: ScreenUtil().setHeight(70),
-                        ),
-                      ),
-                      Text(
-                        '书币：50',
-                        style: TextStyle(
-                            fontSize: ScreenUtil().setSp(50), color: Colors.black54,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  )
-              ),
-              Container(
-                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(right: ScreenUtil().setWidth(20)),
-                        child: Image(
-                          image: AssetImage('images/优惠券 (1).png'),
-                          width: ScreenUtil().setWidth(60),
-                          height: ScreenUtil().setHeight(70),
-                        ),
-                      ),
-                      Text(
-                        '书券：50',
-                        style: TextStyle(
-                            fontSize: ScreenUtil().setSp(50), color: Colors.black54,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  )
-              ),
-            ],
-          ),
-        ));
+  _jumpToRecharge(){
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => RechargePage()
+    ));
   }
 
-  Widget _rightWidget() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(
-          ScreenUtil().setWidth(350), ScreenUtil().setHeight(100), 0, 0),
-      child: Column(
-        children: <Widget>[
-          Container(
-            child: Text(
-              'Sonder',
-              style: TextStyle(
-                  fontSize: ScreenUtil().setSp(100), color: Colors.white),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(110)),
-            child: Container(
-              height: ScreenUtil().setHeight(100),
-              decoration: BoxDecoration(
-                  color: Colors.pinkAccent,
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: FlatButton.icon(
-                color: Colors.white,
-                icon: Icon(
-                  Icons.assignment_turned_in,
-                  color: Colors.pinkAccent,
-                ),
-                label: (Text(
-                  '签到',
-                  style: TextStyle(color: Colors.pinkAccent),
-                )),
-                shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(25.0)),
-                onPressed: () {
-                  print('签到');
-                },
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+  _jumpToVipPage(){
+    Navigator.push(context, MaterialPageRoute(
+        builder: (context) => VipPage()
+    ));
   }
+
+  _jumpToRechargeRecordPage(){
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => RechargeRecordingPage()
+    ));
+  }
+
+  _jumpToFeedbackPage(){
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => FeedbackPage()
+    ));
+  }
+
+  _jumpToConsumptionPage(){
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => ConsumptionPage()
+    ));
+  }
+
 
 }
