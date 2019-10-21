@@ -16,7 +16,7 @@ class VipPage extends StatelessWidget {
               height: ScreenUtil().setHeight(2436),
               child: Image(
                 fit: BoxFit.fill,
-                image: AssetImage('images/VIP会员界面@2x.png'),
+                image: AssetImage('images/VIP会员界面@2x.jpg'),
               ),
             ),
             Container(
@@ -38,7 +38,7 @@ class VipPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(1250),left: ScreenUtil().setWidth(110)),
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(1100),left: ScreenUtil().setWidth(110)),
                     child: InkWell(
                       onTap: (){
                         ///开通会员

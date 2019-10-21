@@ -2,8 +2,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/pages/home/check/check_page.dart';
 import 'package:flutter_reader/pages/home/recharge/recharge_page.dart';
 import 'package:flutter_reader/pages/me/consumption_page.dart';
+import 'package:flutter_reader/pages/me/exchange_page.dart';
 import 'package:flutter_reader/pages/me/feedback_page.dart';
 import 'package:flutter_reader/pages/me/recharge_recording_page.dart';
 import 'package:flutter_reader/pages/me/vip_page.dart';
@@ -208,67 +210,70 @@ class _MePageState extends State<MePage> {
   }
 
   Widget _advertise(){
-    return Container(
-      height: ScreenUtil().setHeight(300),
-      margin: EdgeInsets.only(top: ScreenUtil().setHeight(70),
-      left: ScreenUtil().setWidth(40),
-      right: ScreenUtil().setWidth(40)),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-          color: Colors.black26,
-        blurRadius: 10.0,
-            offset: Offset(3.0, 3.0),),
-        ],
-        color: Colors.black87,
-        borderRadius: BorderRadius.all(Radius.circular(10))
-      ),
-      child:Row(
-        children: <Widget>[
-          Container(
-            width: ScreenUtil().setWidth(270),
-            height: ScreenUtil().setHeight(150),
-            decoration: BoxDecoration(
-              border: Border(
-                right: BorderSide(
-                  width: 1,
-                  color: Colors.white60
-                )
-              )
-            ),
-            margin: EdgeInsets.only(left: ScreenUtil().setWidth(15),
-            top: ScreenUtil().setHeight(10)),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  child: Text('开通爱看VIP',
-                      style: TextStyle(color: Colors.white,
-                          fontWeight: FontWeight.w900,
-                      fontSize: ScreenUtil().setSp(40))),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(30)),
-                  child: Text('暂未开通',style: TextStyle(
-                    color: Colors.white60,fontSize: ScreenUtil().setSp(35)
+    return InkWell(
+      onTap: _jumpToVipPage,
+      child: Container(
+        height: ScreenUtil().setHeight(300),
+        margin: EdgeInsets.only(top: ScreenUtil().setHeight(70),
+            left: ScreenUtil().setWidth(40),
+            right: ScreenUtil().setWidth(40)),
+        decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10.0,
+                offset: Offset(3.0, 3.0),),
+            ],
+            color: Colors.black87,
+            borderRadius: BorderRadius.all(Radius.circular(10))
+        ),
+        child:Row(
+          children: <Widget>[
+            Container(
+              width: ScreenUtil().setWidth(270),
+              height: ScreenUtil().setHeight(150),
+              decoration: BoxDecoration(
+                  border: Border(
+                      right: BorderSide(
+                          width: 1,
+                          color: Colors.white60
+                      )
+                  )
+              ),
+              margin: EdgeInsets.only(left: ScreenUtil().setWidth(15),
+                  top: ScreenUtil().setHeight(10)),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: Text('开通爱看VIP',
+                        style: TextStyle(color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                            fontSize: ScreenUtil().setSp(40))),
                   ),
-                  textAlign: TextAlign.left,),
-                )
-              ],
+                  Container(
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(30)),
+                    child: Text('暂未开通',style: TextStyle(
+                        color: Colors.white60,fontSize: ScreenUtil().setSp(35)
+                    ),
+                      textAlign: TextAlign.left,),
+                  )
+                ],
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: ScreenUtil().setWidth(160)),
-            child: Text('开通vip畅销全站资源',
-            style: TextStyle(color: Color.fromRGBO(245, 226, 221, 1)),),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
-            child: Image(
-              width: ScreenUtil().setWidth(180),
-              image: AssetImage('images/backImage2.png'),
+            Container(
+              margin: EdgeInsets.only(left: ScreenUtil().setWidth(160)),
+              child: Text('开通vip畅销全站资源',
+                style: TextStyle(color: Color.fromRGBO(245, 226, 221, 1)),),
             ),
-          )
-        ],
+            Container(
+              margin: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
+              child: Image(
+                width: ScreenUtil().setWidth(180),
+                image: AssetImage('images/backImage2.png'),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -394,10 +399,10 @@ class _MePageState extends State<MePage> {
       height: ScreenUtil().setHeight(609),
       child: Column(
         children: <Widget>[
-          _ListLine(false, 'images/我签到.png', '签到有礼', _jumpToRecharge),
+          _ListLine(false, 'images/我签到.png', '签到有礼', _jumpToCheckPage),
           _ListLine(false, 'images/记录.png', '充值记录', _jumpToRechargeRecordPage),
           _ListLine(false, 'images/钱.png', '消费记录', _jumpToConsumptionPage),
-          _ListLine(true, 'images/兑换.png', '兑换专区', _jumpToRecharge),
+          _ListLine(true, 'images/兑换.png', '兑换专区', _jumpToExchangePage),
         ],
       ),
     );
@@ -501,5 +506,16 @@ class _MePageState extends State<MePage> {
     ));
   }
 
+  _jumpToCheckPage(){
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => CheckPage()
+    ));
+  }
+
+  _jumpToExchangePage(){
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => ExchangePage()
+    ));
+  }
 
 }
