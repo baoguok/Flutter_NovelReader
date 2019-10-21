@@ -62,7 +62,7 @@ class _CheckPageState extends State<CheckPage> {
                 ),
                 Container(
                   padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(10)),
-                  child:  Text('首页',
+                  child:  Text('返回',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: ScreenUtil().setSp(65),
