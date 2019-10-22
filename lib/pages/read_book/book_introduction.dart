@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/pages/read_book/book_catelog.dart';
 import 'package:flutter_reader/pages/read_book/book_content.dart';
+import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
@@ -70,22 +71,16 @@ class _BookInfoPageState extends State<BookInfoPage> {
         child: Row(
           children: <Widget>[
             Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                  color: Colors.black54,
-                  blurRadius: 5.0,
-                  spreadRadius: 1.0,
-                  offset: Offset(-2.0, 2.0),
-                ),
-                ]
-              ),
               margin: EdgeInsets.only(left: ScreenUtil().setWidth(80)),
               width: ScreenUtil().setWidth(400),
-              child: Image(
-                width: ScreenUtil().setWidth(500),
-                image: AssetImage( widget.isHorizontal == true ?  'bookImage/book3.jpg' : widget.bookImage),
-              ),
+child: BookHero(
+  book: widget.bookImage,
+  height: ScreenUtil().setHeight(650),
+),
+//              child: Image(
+//                width: ScreenUtil().setWidth(500),
+//                image: AssetImage( widget.isHorizontal == true ?  'bookImage/book3.jpg' : widget.bookImage),
+//              ),
             ),
             Container(
               margin: EdgeInsets.only(left: ScreenUtil().setWidth(80)),

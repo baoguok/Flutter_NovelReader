@@ -180,7 +180,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         unselectedLabelColor: Colors.white,
         indicator: UnderlineTabIndicator(
         borderSide: BorderSide(
-        width: 3,
+        width: 7,
         color: Colors.white
     )),
     tabs: _tabs.map((e) => Tab(text: e)).toList()

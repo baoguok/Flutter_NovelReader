@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/pages/read_book/book_introduction.dart';
+import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HotWidget extends StatelessWidget {
@@ -74,12 +75,17 @@ class HotWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Image(
-                width: ScreenUtil().setWidth(400),
-                height: ScreenUtil().setHeight(600),
-                image: AssetImage(image),
-                fit: BoxFit.fill,
-              ),
+              child: BookHero(
+                  book: image,
+                  height: ScreenUtil().setHeight(500),
+                  callback: (){
+                    Navigator.of(context).push(MaterialPageRoute<void>(
+                        builder: (BuildContext context){
+                          return BookInfoPage(bookName: title,bookImage: image,isHorizontal: false,hasCollect: false,);
+                        }
+                    ));
+                  }
+              )
             )
           ],
         ),
