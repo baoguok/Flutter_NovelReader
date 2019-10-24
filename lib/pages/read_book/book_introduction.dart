@@ -75,7 +75,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
               width: ScreenUtil().setWidth(400),
 child: BookHero(
   book: widget.bookImage,
-  height: ScreenUtil().setHeight(650),
+  height: ScreenUtil().setHeight(500),
 ),
 //              child: Image(
 //                width: ScreenUtil().setWidth(500),
