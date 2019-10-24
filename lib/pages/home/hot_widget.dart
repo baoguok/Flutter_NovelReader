@@ -62,20 +62,7 @@ class HotWidget extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              height: ScreenUtil().setHeight(500),
-              margin: EdgeInsets.only(top: 7),
-              decoration: BoxDecoration(
-                boxShadow: <BoxShadow>[
-                  new BoxShadow(
-                    color: Colors.black54,
-                    blurRadius: 5.0,
-                    spreadRadius: 1.0,
-                    offset: Offset(-2.0, 2.0),
-                  ),
-                ],
-              ),
-              child: BookHero(
+            BookHero(
                   book: image,
                   height: ScreenUtil().setHeight(500),
                   callback: (){
@@ -86,7 +73,6 @@ class HotWidget extends StatelessWidget {
                     ));
                   }
               )
-            )
           ],
         ),
       ),

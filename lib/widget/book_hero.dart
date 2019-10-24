@@ -11,8 +11,19 @@ class BookHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return SizedBox(
+    return Container(
       height: height,
+      margin: EdgeInsets.only(top: 7),
+      decoration: BoxDecoration(
+        boxShadow: <BoxShadow>[
+          new BoxShadow(
+            color: Colors.black54,
+            blurRadius: 5.0,
+            spreadRadius: 1.0,
+            offset: Offset(-2.0, 2.0),
+          ),
+        ],
+      ),
       child: Hero(
         tag: book,
         child: Material(
@@ -21,7 +32,7 @@ class BookHero extends StatelessWidget {
             onTap: callback,
             child: Image(
               image: AssetImage(book),
-              fit: BoxFit.contain,
+              fit: BoxFit.fill,
             ),
           ),
         ),
