@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reader/pages/read_book/book_catelog.dart';
 import 'package:flutter_reader/tools/colors.dart';
 import 'package:flutter_reader/tools/size.dart';
+import 'package:flutter_reader/widget/Bubbles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,7 +50,7 @@ class _BookContentPageState extends State<BookContentPage> {
   @override
   void initState() {
     super.initState();
-    Timer _timer = Timer(Duration(seconds: 2), (){
+    Timer _timer = Timer(Duration(seconds: 5), (){
       setState(() {
         _isLoading = false;
       });
@@ -67,25 +69,20 @@ class _BookContentPageState extends State<BookContentPage> {
       body: Container(
         child: Stack(
           children: <Widget>[
-            _bookBgWidget(),
+            Bubbles(),
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: ScreenUtil().setHeight(1100)),
                 child: Column(
                   children: <Widget>[
+                    SpinKitPouringHourglass(
+                      color: Colors.redAccent,
+                      size: 50,
+                    ),
                     Container(
-                      margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(80)),
+                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(80)),
                       child: Text('请稍等，精彩内容马上呈现',
                         style: TextStyle(fontSize: ScreenUtil().setSp(55)),),
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setWidth(15),
-                      width: ScreenUtil().setWidth(800),
-
-                      child: LinearProgressIndicator(
-                        value: null,
-                        backgroundColor: Colors.white,
-                      ),
                     )
                   ],
                 ),
