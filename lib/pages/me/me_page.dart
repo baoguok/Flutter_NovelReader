@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/pages/Login/login_page.dart';
 import 'package:flutter_reader/pages/home/check/check_page.dart';
 import 'package:flutter_reader/pages/home/recharge/recharge_page.dart';
 import 'package:flutter_reader/pages/me/consumption_page.dart';
@@ -9,7 +10,9 @@ import 'package:flutter_reader/pages/me/exchange_page.dart';
 import 'package:flutter_reader/pages/me/feedback_page.dart';
 import 'package:flutter_reader/pages/me/recharge_recording_page.dart';
 import 'package:flutter_reader/pages/me/vip_page.dart';
+import 'package:flutter_reader/tools/global_state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class MePage extends StatefulWidget {
   MePage({Key key}) : super(key: key);
@@ -35,6 +38,9 @@ class _MePageState extends State<MePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final _hasLogin = Provider.of<GlobalModel>(context);
+
     // TODO: implement build
     return Scaffold(
         backgroundColor: Color.fromRGBO(240, 240, 240, 1),
@@ -43,7 +49,7 @@ class _MePageState extends State<MePage> {
             child: Container(
           child: ListView(
             children: <Widget>[
-              _topLabBar(),
+              _topLabBar(_hasLogin),
               _topList(),
               _middleList(),
               _bottomList()
@@ -52,15 +58,15 @@ class _MePageState extends State<MePage> {
         )));
   }
 
-  Widget _topLabBar(){
+  Widget _topLabBar(GlobalModel hasLogin){
     return Container(
       color: Colors.white,
       height: ScreenUtil().setHeight(1000),
       child: Container(
         child: Column(
           children: <Widget>[
-            _iconAndCheck(),
-            _coinAndTicket(),
+            _iconAndCheck(hasLogin),
+            _coinAndTicket(hasLogin),
             _advertise(),
           ],
         ),
@@ -68,44 +74,64 @@ class _MePageState extends State<MePage> {
     );
   }
 
-  Widget _iconAndCheck(){
+  Widget _iconAndCheck(GlobalModel hasLogin){
     return Container(
       child:Row(
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(150),
-            left: ScreenUtil().setWidth(60)),
-            child: ClipOval(
-            child:Image(
-              width: ScreenUtil().setWidth(200),
-              image: AssetImage('images/userIcon.jpeg'),
-            ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  margin:EdgeInsets.only(top: ScreenUtil().setHeight(150)),
-                  child: Text('Sonder',style: TextStyle(fontWeight: FontWeight.w500,
-                  fontSize: ScreenUtil().setSp(60)),),
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => LoginPage()
+              ));
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(150),
+                  left: ScreenUtil().setWidth(60)),
+              child: ClipOval(
+                child:Image(
+                  width: ScreenUtil().setWidth(200),
+                  image: hasLogin.value == true ? AssetImage('images/userIcon.jpeg') : AssetImage('images/用户.png'),
                 ),
-                Container(
-                  width: ScreenUtil().setWidth(180),
-                  height: ScreenUtil().setHeight(60),
-                  decoration: BoxDecoration(color: Colors.black12,
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
-                  child: Image(
-                    width: ScreenUtil().setWidth(100),
-                    image: AssetImage('images/VIP.png'),
-                  ),
-                )
-              ],
+              ),
             ),
           ),
           InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => LoginPage()
+              ));
+            },
+            child: Container(
+              margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
+              child: hasLogin.value == true ? Column(
+                children: <Widget>[
+                  Container(
+                    margin:EdgeInsets.only(top: ScreenUtil().setHeight(150)),
+                    child: Text('Sonder',style: TextStyle(fontWeight: FontWeight.w500,
+                        fontSize: ScreenUtil().setSp(60)),),
+                  ),
+                  Container(
+                    width: ScreenUtil().setWidth(180),
+                    height: ScreenUtil().setHeight(60),
+                    decoration: BoxDecoration(color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                    child: Image(
+                      width: ScreenUtil().setWidth(100),
+                      image: AssetImage('images/VIP.png'),
+                    ),
+                  )
+                ],
+              ) : Container(
+                margin: EdgeInsets.only(top: ScreenUtil().setHeight(140)),
+                child: Text('登录/注册',
+                  style: TextStyle(
+                      fontSize: ScreenUtil().setSp(55)
+                  ),),
+              ),
+            ),
+          ),
+          hasLogin.value == true ? InkWell(
             onTap: (){
               haveCheck = true;
               setState(() {
@@ -115,12 +141,12 @@ class _MePageState extends State<MePage> {
             child: Container(
               width: ScreenUtil().setWidth(250),
               height: ScreenUtil().setHeight(100),
-              margin: EdgeInsets.only(left: ScreenUtil().setWidth(340),
-              top: ScreenUtil().setHeight(150)),
+              margin: EdgeInsets.only(left: hasLogin.value == true ? ScreenUtil().setWidth(300) : ScreenUtil().setWidth(240),
+                  top: ScreenUtil().setHeight(150)),
               decoration: BoxDecoration(
-                border: Border.all(width: 1,
-                color: haveCheck == true ? Colors.black12 : Colors.redAccent),
-                borderRadius: BorderRadius.all(Radius.circular(18)),
+                  border: Border.all(width: 1,
+                      color: haveCheck == true ? Colors.black12 : Colors.redAccent),
+                  borderRadius: BorderRadius.all(Radius.circular(18)),
                   color: haveCheck == true ? Colors.white : Colors.redAccent
               ),
               child: Container(
@@ -135,13 +161,15 @@ class _MePageState extends State<MePage> {
                 ),
               ),
             ),
+          ) : Container(
+
           )
         ],
       ),
     );
   }
 
-  Widget _coinAndTicket(){
+  Widget _coinAndTicket(GlobalModel hasLogin){
     return Container(
       margin: EdgeInsets.only(top: ScreenUtil().setHeight(70)),
       child: Row(
@@ -160,7 +188,7 @@ class _MePageState extends State<MePage> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    child: Text('410',
+                    child: Text(hasLogin.value == true ? '410' : '0',
                       style: TextStyle(
                           fontSize: ScreenUtil().setSp(60),
                           fontWeight: FontWeight.w500
@@ -185,7 +213,7 @@ class _MePageState extends State<MePage> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    child: Text('770',
+                    child: Text(hasLogin.value == true ? '770' : '0',
                       style: TextStyle(
                           fontSize: ScreenUtil().setSp(60),
                           fontWeight: FontWeight.w500
@@ -517,5 +545,4 @@ class _MePageState extends State<MePage> {
       builder: (context) => ExchangePage()
     ));
   }
-
 }
