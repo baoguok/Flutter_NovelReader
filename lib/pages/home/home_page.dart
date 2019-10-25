@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'package:flutter_reader/model/home/home_banner_model.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/pages/home/connect_widget.dart';
 import 'package:flutter_reader/pages/home/func_widget.dart';
@@ -25,12 +29,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  bool _isLoadingBanner = true;
+  HomePageBannerModel _bannerModel;
+  List _bannerImageExample = ["https://book-98nice.oss-cn-hangzhou.aliyuncs.com/XDYQ00/3AC256EE6C59096047A25AD75FBB1512/poster.jpg",];
+  List _bannerImageLoad = [];
+  List<bannerData> _bannerData = [];
 
-  final List _bannerList = [
-    'adImages/1.jpg',
-    'adImages/2.jpg',
-    'adImages/3.jpg'
-  ];
   TabController _controller;
   List _tabs = ['男生', '女生', '精选'];
 
@@ -42,7 +46,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
+
     _controller = TabController(length: 3, vsync: this);
+
+    fetchBannerData().then((val){
+      setState(() {
+        _bannerModel = val;
+        _bannerData = _bannerModel.data;
+        var i;
+        for(i = 0; i < _bannerData.length; i++){
+          _bannerImageLoad.add(_bannerData[i].image);
+        }
+        _isLoadingBanner = false;
+      });
+    });
     super.initState();
   }
 
@@ -62,6 +79,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  Future<HomePageBannerModel> fetchBannerData() async{
+    final response = await http.get('http://appapi.98nice.cn/api/topic/banner?channel=2',
+        headers: {'BSAuthorization':'C2B92CBAA2B92328A330DC3D50B73CEE',
+          'READING':'API'});
+
+    final json = jsonDecode(response.body);
+
+    return HomePageBannerModel.fromJson(json);
   }
 
   @override
@@ -121,7 +148,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Container(
       height: ScreenUtil().setHeight(230),
       decoration: BoxDecoration(
-        color: Colors.redAccent
+          color: Colors.redAccent
       ),
       child: Container(
 
@@ -170,21 +197,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Widget get _getCategory{
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.redAccent
-      ),
+        decoration: BoxDecoration(
+            color: Colors.redAccent
+        ),
         child:
         TabBar(
-        controller: _controller,
-        labelColor: Colors.white,
-        unselectedLabelColor: Colors.white,
-        indicator: UnderlineTabIndicator(
-        borderSide: BorderSide(
-        width: 7,
-        color: Colors.white
-    )),
-    tabs: _tabs.map((e) => Tab(text: e)).toList()
-    ));
+            controller: _controller,
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.white,
+            indicator: UnderlineTabIndicator(
+                borderSide: BorderSide(
+                    width: 7,
+                    color: Colors.white
+                )),
+            tabs: _tabs.map((e) => Tab(text: e)).toList()
+        ));
   }
 
   Widget get _banner {
@@ -192,7 +219,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       margin: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
       height: ScreenUtil().setHeight(400),
       child: Swiper(
-          itemCount: _bannerList.length,
+          itemCount: _isLoadingBanner == true ? _bannerImageExample.length : _bannerImageLoad.length,
           autoplay: true,
           pagination: SwiperPagination(),
           viewportFraction: 0.8,
@@ -201,8 +228,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             return Container(                     // 用Container实现图片圆角的效果
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(_bannerList[index]),
-                  fit: BoxFit.fill,
+                    image: NetworkImage(_isLoadingBanner == true ? _bannerImageExample[index] : _bannerImageLoad[index]),
+                    fit: BoxFit.fill
                 ),
                 borderRadius: BorderRadius.all(
                   Radius.circular(10.0),
