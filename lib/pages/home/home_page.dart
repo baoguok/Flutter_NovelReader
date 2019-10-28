@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:flutter_reader/dao/home_data_manager.dart';
 import 'package:flutter_reader/model/home/home_banner_model.dart';
+import 'package:flutter_reader/pages/home/search/search_page.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -29,9 +31,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+
   bool _isLoadingBanner = true;
   HomePageBannerModel _bannerModel;
+
   List _bannerImageExample = ["https://book-98nice.oss-cn-hangzhou.aliyuncs.com/XDYQ00/3AC256EE6C59096047A25AD75FBB1512/poster.jpg",];
+
   List _bannerImageLoad = [];
   List<bannerData> _bannerData = [];
 
@@ -48,18 +53,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
 
     _controller = TabController(length: 3, vsync: this);
-
-    fetchBannerData().then((val){
-      setState(() {
-        _bannerModel = val;
-        _bannerData = _bannerModel.data;
-        var i;
-        for(i = 0; i < _bannerData.length; i++){
-          _bannerImageLoad.add(_bannerData[i].image);
-        }
-        _isLoadingBanner = false;
-      });
-    });
+    loadBannerData();
     super.initState();
   }
 
@@ -80,15 +74,34 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _controller.dispose();
     super.dispose();
   }
+///加载轮播图数据
+  loadBannerData(){
+    HomeDao.fetchBanner().then((value){
+      setState(() {
+        _bannerModel = value;
+        _bannerData = _bannerModel.data;
+        var i;
+        for(i=0;i<_bannerData.length;i++){
+          _bannerImageLoad.add(_bannerData[i].image);
+        }
+        _isLoadingBanner = false;
+      });
+    });
+  }
 
   Future<HomePageBannerModel> fetchBannerData() async{
     final response = await http.get('http://appapi.98nice.cn/api/topic/banner?channel=2',
         headers: {'BSAuthorization':'C2B92CBAA2B92328A330DC3D50B73CEE',
           'READING':'API'});
-
-    final json = jsonDecode(response.body);
-
-    return HomePageBannerModel.fromJson(json);
+    if(response.statusCode == 200){
+      //解决中文乱码
+      Utf8Decoder utf8decoder = Utf8Decoder();
+      final json = jsonDecode(utf8decoder.convert(response.bodyBytes));
+      return HomePageBannerModel.fromJson(json);
+    }
+    else{
+      throw Exception('加载banner接口失败');
+    }
   }
 
   @override
@@ -322,6 +335,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
 
-  _jumpToSearch(){}
+  _jumpToSearch(){
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => SearchPage()
+    ));
+  }
 }
 
