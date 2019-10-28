@@ -98,7 +98,7 @@ class _searchBarState extends State<SearchBar> {
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                 child: Text(
                   '搜索',
-                  style: TextStyle(color: Colors.blue, fontSize: 17),
+                  style: TextStyle(color: Colors.redAccent, fontSize: 17),
                 ),
               ),
               widget.rightButtonClick)
@@ -241,7 +241,7 @@ class _searchBarState extends State<SearchBar> {
                 Icons.mic,
                 size: 22,
                 color: widget.searchBarType == SearchBarType.normal
-                    ? Colors.blue
+                    ? Colors.redAccent
                     : Colors.grey,
               ),
               widget.speakClick)
