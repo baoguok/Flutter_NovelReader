@@ -31,7 +31,7 @@ class BookHero extends StatelessWidget {
           child: InkWell(
             onTap: callback,
             child: Image(
-              image: AssetImage(book),
+              image: NetworkImage(book),
               fit: BoxFit.fill,
             ),
           ),
