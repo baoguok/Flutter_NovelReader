@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'package:flutter_reader/dao/home_data_manager.dart';
+import 'package:flutter_reader/model/home/HotModel.dart';
+import 'package:flutter_reader/model/home/NewModel.dart';
+import 'package:flutter_reader/model/home/guess_like_model.dart';
 import 'package:flutter_reader/model/home/home_banner_model.dart';
+import 'package:flutter_reader/model/home/recommend_model.dart';
 import 'package:flutter_reader/pages/home/search/search_page.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,13 +38,49 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   bool _isLoadingBanner = true;
   HomePageBannerModel _bannerModel;
-
   List _bannerImageExample = ["https://book-98nice.oss-cn-hangzhou.aliyuncs.com/XDYQ00/3AC256EE6C59096047A25AD75FBB1512/poster.jpg",];
-
   List _bannerImageLoad = [];
   List<bannerData> _bannerData = [];
 
+  bool _isLoadingHot = true;
+  HotModel _hotModel;
+  HotData _hotData;
+  List<Shortcut> _shortcut = [];
+  List<String> _hotImage = [];
+  List<String> _hotTitle = [];
+  List<String> _hotSubTitle = [];
+
+  bool _isLoadingRecommend = true;
+  RecommendModel _recommendModel;
+  List<RecommendData> _recommendData = [];
+  List<String> _recommendImage = [];
+  List<String> _recommendTitle = [];
+
+  bool _isLoadingNew = true;
+  NewModel _newModel;
+  List<NewData> _newData = [];
+  List<String> _newName = [];
+  List<String> _newImage = [];
+  List<String> _newCat = [];
+  List<String> _newDesc = [];
+  List<String> _newStatus = [];
+  List<int> _newClicks =[];
+
+  bool _isLoadingGuess = true;
+  GuessModel _guessModel;
+  List<guessData> _guessData = [];
+  List<String> _guessImage = [];
+  List<String> _guessTitle = [];
+
+  bool _isLoadingConnect = true;
+  App _connectModel;
+  String _connectTime;
+  String _connectQQ;
+  String _connectName;
+  String _connectImage;
+
   TabController _controller;
+  String channel = '1';
   List _tabs = ['男生', '女生', '精选'];
 
   double appBarAlpha = 0;
@@ -51,9 +91,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-
     _controller = TabController(length: 3, vsync: this);
     loadBannerData();
+    loadHotData();
+    loadGuessData();
+    loadNewData();
+    loadRecommendData();
     super.initState();
   }
 
@@ -74,9 +117,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _controller.dispose();
     super.dispose();
   }
-///加载轮播图数据
+///加载 轮播图 数据
   loadBannerData(){
-    HomeDao.fetchBanner().then((value){
+    _bannerImageLoad.clear();
+    HomeDao.fetchBanner(channel).then((value){
       setState(() {
         _bannerModel = value;
         _bannerData = _bannerModel.data;
@@ -89,20 +133,85 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
-  Future<HomePageBannerModel> fetchBannerData() async{
-    final response = await http.get('http://appapi.98nice.cn/api/topic/banner?channel=2',
-        headers: {'BSAuthorization':'C2B92CBAA2B92328A330DC3D50B73CEE',
-          'READING':'API'});
-    if(response.statusCode == 200){
-      //解决中文乱码
-      Utf8Decoder utf8decoder = Utf8Decoder();
-      final json = jsonDecode(utf8decoder.convert(response.bodyBytes));
-      return HomePageBannerModel.fromJson(json);
-    }
-    else{
-      throw Exception('加载banner接口失败');
-    }
+  ///加载 热门专区 联系我们 数据
+  loadHotData(){
+    _hotImage.clear();
+    _hotTitle.clear();
+    _hotSubTitle.clear();
+    HomeDao.fetchHot(channel).then((value){
+      _hotModel = value;
+      _hotData = value.data;
+      _shortcut = _hotData.shortcut;
+
+      _connectModel = _hotData.app;
+      _connectTime = _connectModel.time;
+      _connectQQ = _connectModel.qq;
+      _connectName = _connectModel.name;
+      _connectImage = _connectModel.image;
+
+      for(var i = 0 ;i < _shortcut.length; i++){
+        _hotImage.add(_shortcut[i].image);
+        _hotTitle.add(_shortcut[i].name);
+        _hotSubTitle.add(_shortcut[i].hint);
+      }
+      _isLoadingHot = false;
+    });
   }
+
+  ///加载 主编推荐 数据
+  loadRecommendData(){
+    _recommendImage.clear();
+    _recommendTitle.clear();
+    HomeDao.fetchRecommend(channel).then((value){
+        _recommendModel = value;
+        _recommendData = _recommendModel.data;
+        for(var i = 0; i < _recommendData.length; i++){
+          _recommendImage.add(_recommendData[i].image);
+          _recommendTitle.add(_recommendData[i].name);
+        }
+        _isLoadingRecommend = false;
+    });
+  }
+  ///加载新书推荐
+  loadNewData(){
+    _newName.clear();
+    _newImage.clear();
+    _newCat.clear();
+    _newDesc.clear();
+    _newStatus.clear();
+    _newClicks.clear();
+    HomeDao.fetchNew(channel).then((value){
+      _newModel = value;
+      _newData = value.data;
+      for(var i = 0; i < _newData.length; i++){
+        _newName.add(_newData[i].name);
+        _newImage.add(_newData[i].image);
+        _newCat.add(_newData[i].cat);
+        _newDesc.add(_newData[i].desc);
+        _newStatus.add(_newData[i].status);
+        _newClicks.add(_newData[i].clicks);
+      }
+      _isLoadingNew = false;
+    });
+  }
+
+  ///加载 猜你喜欢 数据
+  loadGuessData(){
+    _guessImage.clear();
+    _guessTitle.clear();
+    HomeDao.fetchGuess(channel).then((value){
+      setState(() {
+        _guessModel = value;
+        _guessData = _guessModel.data;
+        for(var i = 0; i < _guessData.length; i++){
+          _guessImage.add(_guessData[i].image);
+          _guessTitle.add(_guessData[i].name);
+        }
+        _isLoadingGuess = false;
+      });
+    });
+  }
+
 
   @override
   @override
@@ -144,15 +253,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: FuncWidget(),
         ),
         _getIcon('images/热门@2x.png', '热门专区'),
-        HotWidget(),
+        _isLoadingHot == true ? SizedBox() : HotWidget(_hotImage,_hotTitle,_hotSubTitle),
         _getIcon('images/推荐@2x.png', '主编推荐'),
-        RecommendWidget(),
+        _isLoadingRecommend == true ? SizedBox() : RecommendWidget(_recommendImage,_recommendTitle),
         _getIcon('images/31_新品@2x.png', '新书抢先'),
-        NewBookWidget(),
+        _isLoadingNew == true ? SizedBox() : NewBookWidget(_newName, _newImage, _newCat, _newDesc, _newStatus, _newClicks),
         _getOtherIcon('images/喜欢@2x.png', '猜你喜欢', 'images/换一批红@2x.png', '换一批'),
-        GuessWidget(),
+        _isLoadingGuess == true ? SizedBox() : GuessWidget(_guessImage, _guessTitle),
         _getIcon('images/联系 (1).png', '联系我们'),
-        ConnectWidget()
+        _isLoadingHot == true ? SizedBox() : ConnectWidget(_connectTime, _connectQQ, _connectName, _connectImage)
       ],
     );
   }
@@ -223,7 +332,35 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     width: 7,
                     color: Colors.white
                 )),
-            tabs: _tabs.map((e) => Tab(text: e)).toList()
+            tabs: _tabs.map((e) => Tab(text: e)).toList(),
+          onTap: (val){
+                switch (val){
+                  case 0:{
+                    channel = '1';
+                    break;
+                  }
+                  case 1:{
+                    channel = '2';
+                    break;
+                  }
+                  case 2:{
+                    channel = '2';
+                  }
+                }
+
+                _isLoadingHot = true;
+                _isLoadingNew = true;
+                _isLoadingGuess = true;
+                _isLoadingRecommend = true;
+                _isLoadingBanner = true;
+                _isLoadingConnect = true;
+
+                loadBannerData();
+                loadHotData();
+                loadRecommendData();
+                loadNewData();
+                loadGuessData();
+          },
         ));
   }
 
@@ -307,25 +444,31 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: ScreenUtil().setWidth(600)),
-            child: Text(
-              rightTitle,
-              style: TextStyle(
-                  color: Colors.redAccent,
-                  fontSize: ScreenUtil().setSp(40)
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 7),
             child: InkWell(
-              onTap: () {
-                print('换一批');
+              onTap: (){
+                loadGuessData();
               },
-              child: Image(
-                width: ScreenUtil().setWidth(32),
-                height: ScreenUtil().setWidth(32),
-                image: AssetImage(rightIcon),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(600)),
+                    child: Text(
+                      rightTitle,
+                      style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: ScreenUtil().setSp(40)
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 7),
+                    child: Image(
+                      width: ScreenUtil().setWidth(32),
+                      height: ScreenUtil().setWidth(32),
+                      image: AssetImage(rightIcon),
+                    ),
+                  )
+                ],
               ),
             ),
           )
