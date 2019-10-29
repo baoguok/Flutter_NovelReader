@@ -1,8 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class GuessWidget extends StatelessWidget {
-  GuessWidget({Key key}) : super(key: key);
+class GuessWidget extends StatefulWidget {
+
+   final List<String> _imageList;
+   final List<String> _titleList;
+
+   GuessWidget(this._imageList, this._titleList);
+
+
+  @override
+  _GuessWidgetState createState() {
+    return _GuessWidgetState();
+  }
+}
+
+class _GuessWidgetState extends State<GuessWidget> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,23 +33,23 @@ class GuessWidget extends StatelessWidget {
     return Container(
       height: ScreenUtil().setHeight(1175),
       decoration: BoxDecoration(
-        color: Colors.white
+          color: Colors.white
       ),
       child: Container(
         child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
-                _subItem('bookImage/book12.jpg', '卖婚'),
-                _subItem('bookImage/book13.jpg', '求调教'),
-                _subItem('bookImage/book14.jpg', '亿万老公太危险')
+                _subItem(widget._imageList[0], widget._titleList[0]),
+                _subItem(widget._imageList[1], widget._titleList[1]),
+                _subItem(widget._imageList[2], widget._titleList[2])
               ],
             ),
             Row(
               children: <Widget>[
-                _subItem('bookImage/book15.jpg', '鬼也要爱'),
-                _subItem('bookImage/book16.jpg', '夜班鬼敲门'),
-                _subItem('bookImage/book17.jpg', '总裁大人甜掉牙')
+                _subItem(widget._imageList[3], widget._titleList[3]),
+                _subItem(widget._imageList[4], widget._titleList[4]),
+                _subItem(widget._imageList[5], widget._titleList[5])
               ],
             )
           ],
@@ -58,14 +81,14 @@ class GuessWidget extends StatelessWidget {
             child: Image(
               width: ScreenUtil().setWidth(310),
               height: ScreenUtil().setHeight(400),
-              image: AssetImage(image),
+              image: NetworkImage(image),
               fit: BoxFit.fill,
             ),
           ),
           Container(
               margin: EdgeInsets.only(top: ScreenUtil().setHeight(35)),
               child:Text(
-                  title,
+                title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
