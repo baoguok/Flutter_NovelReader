@@ -1,15 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ConnectWidget extends StatelessWidget {
-  ConnectWidget({Key key}) : super(key: key);
+class ConnectWidget extends StatefulWidget {
+  final String time;
+  final String qq;
+  final String name;
+  final String image;
+
+  ConnectWidget(this.time, this.qq, this.name, this.image);
+
+  @override
+  _ConnectWidgetState createState() {
+    return _ConnectWidgetState();
+  }
+}
+
+class _ConnectWidgetState extends State<ConnectWidget> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white
+          color: Colors.white
       ),
       child: Container(
         padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(100),
@@ -36,18 +58,18 @@ class ConnectWidget extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: ScreenUtil().setHeight(70)),
                   child: Image(
-                      image: AssetImage('images/联系.png'),
-                      width: ScreenUtil().setWidth(55),
-                      height: ScreenUtil().setWidth(55),
-                    ),
+                    image: AssetImage('images/联系.png'),
+                    width: ScreenUtil().setWidth(55),
+                    height: ScreenUtil().setWidth(55),
+                  ),
                 ),
                 Container(
                   width: ScreenUtil().setWidth(ScreenUtil().setWidth(700)),
                   margin: EdgeInsets.fromLTRB(7, ScreenUtil().setHeight(70), 0, 0),
                   child: Text('联系方式:',
-                  style: TextStyle(
-                    color: Colors.grey
-                  ),),
+                    style: TextStyle(
+                        color: Colors.grey
+                    ),),
                 )
               ],
             ),
@@ -56,14 +78,14 @@ class ConnectWidget extends StatelessWidget {
             width: ScreenUtil().setWidth(450),
             margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
             child: Text(
-              'WeChat: kanxiaoshuo101',
+              'WeChat: ${widget.qq}',
               style: TextStyle(
-                color: Colors.greenAccent
+                  color: Colors.greenAccent
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
+            margin: EdgeInsets.only(top: ScreenUtil().setHeight(80)),
             width: ScreenUtil().setWidth(450),
             child: Row(
               children: <Widget>[
@@ -88,24 +110,14 @@ class ConnectWidget extends StatelessWidget {
           ),
           Container(
             width: ScreenUtil().setWidth(450),
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+            margin: EdgeInsets.only(top: ScreenUtil().setHeight(30)),
             child: Text(
-              '周一～周五',
+              widget.time,
               style: TextStyle(
                   color: Colors.greenAccent
               ),
             ),
           ),
-          Container(
-            width: ScreenUtil().setWidth(450),
-            margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
-            child: Text(
-              '9:00~18:00',
-              style: TextStyle(
-                  color: Colors.greenAccent
-              ),
-            ),
-          )
         ],
       ),
     );
@@ -118,14 +130,14 @@ class ConnectWidget extends StatelessWidget {
         children: <Widget>[
           Container(
             child: Text(
-                '客服二维码',
-            style: TextStyle(
-              color: Colors.grey
-            )),
+                widget.name,
+                style: TextStyle(
+                    color: Colors.grey
+                )),
           ),
           Container(
             child: Image(
-              image: AssetImage('images/客服二维码.JPG'),
+              image: NetworkImage(widget.image),
             ),
           )
         ],
