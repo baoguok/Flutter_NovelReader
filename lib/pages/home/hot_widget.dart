@@ -3,8 +3,29 @@ import 'package:flutter_reader/pages/read_book/book_introduction.dart';
 import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HotWidget extends StatelessWidget {
-  HotWidget({Key key}) : super(key: key);
+class HotWidget extends StatefulWidget {
+  final List<String> _imageList;
+  final List<String> _titleList;
+  final List<String> _subTitleList;
+
+  HotWidget(this._imageList, this._titleList ,this._subTitleList);
+
+  @override
+  _HotWidgetState createState() {
+    return _HotWidgetState();
+  }
+}
+
+class _HotWidgetState extends State<HotWidget> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,16 +33,16 @@ class HotWidget extends StatelessWidget {
     return Container(
       height: ScreenUtil().setHeight(750),
       decoration: BoxDecoration(
-        color: Colors.white
+          color: Colors.white
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          _mainItem(context ,'bookImage/book21.jpg', '一世情 两生缘','一世的相遇也为了下一次的相遇'),
+          _mainItem(context ,widget._imageList[0], widget._titleList[0],widget._subTitleList[0]),
           Column(
             children: <Widget>[
-              _subItem(context, 'adImages/4.jpg', '军装下的温柔', '军装之下有着怎样动人又美好的故事'),
-              _subItem(context, 'adImages/5.jpg', '爱是痛情是恶', '爱恨交织错杂的故事')
+              _subItem(context, widget._imageList[1], widget._titleList[1], widget._subTitleList[1]),
+              _subItem(context, widget._imageList[2], widget._titleList[2], widget._subTitleList[2])
             ],
           )
         ],
@@ -63,16 +84,16 @@ class HotWidget extends StatelessWidget {
               ),
             ),
             BookHero(
-                  book: image,
-                  height: ScreenUtil().setHeight(500),
-                  callback: (){
-                    Navigator.of(context).push(MaterialPageRoute<void>(
-                        builder: (BuildContext context){
-                          return BookInfoPage(bookName: title,bookImage: image,isHorizontal: false,hasCollect: false,);
-                        }
-                    ));
-                  }
-              )
+                book: image,
+                height: ScreenUtil().setHeight(500),
+                callback: (){
+                  Navigator.of(context).push(MaterialPageRoute<void>(
+                      builder: (BuildContext context){
+                        return BookInfoPage(bookName: title,bookImage: image,isHorizontal: false,hasCollect: false,);
+                      }
+                  ));
+                }
+            )
           ],
         ),
       ),
@@ -83,7 +104,7 @@ class HotWidget extends StatelessWidget {
     return InkWell(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-          builder: (context) => BookInfoPage(bookName: mainTitle,bookImage: image,isHorizontal: true,hasCollect: false,)
+            builder: (context) => BookInfoPage(bookName: mainTitle,bookImage: image,isHorizontal: true,hasCollect: false,)
         ));
       },
       child: Container(
@@ -124,7 +145,7 @@ class HotWidget extends StatelessWidget {
               child: Image(
                 width: ScreenUtil().setWidth(500),
                 height: ScreenUtil().setHeight(200),
-                image: AssetImage(image),
+                image: NetworkImage(image),
               ),
             )
           ],
@@ -132,4 +153,5 @@ class HotWidget extends StatelessWidget {
       ),
     );
   }
+
 }
