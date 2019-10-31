@@ -1,23 +1,23 @@
 class GuessModel {
   bool _success;
-  List<guessData> _data;
+  List<GuessData> _data;
 
-  GuessModel({bool success, List<guessData> data}) {
+  GuessModel({bool success, List<GuessData> data}) {
     this._success = success;
     this._data = data;
   }
 
   bool get success => _success;
   set success(bool success) => _success = success;
-  List<guessData> get data => _data;
-  set data(List<guessData> data) => _data = data;
+  List<GuessData> get data => _data;
+  set data(List<GuessData> data) => _data = data;
 
   GuessModel.fromJson(Map<String, dynamic> json) {
     _success = json['success'];
     if (json['data'] != null) {
-      _data = new List<guessData>();
+      _data = new List<GuessData>();
       json['data'].forEach((v) {
-        _data.add(new guessData.fromJson(v));
+        _data.add(new GuessData.fromJson(v));
       });
     }
   }
@@ -32,15 +32,30 @@ class GuessModel {
   }
 }
 
-class guessData {
+class GuessData {
   String _id;
   String _name;
   String _image;
+  String _cat;
+  String _desc;
+  String _status;
+  int _clicks;
 
-  guessData({String id, String name, String image}) {
+  GuessData(
+      {String id,
+        String name,
+        String image,
+        String cat,
+        String desc,
+        String status,
+        int clicks}) {
     this._id = id;
     this._name = name;
     this._image = image;
+    this._cat = cat;
+    this._desc = desc;
+    this._status = status;
+    this._clicks = clicks;
   }
 
   String get id => _id;
@@ -49,11 +64,23 @@ class guessData {
   set name(String name) => _name = name;
   String get image => _image;
   set image(String image) => _image = image;
+  String get cat => _cat;
+  set cat(String cat) => _cat = cat;
+  String get desc => _desc;
+  set desc(String desc) => _desc = desc;
+  String get status => _status;
+  set status(String status) => _status = status;
+  int get clicks => _clicks;
+  set clicks(int clicks) => _clicks = clicks;
 
-  guessData.fromJson(Map<String, dynamic> json) {
+  GuessData.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _name = json['name'];
     _image = json['image'];
+    _cat = json['cat'];
+    _desc = json['desc'];
+    _status = json['status'];
+    _clicks = json['clicks'];
   }
 
   Map<String, dynamic> toJson() {
@@ -61,6 +88,10 @@ class guessData {
     data['id'] = this._id;
     data['name'] = this._name;
     data['image'] = this._image;
+    data['cat'] = this._cat;
+    data['desc'] = this._desc;
+    data['status'] = this._status;
+    data['clicks'] = this._clicks;
     return data;
   }
 }
