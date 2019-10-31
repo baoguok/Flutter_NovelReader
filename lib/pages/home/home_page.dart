@@ -45,16 +45,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool _isLoadingHot = true;
   HotModel _hotModel;
   HotData _hotData;
+  String _hotType = '';
   List<Shortcut> _shortcut = [];
   List<String> _hotImage = [];
   List<String> _hotTitle = [];
   List<String> _hotSubTitle = [];
+  List<String> _hotBookid = [];
 
   bool _isLoadingRecommend = true;
   RecommendModel _recommendModel;
   List<RecommendData> _recommendData = [];
   List<String> _recommendImage = [];
   List<String> _recommendTitle = [];
+  List<String> _recommendBookId = [];
 
   bool _isLoadingNew = true;
   NewModel _newModel;
@@ -65,12 +68,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<String> _newDesc = [];
   List<String> _newStatus = [];
   List<int> _newClicks =[];
+  List<String> _newBookId = [];
 
   bool _isLoadingGuess = true;
   GuessModel _guessModel;
-  List<guessData> _guessData = [];
+  List<GuessData> _guessData = [];
   List<String> _guessImage = [];
   List<String> _guessTitle = [];
+  List<String> _guessBookId = [];
 
   bool _isLoadingConnect = true;
   App _connectModel;
@@ -138,6 +143,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _hotImage.clear();
     _hotTitle.clear();
     _hotSubTitle.clear();
+    _hotBookid.clear();
+    _hotType = '';
     HomeDao.fetchHot(channel).then((value){
       _hotModel = value;
       _hotData = value.data;
@@ -149,10 +156,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       _connectName = _connectModel.name;
       _connectImage = _connectModel.image;
 
+      _hotType = _shortcut[0].listType;
+
       for(var i = 0 ;i < _shortcut.length; i++){
         _hotImage.add(_shortcut[i].image);
         _hotTitle.add(_shortcut[i].name);
         _hotSubTitle.add(_shortcut[i].hint);
+        _hotBookid.add(_shortcut[i].bookId);
       }
       _isLoadingHot = false;
     });
@@ -162,12 +172,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   loadRecommendData(){
     _recommendImage.clear();
     _recommendTitle.clear();
+    _recommendBookId.clear();
     HomeDao.fetchRecommend(channel).then((value){
         _recommendModel = value;
         _recommendData = _recommendModel.data;
         for(var i = 0; i < _recommendData.length; i++){
           _recommendImage.add(_recommendData[i].image);
           _recommendTitle.add(_recommendData[i].name);
+          _recommendBookId.add(_recommendData[i].id);
         }
         _isLoadingRecommend = false;
     });
@@ -180,6 +192,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _newDesc.clear();
     _newStatus.clear();
     _newClicks.clear();
+    _newBookId.clear();
     HomeDao.fetchNew(channel).then((value){
       _newModel = value;
       _newData = value.data;
@@ -190,6 +203,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _newDesc.add(_newData[i].desc);
         _newStatus.add(_newData[i].status);
         _newClicks.add(_newData[i].clicks);
+        _newBookId.add(_newData[i].id);
       }
       _isLoadingNew = false;
     });
@@ -199,6 +213,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   loadGuessData(){
     _guessImage.clear();
     _guessTitle.clear();
+    _guessBookId.clear();
     HomeDao.fetchGuess(channel).then((value){
       setState(() {
         _guessModel = value;
@@ -206,6 +221,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         for(var i = 0; i < _guessData.length; i++){
           _guessImage.add(_guessData[i].image);
           _guessTitle.add(_guessData[i].name);
+          _guessBookId.add(_guessData[i].id);
         }
         _isLoadingGuess = false;
       });
@@ -253,13 +269,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: FuncWidget(),
         ),
         _getIcon('images/热门@2x.png', '热门专区'),
-        _isLoadingHot == true ? SizedBox() : HotWidget(_hotImage,_hotTitle,_hotSubTitle),
+        _isLoadingHot == true ? SizedBox() : HotWidget(channel,_hotType,_hotBookid,_hotImage,_hotTitle,_hotSubTitle),
         _getIcon('images/推荐@2x.png', '主编推荐'),
-        _isLoadingRecommend == true ? SizedBox() : RecommendWidget(_recommendImage,_recommendTitle),
+        _isLoadingRecommend == true ? SizedBox() : RecommendWidget(channel,_recommendBookId,_recommendImage,_recommendTitle),
         _getIcon('images/31_新品@2x.png', '新书抢先'),
-        _isLoadingNew == true ? SizedBox() : NewBookWidget(_newName, _newImage, _newCat, _newDesc, _newStatus, _newClicks),
+        _isLoadingNew == true ? SizedBox() : NewBookWidget(channel,_newBookId, _newName, _newImage, _newCat, _newDesc, _newStatus, _newClicks),
         _getOtherIcon('images/喜欢@2x.png', '猜你喜欢', 'images/换一批红@2x.png', '换一批'),
-        _isLoadingGuess == true ? SizedBox() : GuessWidget(_guessImage, _guessTitle),
+        _isLoadingGuess == true ? SizedBox() : GuessWidget(channel,_guessBookId, _guessImage, _guessTitle),
         _getIcon('images/联系 (1).png', '联系我们'),
         _isLoadingHot == true ? SizedBox() : ConnectWidget(_connectTime, _connectQQ, _connectName, _connectImage)
       ],
