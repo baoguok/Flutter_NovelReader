@@ -109,40 +109,72 @@ class App {
 }
 
 class Shortcut {
+  String _bookId;
+  String _channel;
   String _hint;
   String _image;
+  String _listTitle;
+  String _listType;
   String _name;
-  String _path;
+  String _type;
 
-  Shortcut({String hint, String image, String name, String path}) {
+  Shortcut(
+      {String bookId,
+        String channel,
+        String hint,
+        String image,
+        String listTitle,
+        String listType,
+        String name,
+        String type}) {
+    this._bookId = bookId;
+    this._channel = channel;
     this._hint = hint;
     this._image = image;
+    this._listTitle = listTitle;
+    this._listType = listType;
     this._name = name;
-    this._path = path;
+    this._type = type;
   }
 
+  String get bookId => _bookId;
+  set bookId(String bookId) => _bookId = bookId;
+  String get channel => _channel;
+  set channel(String channel) => _channel = channel;
   String get hint => _hint;
   set hint(String hint) => _hint = hint;
   String get image => _image;
   set image(String image) => _image = image;
+  String get listTitle => _listTitle;
+  set listTitle(String listTitle) => _listTitle = listTitle;
+  String get listType => _listType;
+  set listType(String listType) => _listType = listType;
   String get name => _name;
   set name(String name) => _name = name;
-  String get path => _path;
-  set path(String path) => _path = path;
+  String get type => _type;
+  set type(String type) => _type = type;
 
   Shortcut.fromJson(Map<String, dynamic> json) {
+    _bookId = json['book_id'];
+    _channel = json['channel'];
     _hint = json['hint'];
     _image = json['image'];
+    _listTitle = json['list_title'];
+    _listType = json['list_type'];
     _name = json['name'];
-    _path = json['path'];
+    _type = json['type'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['book_id'] = this._bookId;
+    data['channel'] = this._channel;
     data['hint'] = this._hint;
     data['image'] = this._image;
+    data['list_title'] = this._listTitle;
+    data['list_type'] = this._listType;
     data['name'] = this._name;
-    data['path'] = this._path;
+    data['type'] = this._type;
     return data;
   }
 }
