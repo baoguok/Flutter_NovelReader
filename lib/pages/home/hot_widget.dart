@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/pages/home/hot_detail_page.dart';
 import 'package:flutter_reader/pages/read_book/book_introduction.dart';
 import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HotWidget extends StatefulWidget {
+  final String _channel;
+  final String _hotType;
+  final List<String> _bookId;
   final List<String> _imageList;
   final List<String> _titleList;
   final List<String> _subTitleList;
 
-  HotWidget(this._imageList, this._titleList ,this._subTitleList);
+  HotWidget(this._channel,this._hotType,this._bookId,this._imageList, this._titleList ,this._subTitleList);
 
   @override
   _HotWidgetState createState() {
@@ -41,8 +45,8 @@ class _HotWidgetState extends State<HotWidget> {
           _mainItem(context ,widget._imageList[0], widget._titleList[0],widget._subTitleList[0]),
           Column(
             children: <Widget>[
-              _subItem(context, widget._imageList[1], widget._titleList[1], widget._subTitleList[1]),
-              _subItem(context, widget._imageList[2], widget._titleList[2], widget._subTitleList[2])
+              _subItem(context, widget._bookId[1],widget._imageList[1], widget._titleList[1], widget._subTitleList[1]),
+              _subItem(context, widget._bookId[2],widget._imageList[2], widget._titleList[2], widget._subTitleList[2])
             ],
           )
         ],
@@ -54,7 +58,7 @@ class _HotWidgetState extends State<HotWidget> {
     return InkWell(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-            builder:(context) => BookInfoPage(bookName: title,bookImage: image,isHorizontal: false,hasCollect: false,)
+            builder:(context) => HotDetailPage(channel: widget._channel,type: widget._hotType,)
         ));
       },
       child: Container(
@@ -83,16 +87,22 @@ class _HotWidgetState extends State<HotWidget> {
                 ),
               ),
             ),
-            BookHero(
-                book: image,
-                height: ScreenUtil().setHeight(500),
-                callback: (){
-                  Navigator.of(context).push(MaterialPageRoute<void>(
-                      builder: (BuildContext context){
-                        return BookInfoPage(bookName: title,bookImage: image,isHorizontal: false,hasCollect: false,);
-                      }
-                  ));
-                }
+            Container(
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(30)),
+              decoration: BoxDecoration(
+                boxShadow: <BoxShadow>[
+                  new BoxShadow(
+                    color: Colors.black54,
+                    blurRadius: 5.0,
+                    spreadRadius: 1.0,
+                    offset: Offset(-2.0, 2.0),
+                  ),
+                ],
+              ),
+              child: Image(
+                width: ScreenUtil().setWidth(400),
+                image: NetworkImage(image),
+              ),
             )
           ],
         ),
@@ -100,11 +110,11 @@ class _HotWidgetState extends State<HotWidget> {
     );
   }
 
-  Widget _subItem(BuildContext context, String image,String mainTitle, String subTitle){
+  Widget _subItem(BuildContext context,String bookId, String image,String mainTitle, String subTitle){
     return InkWell(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-            builder: (context) => BookInfoPage(bookName: mainTitle,bookImage: image,isHorizontal: true,hasCollect: false,)
+            builder: (context) => BookInfoPage(channel: widget._channel,bookId:bookId,bookName: mainTitle,bookImage: image,isHorizontal: true,hasCollect: false,)
         ));
       },
       child: Container(
