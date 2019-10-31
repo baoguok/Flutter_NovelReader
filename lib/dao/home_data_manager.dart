@@ -6,6 +6,7 @@ import 'package:flutter_reader/model/home/HomeDataModel.dart';
 import 'package:flutter_reader/model/home/HotModel.dart';
 import 'package:flutter_reader/model/home/NewModel.dart';
 import 'package:flutter_reader/model/home/guess_like_model.dart';
+import 'package:flutter_reader/model/home/hot_detail_model.dart';
 import 'package:flutter_reader/model/home/recommend_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_reader/model/home/home_banner_model.dart';
@@ -29,7 +30,7 @@ class HomeDao{
   }
 
   static Future<GuessModel> fetchGuess(String channel) async{
-    final response = await http.get('http://appapi.98nice.cn/api/topic/gene?channel=${channel}&size=6&format=normal',
+    final response = await http.get('http://appapi.98nice.cn/api/topic/gene?channel=${channel}&size=6&format=full',
     headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if(response.statusCode == 200){
       Utf8Decoder utf8decoder = Utf8Decoder();
@@ -43,7 +44,7 @@ class HomeDao{
   }
 
   static Future<HotModel> fetchHot(String channel) async{
-    final response = await http.get('http://appapi.98nice.cn/api/config/index?channel=${channel}',
+    final response = await http.get('http://appapi.98nice.cn/api/config/index?channel=${channel}&format=full',
     headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if(response.statusCode == 200){
       Utf8Decoder utf8decoder = Utf8Decoder();
@@ -81,6 +82,20 @@ class HomeDao{
     else
     {
       throw Exception('加载recommend接口失败');
+    }
+  }
+
+  static Future<HotDetailModel> fetchHotDetail(String channel,String type) async{
+    final response = await http.get('http://appapi.98nice.cn/api/topic/base?channel=${channel}&type=${type}&format=full',
+        headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
+    if(response.statusCode == 200){
+      Utf8Decoder utf8decoder = Utf8Decoder();
+      final json = jsonDecode(utf8decoder.convert(response.bodyBytes));
+      return HotDetailModel.fromJson(json);
+    }
+    else
+    {
+      throw Exception('加载hotdetail接口失败');
     }
   }
 }
