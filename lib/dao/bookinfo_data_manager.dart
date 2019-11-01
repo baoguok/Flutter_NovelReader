@@ -8,10 +8,12 @@ import 'package:flutter_reader/model/home/guess_like_model.dart';
 import 'package:http/http.dart' as http;
 
 const BSAuthorization = 'C2B92CBAA2B92328A330DC3D50B73CEE';
+const BaseURL = 'http://appapi.98nice.cn/api';
+
 
 class BookDao{
   static Future<BookinfoModel> fetchBookinfo(id) async{
-    final response = await http.get('http://appapi.98nice.cn/api/book/profile?id=${id}',
+    final response = await http.get(BaseURL+'/book/profile?id=${id}',
     headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if( response.statusCode == 200){
       //解决中文乱码
@@ -26,7 +28,7 @@ class BookDao{
   }
 
   static Future<BookInfoCaModel> fetchBookInfoCa(id) async{
-    final response = await http.get('http://appapi.98nice.cn/api/chap/list?id=${id}&page=1&limit=6&sort=0&no=0',
+    final response = await http.get(BaseURL+'/chap/list?id=${id}&page=1&limit=6&sort=0&no=0',
         headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if( response.statusCode == 200){
       //解决中文乱码
@@ -41,7 +43,7 @@ class BookDao{
   }
 
   static Future<GuessModel> fetchGuess(String channel) async{
-    final response = await http.get('http://appapi.98nice.cn/api/topic/gene?channel=${channel}&size=4&format=full',
+    final response = await http.get(BaseURL+'/topic/gene?channel=${channel}&size=4&format=full',
         headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if(response.statusCode == 200){
       Utf8Decoder utf8decoder = Utf8Decoder();
@@ -55,7 +57,7 @@ class BookDao{
   }
   
   static Future<CataInfoModel> fetchCataInfo(String id) async{
-    final response = await http.get('http://appapi.98nice.cn/api/chap/info?id=${id}',
+    final response = await http.get(BaseURL+'/chap/info?id=${id}',
         headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if(response.statusCode == 200){
       Utf8Decoder utf8decoder = Utf8Decoder();
@@ -69,7 +71,7 @@ class BookDao{
   }
 
   static Future<CataListModel> fetchCataList(String id,int startNum) async{
-    final response = await http.get('http://appapi.98nice.cn/api/chap/list?id=${id}&page=1&limit=100&sort=0&no=${startNum}',
+    final response = await http.get(BaseURL+'/chap/list?id=${id}&page=1&limit=100&sort=0&no=${startNum}',
         headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if(response.statusCode == 200){
       Utf8Decoder utf8decoder = Utf8Decoder();
