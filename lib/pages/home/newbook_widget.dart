@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/pages/read_book/book_introduction.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NewBookWidget extends StatefulWidget {
+  final String _channel;
+
+  final List<String> _newBookId;
   final List<String> _newName;
   final List<String> _newImage;
   final List<String> _newCat;
@@ -10,7 +14,7 @@ class NewBookWidget extends StatefulWidget {
   final List<String> _newStatus;
   final List<int> _newClicks;
 
-  NewBookWidget(this._newName, this._newImage, this._newCat, this._newDesc, this._newStatus, this._newClicks);
+  NewBookWidget(this._channel,this._newBookId,this._newName, this._newImage, this._newCat, this._newDesc, this._newStatus, this._newClicks);
 
   @override
   _NewBookWidgetState createState() {
@@ -40,43 +44,52 @@ class _NewBookWidgetState extends State<NewBookWidget> {
         child: Container(
             child: Column(
               children: <Widget>[
-                _getMainItem(widget._newImage[0], widget._newName[0],'[${widget._newStatus[0]}]:', widget._newDesc[0],widget._newCat[0],widget._newClicks[0]),
-                _getMainItem(widget._newImage[1], widget._newName[1],'[${widget._newStatus[1]}]:', widget._newDesc[1],widget._newCat[1],widget._newClicks[1]),
-                _getMainItem(widget._newImage[2], widget._newName[2],'[${widget._newStatus[2]}]:', widget._newDesc[2],widget._newCat[2],widget._newClicks[2])
+                _getMainItem(widget._newBookId[0],widget._newImage[0], widget._newName[0],'[${widget._newStatus[0]}]:', widget._newDesc[0],widget._newCat[0],widget._newClicks[0]),
+                _getMainItem(widget._newBookId[1],widget._newImage[1], widget._newName[1],'[${widget._newStatus[1]}]:', widget._newDesc[1],widget._newCat[1],widget._newClicks[1]),
+                _getMainItem(widget._newBookId[2],widget._newImage[2], widget._newName[2],'[${widget._newStatus[2]}]:', widget._newDesc[2],widget._newCat[2],widget._newClicks[2])
               ],
             )
         )
     );
   }
-  _getMainItem(String imageName, String title, String state, String introduce, String type, int readTimes){
-    return Container(
-      child: Row(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              boxShadow: <BoxShadow>[
-                new BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 5.0,
-                  spreadRadius: 1.0,
-                  offset: Offset(-2.0, 2.0),
-                ),
-              ],
+  _getMainItem(String bookId, String imageName, String title, String state, String introduce, String type, int readTimes){
+    return InkWell(
+      onTap: (){
+        Navigator.of(context).push(MaterialPageRoute<void>(
+            builder: (BuildContext context){
+              return BookInfoPage(channel:widget._channel,bookId: bookId,bookName: title,bookImage: imageName,isHorizontal: false,hasCollect: false,);
+            }
+        ));
+      },
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: <BoxShadow>[
+                  new BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 5.0,
+                    spreadRadius: 1.0,
+                    offset: Offset(-2.0, 2.0),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.fromLTRB(
+                  ScreenUtil().setWidth(40),
+                  ScreenUtil().setHeight(50),
+                  ScreenUtil().setWidth(20),
+                  ScreenUtil().setHeight(0)),
+              child: Image(
+                width: ScreenUtil().setWidth(280),
+                height: ScreenUtil().setHeight(350),
+                image: NetworkImage(imageName),
+                fit: BoxFit.fill,
+              ),
             ),
-            margin: EdgeInsets.fromLTRB(
-                ScreenUtil().setWidth(40),
-                ScreenUtil().setHeight(50),
-                ScreenUtil().setWidth(20),
-                ScreenUtil().setHeight(0)),
-            child: Image(
-              width: ScreenUtil().setWidth(280),
-              height: ScreenUtil().setHeight(350),
-              image: NetworkImage(imageName),
-              fit: BoxFit.fill,
-            ),
-          ),
-          _rightItem(title, state, introduce, type, readTimes)
-        ],
+            _rightItem(title, state, introduce, type, readTimes)
+          ],
+        ),
       ),
     );
   }
