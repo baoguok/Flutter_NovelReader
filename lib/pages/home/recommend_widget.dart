@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/pages/read_book/book_introduction.dart';
+import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class RecommendWidget extends StatefulWidget {
 
+  final String _channel;
+  final List<String> _bookId;
   final List<String> _imageList;
   final List<String> _titleList;
 
-  RecommendWidget(this._imageList, this._titleList);
+  RecommendWidget(this._channel,this._bookId,this._imageList, this._titleList);
 
 
   @override
@@ -37,39 +41,30 @@ class _RecommendWidgetState extends State<RecommendWidget> {
       height: ScreenUtil().setHeight(600),
       child: Row(
         children: <Widget>[
-          _subItem(widget._imageList[0], widget._titleList[0]),
-          _subItem(widget._imageList[1], widget._titleList[1]),
-          _subItem(widget._imageList[2], widget._titleList[2]),
+          _subItem(widget._bookId[0],widget._imageList[0], widget._titleList[0]),
+          _subItem(widget._bookId[1],widget._imageList[1], widget._titleList[1]),
+          _subItem(widget._bookId[2],widget._imageList[2], widget._titleList[2]),
         ],
       ),
     );
   }
-  _subItem(String image, String title){
+  _subItem(String bookId, String image, String title){
     return Container(
       margin: EdgeInsets.only(left: ScreenUtil().setWidth(50)),
       width: ScreenUtil().setWidth(310),
       padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
       child: Column(
         children: <Widget>[
-          Container(
-            height: ScreenUtil().setHeight(400),
-            margin: EdgeInsets.only(top: 7),
-            decoration: BoxDecoration(
-              boxShadow: <BoxShadow>[
-                new BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 5.0,
-                  spreadRadius: 1.0,
-                  offset: Offset(-2.0, 2.0),
-                ),
-              ],
-            ),
-            child: Image(
-              width: ScreenUtil().setWidth(310),
+          BookHero(
+              book: image,
               height: ScreenUtil().setHeight(400),
-              image: NetworkImage(image),
-              fit: BoxFit.fill,
-            ),
+              callback: (){
+                Navigator.of(context).push(MaterialPageRoute<void>(
+                    builder: (BuildContext context){
+                      return BookInfoPage(channel: widget._channel,bookId: bookId,bookName: title,bookImage: image,isHorizontal: false,hasCollect: false,);
+                    }
+                ));
+              }
           ),
           Container(
               margin: EdgeInsets.only(top: ScreenUtil().setHeight(35)),
