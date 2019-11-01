@@ -359,7 +359,7 @@ class _BookContentPageState extends State<BookContentPage> {
               onTap: (){
                 ///跳转至目录页
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => BookCatelogPage()
+                  builder: (context) => BookCatalogPage('68E37B30E2D8219CBF1F0CCEC5384AEE')
                 ));
               },
               child: Row(
