@@ -32,18 +32,15 @@ class _FuncWidgetState extends State<FuncWidget> {
     // TODO: implement build
     return Container(
       margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
-      height: ScreenUtil().setHeight(200),
+      height: ScreenUtil().setHeight(230),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
               Radius.circular(6)
           )
       ),
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(20),
-            ScreenUtil().setHeight(30),
-            ScreenUtil().setWidth(20),
-            ScreenUtil().setHeight(10)),
+      child: Container(
+        padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
         child: _items(context),
       ),
     );
@@ -62,7 +59,7 @@ class _FuncWidgetState extends State<FuncWidget> {
 
     return Row(
       //水平均匀排列
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: items,
     );
   }
@@ -75,9 +72,9 @@ class _FuncWidgetState extends State<FuncWidget> {
       child: Column(
         children: <Widget>[
           Image(
+            fit: BoxFit.fitHeight,
             image: AssetImage(itemImage),
-            height: ScreenUtil().setWidth(100),
-            width: ScreenUtil().setWidth(100),
+            height: ScreenUtil().setHeight(100),
           ),
           Text(
             itemTitle,
