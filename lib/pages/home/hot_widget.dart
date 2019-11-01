@@ -100,7 +100,7 @@ class _HotWidgetState extends State<HotWidget> {
                 ],
               ),
               child: Image(
-                width: ScreenUtil().setWidth(400),
+                height: ScreenUtil().setHeight(500),
                 image: NetworkImage(image),
               ),
             )
@@ -151,8 +151,9 @@ class _HotWidgetState extends State<HotWidget> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(right: ScreenUtil().setWidth(60)),
+              margin: EdgeInsets.only(right: ScreenUtil().setWidth(60)),
               child: Image(
+                fit: BoxFit.fill,
                 width: ScreenUtil().setWidth(500),
                 height: ScreenUtil().setHeight(200),
                 image: NetworkImage(image),
