@@ -2,6 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/dao/bookinfo_data_manager.dart';
+import 'package:flutter_reader/model/book/book_info_catalog_model.dart';
+import 'package:flutter_reader/model/book/bookinfo_model.dart';
+import 'package:flutter_reader/model/home/guess_like_model.dart';
 import 'package:flutter_reader/pages/read_book/book_catelog.dart';
 import 'package:flutter_reader/pages/read_book/book_content.dart';
 import 'package:flutter_reader/widget/book_hero.dart';
@@ -9,12 +13,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class BookInfoPage extends StatefulWidget {
+  final String channel;
+  final String bookId;
 
   String bookName;
   String bookImage;
   bool isHorizontal;
   bool hasCollect;
-  BookInfoPage({this.bookName,this.bookImage,this.isHorizontal,this.hasCollect});
+  BookInfoPage({this.channel,this.bookId,this.bookName,this.bookImage,this.isHorizontal,this.hasCollect});
 
   @override
   _BookInfoPageState createState() {
@@ -23,14 +29,100 @@ class BookInfoPage extends StatefulWidget {
 }
 
 class _BookInfoPageState extends State<BookInfoPage> {
+  BookinfoModel _bookinfoModel;
+  BookinfoData _bookinfoData;
+  String _bookName;
+  String _bookDesc;
+  String _bookStatus;
+  String _bookReloadImage;
+  int _bookClicks;
+  int _bookWords;
+  List<String> _bookTags = ['标签'];
+  bool _isLoadData = true;
+  
+  bool _isLoadCata = true;
+  BookInfoCaModel _bookInfoCaModel;
+  List<BookInfoCaData> _bookInfoCaData;
+  List<String> _bookCata = [];
+
+  bool _isLoadGuess = true;
+  GuessModel _guessModel;
+  List<GuessData> _guessData = [];
+  List<String> _guessBookId = [];
+  List<String> _guessBookName = [];
+  List<String> _guessBookImage = [];
+  List<String> _guessBookCat = [];
+  List<String> _guessBookStatus = [];
+  List<String> _guessBookDesc = [];
+  List<int> _guessBookClicks = [];
   @override
   void initState() {
+    loadBookinfo();
+    loadBookCatalog();
+    loadGuess();
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  loadBookinfo(){
+    BookDao.fetchBookinfo(widget.bookId).then((value){
+      setState(() {
+        _bookinfoModel = value;
+        _bookinfoData = value.data;
+        _bookName = _bookinfoData.name;
+        _bookDesc = _bookinfoData.desc;
+        _bookStatus = _bookinfoData.status;
+        _bookClicks = _bookinfoData.clicks;
+        _bookWords = _bookinfoData.words;
+        _bookTags = _bookinfoData.tags;
+        _bookReloadImage = _bookinfoData.image;
+        _isLoadData = false;
+      });
+
+    });
+  }
+
+  loadBookCatalog(){
+    BookDao.fetchBookInfoCa(widget.bookId).then((value){
+      setState(() {
+        _bookInfoCaModel = value;
+        _bookInfoCaData = value.data;
+        for(var i = 0; i < _bookInfoCaData.length; i++){
+          _bookCata.add(_bookInfoCaData[i].name);
+        }
+        _isLoadCata = false;
+      });
+    });
+  }
+
+  loadGuess(){
+    _guessBookImage.clear();
+    _guessBookStatus.clear();
+    _guessBookClicks.clear();
+    _guessBookCat.clear();
+    _guessBookDesc.clear();
+    _guessBookId.clear();
+    _guessBookName.clear();
+    BookDao.fetchGuess(widget.channel).then((value){
+      setState(() {
+        _guessModel = value;
+        _guessData = value.data;
+        for(var i = 0; i < _guessData.length; i++){
+          _guessBookId.add(_guessData[i].id);
+          _guessBookName.add(_guessData[i].name);
+          _guessBookCat.add(_guessData[i].cat);
+          _guessBookDesc.add(_guessData[i].desc);
+          _guessBookClicks.add(_guessData[i].clicks);
+          _guessBookStatus.add(_guessData[i].status);
+          _guessBookImage.add(_guessData[i].image);
+          _isLoadGuess = false;
+        }
+      });
+    });
   }
 
   @override
@@ -73,8 +165,12 @@ class _BookInfoPageState extends State<BookInfoPage> {
             Container(
               margin: EdgeInsets.only(left: ScreenUtil().setWidth(80)),
               width: ScreenUtil().setWidth(400),
-child: BookHero(
+child: widget.isHorizontal == false ?
+BookHero(
   book: widget.bookImage,
+  height: ScreenUtil().setHeight(500),
+) : _isLoadData == true ? SizedBox() : BookHero(
+  book: _bookReloadImage,
   height: ScreenUtil().setHeight(500),
 ),
 //              child: Image(
@@ -89,7 +185,7 @@ child: BookHero(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    child: Text(widget.bookName,style: TextStyle(
+                    child: Text(_isLoadData == true ? '书名' : _bookName,style: TextStyle(
                         fontSize: ScreenUtil().setSp(55),
                         fontWeight: FontWeight.w600
                     ),),
@@ -99,14 +195,14 @@ child: BookHero(
                     child: Row(
                       children: <Widget>[
                         Container(
-                          child: Text('392822',style: TextStyle(
+                          child: Text(_isLoadData == true ? '字数' : _bookWords.toString(),style: TextStyle(
                               color: Colors.black26,
                               fontSize: ScreenUtil().setSp(48)
                           ),),
                         ),
                         Container(
                           margin: EdgeInsets.only(left: ScreenUtil().setWidth(5)),
-                          child: Text('已完结',style: TextStyle(
+                          child: Text(_isLoadData == true ? '状态' : _bookStatus,style: TextStyle(
                               color: Colors.black26,
                               fontSize: ScreenUtil().setSp(48)
                           ),),
@@ -126,7 +222,7 @@ child: BookHero(
                         ),
                         Container(
                           margin: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
-                          child: Text('7686',style: TextStyle(
+                          child: Text(_isLoadData == true ? '阅读量' : _bookClicks.toString(),style: TextStyle(
                               color: Colors.redAccent,
                               fontSize: ScreenUtil().setSp(50)
                           ),),
@@ -176,37 +272,7 @@ child: BookHero(
                   Container(
                     margin: EdgeInsets.only(top: ScreenUtil().setHeight(150)),
                     child: Row(
-                      children: <Widget>[
-                        Container(
-                          width: ScreenUtil().setWidth(130),
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(233, 152, 149, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(3)),
-                          ),
-                          child: Text('两性',style: TextStyle(color: Colors.white),
-                          textAlign: TextAlign.center,),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: ScreenUtil().setWidth(20)),
-                          width: ScreenUtil().setWidth(130),
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(157, 151, 240, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(3)),
-                          ),
-                          child: Text('美女',style: TextStyle(color: Colors.white),
-                            textAlign: TextAlign.center,),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: ScreenUtil().setWidth(20)),
-                          width: ScreenUtil().setWidth(130),
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(236, 179, 158, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(3)),
-                          ),
-                          child: Text('爽文',style: TextStyle(color: Colors.white),
-                            textAlign: TextAlign.center,),
-                        )
-                      ],
+                      children: _tagWidget(),
                     ),
                   )
                 ],
@@ -217,6 +283,27 @@ child: BookHero(
     );
   }
 
+  List<Widget> _tagWidget(){
+    List<Widget> list = new List();
+    var j = _bookTags.length <= 3 ? _bookTags.length : 3;
+    for(var i = 0; i < j; i++){
+      list.add(Container(
+        margin: i == 0 ? null : EdgeInsets.only(left: ScreenUtil().setWidth(40)),
+        width: ScreenUtil().setWidth(130),
+        decoration: BoxDecoration(
+          color: i == 1 ? Color.fromRGBO(233, 152, 149, 1) : i == 2 ? Color.fromRGBO(157, 152, 240, 1) : Color.fromRGBO(236, 177, 154, 1),
+          borderRadius: BorderRadius.all(Radius.circular(3)),
+                          ),
+        child: Text(_bookTags[i],
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,),
+                        ),);
+    }
+    return list;
+  }
+
 
   _briefWidget(){
     return Container(
@@ -224,7 +311,7 @@ child: BookHero(
       color: Colors.white,
       padding: EdgeInsets.only(top: ScreenUtil().setHeight(20), left: ScreenUtil().setWidth(80),right: ScreenUtil().setWidth(80)),
       child: Text(
-        '一个少女正朝那未被遮掩的窗口处走来，竟见这个少女眉若远山，眼若秋水，琼鼻樱唇，精致白皙的脸上淌着一丝隽秀清丽之色，身材亭亭玉立，玲珑有致，绝对是超一流的清纯美女。',
+        _isLoadData == true ? '描述' : _bookDesc,
         style: TextStyle(
           color: Colors.black38
         ),
@@ -333,42 +420,42 @@ child: BookHero(
           ),
           Container(
             margin: EdgeInsets.only(left: ScreenUtil().setWidth(20)),
-            child: Column(
+            child: _isLoadCata == true ? Center(child: Text('加载目录...'),) : Column(
               children: <Widget>[
                 Container(
                   height: ScreenUtil().setHeight(120),
                   child: ListTile(
-                    title: Text('第1章 XXXX'),
+                    title: Text(_bookCata[0]),
                   ),
                 ),
                 Container(
                   height: ScreenUtil().setHeight(120),
                   child: ListTile(
-                    title: Text('第2章  XXXXX'),
+                    title: Text(_bookCata[1]),
                   ),
                 ),
                 Container(
                   height: ScreenUtil().setHeight(120),
                   child: ListTile(
-                    title: Text('第3章  XXXXXX'),
+                    title: Text(_bookCata[2]),
                   ),
                 ),
                 Container(
                   height: ScreenUtil().setHeight(120),
                   child: ListTile(
-                    title: Text('第4章  XXXXX'),
+                    title: Text(_bookCata[3]),
                   ),
                 ),
                 Container(
                   height: ScreenUtil().setHeight(120),
                   child: ListTile(
-                    title: Text('第5章  XXXXX'),
+                    title: Text(_bookCata[4]),
                   ),
                 ),
                 Container(
                   height: ScreenUtil().setHeight(120),
                   child: ListTile(
-                    title: Text('第6章  XXXXX'),
+                    title: Text(_bookCata[5]),
                   ),
                 ),
               ],
@@ -384,7 +471,7 @@ child: BookHero(
                 child: InkWell(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => BookCatelogPage()
+                      builder: (context) => BookCatalogPage(widget.bookId)
                     ));
                   },
                   child: Row(
@@ -443,39 +530,44 @@ child: BookHero(
                     ),
                     textAlign: TextAlign.center,),
                 ),
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(right: ScreenUtil().setWidth(30)),
-                        child: Text('换一批',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: ScreenUtil().setSp(45)
-                        ),),
-                      ),
-                      Container(
-                        child: Image(
-                          width: ScreenUtil().setWidth(50),
-                          color: Colors.black54,
-                          image: AssetImage('images/刷新.png'),
-                        ),
+                InkWell(
+                  onTap: (){
+                    loadGuess();
+                  },
+                  child: Container(
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(right: ScreenUtil().setWidth(30)),
+                            child: Text('换一批',
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: ScreenUtil().setSp(45)
+                              ),),
+                          ),
+                          Container(
+                            child: Image(
+                              width: ScreenUtil().setWidth(50),
+                              color: Colors.black54,
+                              image: AssetImage('images/刷新.png'),
+                            ),
+                          )
+                        ],
                       )
-                    ],
-                  )
+                  ),
                 )
               ],
             ),
           ),
-          Container(
-            child: Column(
-              children: <Widget>[
-                _getMainItem('bookImage/book7.jpg', '情花开','[连载中]:', '郎骑竹马来，绕床弄青梅故事里面没有青梅，只有失散七年的竹马与竹马。再次相遇，可就不能让缘分就这么悄无声息的溜走，一定要','都市娱乐',4785),
-                _getMainItem('bookImage/book8.jpg', '爱的彼方','[已完结]:', '你承诺要给我一个没有狂风暴雨的世界但我更希望站到你身和你一同担负起这个国家穿越时空','都市娱乐',7854),
-                _getMainItem('bookImage/book9.jpg', '无尽沉沦','[已完结]:', '地球的表面出现了九个巨坑，有人从其中挖出了一口石棺，里面躺着九具衣冠整洁的干尸。一棺九尸，开启了人类最黑暗的末日纪元。红颜薄命，英雄气短。','都市娱乐',5789),
-                _getMainItem('bookImage/book10.jpg', '难忘情缘','[已完结]:', '地球的表面出现了九个巨坑，有人从其中挖出了一口石棺，里面躺着九具衣冠整洁的干尸。一棺九尸，开启了人类最黑暗的末日纪元。红颜薄命，英雄气短。','都市娱乐',5789)
-              ],
-            )
+          _isLoadGuess == true ? SizedBox() : Container(
+              child: Column(
+                children: <Widget>[
+                  _getMainItem(_guessBookImage[0], _guessBookName[0],'[${_guessBookStatus[0]}]:', _guessBookDesc[0],_guessBookCat[0],_guessBookClicks[0]),
+                  _getMainItem(_guessBookImage[1], _guessBookName[1],'[${_guessBookStatus[1]}]:', _guessBookDesc[1],_guessBookCat[1],_guessBookClicks[1]),
+                  _getMainItem(_guessBookImage[2], _guessBookName[2],'[${_guessBookStatus[2]}]:', _guessBookDesc[2],_guessBookCat[2],_guessBookClicks[2]),
+                  _getMainItem(_guessBookImage[3], _guessBookName[3],'[${_guessBookStatus[3]}]:', _guessBookDesc[3],_guessBookCat[3],_guessBookClicks[3])
+                ],
+              )
           )
         ],
       ),
@@ -505,7 +597,7 @@ child: BookHero(
             child: Image(
               width: ScreenUtil().setWidth(280),
               height: ScreenUtil().setHeight(350),
-              image: AssetImage(imageName),
+              image: NetworkImage(imageName),
               fit: BoxFit.fill,
             ),
           ),
