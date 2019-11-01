@@ -81,7 +81,6 @@ class _NewBookWidgetState extends State<NewBookWidget> {
                   ScreenUtil().setWidth(20),
                   ScreenUtil().setHeight(0)),
               child: Image(
-                width: ScreenUtil().setWidth(280),
                 height: ScreenUtil().setHeight(350),
                 image: NetworkImage(imageName),
                 fit: BoxFit.fill,
@@ -113,6 +112,7 @@ class _NewBookWidgetState extends State<NewBookWidget> {
               width: ScreenUtil().setWidth(700),
               height: ScreenUtil().setHeight(120),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     child: Align(
@@ -148,11 +148,12 @@ class _NewBookWidgetState extends State<NewBookWidget> {
 
   _bottom(String type, int readTimes){
     return Container(
+      width: ScreenUtil().setWidth(650),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(0, ScreenUtil().setHeight(50), ScreenUtil().setWidth(320), 0),
-              width: ScreenUtil().setWidth(150),
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
               decoration: BoxDecoration(
                   border: Border.all(
                       color: Colors.grey,
@@ -161,32 +162,40 @@ class _NewBookWidgetState extends State<NewBookWidget> {
                   ),
                   borderRadius:BorderRadius.all(Radius.circular(5.0))
               ),
-              child: Text(
-                type,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: ScreenUtil().setSp(30),
-                    color: Colors.grey
+              child: Center(
+                child: new Text(
+                  type,
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(38),
+                    color: Colors.black54
+                  ),
+                  textAlign: TextAlign.justify,
                 ),
-              ),
+              )
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, ScreenUtil().setHeight(60), 0, 0),
-              child: Image(
-                width: ScreenUtil().setWidth(50),
-                height: ScreenUtil().setHeight(30),
-                fit: BoxFit.fill,
-                image: AssetImage('images/浏览眼睛@2x.png'),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(30), ScreenUtil().setHeight(60), 0, 0),
-              child: Text(
-                readTimes.toString(),
-                style: TextStyle(
-                    fontSize: ScreenUtil().setSp(35),
-                    color: Colors.redAccent
-                ),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(60)),
+                    child: Image(
+                      width: ScreenUtil().setWidth(50),
+                      height: ScreenUtil().setHeight(30),
+                      fit: BoxFit.fill,
+                      image: AssetImage('images/浏览眼睛@2x.png'),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(30), ScreenUtil().setHeight(60), 0, 0),
+                    child: Text(
+                      readTimes.toString(),
+                      style: TextStyle(
+                          fontSize: ScreenUtil().setSp(35),
+                          color: Colors.redAccent
+                      ),
+                    ),
+                  )
+                ],
               ),
             )
           ],
