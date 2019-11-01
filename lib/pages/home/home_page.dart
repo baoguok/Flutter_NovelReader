@@ -25,6 +25,8 @@ import 'newbook_widget.dart';
 const APPBAR_SCROLL_OFFSET = 100;
 const SEARCH_BAR_DEFAULT_TEXT = '都市言情、武侠修真、';
 
+
+
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -35,6 +37,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+
 
   bool _isLoadingBanner = true;
   HomePageBannerModel _bannerModel;
@@ -232,36 +235,38 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   @override
   Widget build(BuildContext context) {
+    final double topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
         backgroundColor: Color(0xfff2f2f2),
         body: LoadingContainer(
-          isLoading: _loading,
-          child: Stack(
-            children: <Widget>[
-              MediaQuery.removePadding(
-                  removeTop: true,
-                  context: context,
-                  child: RefreshIndicator(
-                    onRefresh: _handleRefesh,
-                    child: NotificationListener(
-                        onNotification: (scrollNotification) {
-                          if (scrollNotification is ScrollUpdateNotification &&
-                              scrollNotification.depth == 0) {
-                            _onScroll(scrollNotification.metrics.pixels);
-                          }
-                        },
-                        child: _listView),
-                  )),
-              _appBar
-            ],
-          ),
-        ));
+                isLoading: _loading,
+                child: Stack(
+                  children: <Widget>[
+                    MediaQuery.removePadding(
+                        removeTop: true,
+                        context: context,
+                        child: RefreshIndicator(
+                          onRefresh: _handleRefesh,
+                          child: NotificationListener(
+                              onNotification: (scrollNotification) {
+                                if (scrollNotification is ScrollUpdateNotification &&
+                                    scrollNotification.depth == 0) {
+                                  _onScroll(scrollNotification.metrics.pixels);
+                                }
+                              },
+                              child: _listView(topPadding)),
+                        )),
+                    _appBar(topPadding)
+                  ],
+                ),
+              )
+    );
   }
 
-  Widget get _listView {
+  _listView(double topPad) {
     return ListView(
       children: <Widget>[
-        _topPadding,
+        _topPadding(topPad),
         _getCategory,
         _banner,
         Padding(
@@ -282,19 +287,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget get _topPadding{
-    return Container(
-      height: ScreenUtil().setHeight(230),
-      decoration: BoxDecoration(
-          color: Colors.redAccent
-      ),
-      child: Container(
 
-      ),
-    );
-  }
-
-  Widget get _appBar {
+  _appBar(double topPad) {
     return Column(
       children: <Widget>[
         Container(
@@ -307,8 +301,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               )
           ),
           child: Container(
-              padding: EdgeInsets.fromLTRB(0, 44, 0, 0),
-              height: 80,
+            padding: EdgeInsets.only(top: 5 + topPad),
               decoration: BoxDecoration(
                   color: Color.fromARGB((appBarAlpha * 255).toInt(), 255, 255, 255)
               ),
@@ -330,6 +323,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
         )
       ],
+    );
+  }
+
+   _topPadding(double topPad){
+    return Container(
+      height: 40 + topPad,
+      color: Colors.redAccent,
     );
   }
 
