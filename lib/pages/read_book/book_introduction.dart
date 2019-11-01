@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/dao/bookinfo_data_manager.dart';
+import 'package:flutter_reader/model/book/book_cata_info_model.dart';
 import 'package:flutter_reader/model/book/book_info_catalog_model.dart';
 import 'package:flutter_reader/model/book/bookinfo_model.dart';
 import 'package:flutter_reader/model/home/guess_like_model.dart';
@@ -39,6 +40,13 @@ class _BookInfoPageState extends State<BookInfoPage> {
   int _bookWords;
   List<String> _bookTags = ['标签'];
   bool _isLoadData = true;
+
+  bool _isLoadCataInfo = true;
+  CataInfoModel _cataInfoModel;
+  CataInfoData _cataInfoData;
+  Last _last;
+  String _bookCataName;
+
   
   bool _isLoadCata = true;
   BookInfoCaModel _bookInfoCaModel;
@@ -58,6 +66,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
   @override
   void initState() {
     loadBookinfo();
+    loadBookCataInfo();
     loadBookCatalog();
     loadGuess();
     super.initState();
@@ -83,6 +92,17 @@ class _BookInfoPageState extends State<BookInfoPage> {
         _isLoadData = false;
       });
 
+    });
+  }
+
+  loadBookCataInfo(){
+    BookDao.fetchCataInfo(widget.bookId).then((value){
+      setState(() {
+        _cataInfoData = value.data;
+        _last = _cataInfoData.last;
+        _bookCataName = _last.name;
+        _isLoadCataInfo = false;
+      });
     });
   }
 
@@ -409,7 +429,9 @@ BookHero(
                   textAlign: TextAlign.center,),
                 ),
                 Container(
-                  child: Text('更新至第247章 大结局下',
+                  child: Text(_isLoadCataInfo == true ? '更新至' : '更新至 ${_bookCataName}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.black54,
                     fontSize: ScreenUtil().setSp(45)
