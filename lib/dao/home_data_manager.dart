@@ -12,10 +12,11 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_reader/model/home/home_banner_model.dart';
 
 const BSAuthorization = 'C2B92CBAA2B92328A330DC3D50B73CEE';
+const BaseURL = 'http://appapi.98nice.cn/api';
 
 class HomeDao{
   static Future<HomePageBannerModel> fetchBanner(String channel) async{
-    final response = await http.get('http://appapi.98nice.cn/api/topic/base?channel=${channel}&size=0&type=1&format=full'
+    final response = await http.get(BaseURL+'/topic/base?channel=${channel}&size=0&type=1&format=full'
     ,headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if(response.statusCode == 200){
       //解决中文乱码
@@ -30,7 +31,7 @@ class HomeDao{
   }
 
   static Future<GuessModel> fetchGuess(String channel) async{
-    final response = await http.get('http://appapi.98nice.cn/api/topic/gene?channel=${channel}&size=6&format=full',
+    final response = await http.get(BaseURL+'/topic/gene?channel=${channel}&size=6&format=full',
     headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if(response.statusCode == 200){
       Utf8Decoder utf8decoder = Utf8Decoder();
@@ -44,7 +45,7 @@ class HomeDao{
   }
 
   static Future<HotModel> fetchHot(String channel) async{
-    final response = await http.get('http://appapi.98nice.cn/api/config/index?channel=${channel}&format=full',
+    final response = await http.get(BaseURL+'/config/index?channel=${channel}&format=full',
     headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if(response.statusCode == 200){
       Utf8Decoder utf8decoder = Utf8Decoder();
@@ -58,7 +59,7 @@ class HomeDao{
   }
   
   static Future<NewModel> fetchNew(String channel) async{
-    final response = await http.get('http://appapi.98nice.cn/api/topic/base?channel=${channel}&size=3&type=-1&format=full',
+    final response = await http.get(BaseURL+'/topic/base?channel=${channel}&size=3&type=-1&format=full',
     headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if(response.statusCode == 200){
       Utf8Decoder utf8decoder = Utf8Decoder();
@@ -72,7 +73,7 @@ class HomeDao{
   }
 
   static Future<RecommendModel> fetchRecommend(String channel) async{
-    final response = await http.get('http://appapi.98nice.cn/api/topic/base?channel=${channel}&size=3&type=2&format=full',
+    final response = await http.get(BaseURL+'/topic/base?channel=${channel}&size=3&type=2&format=full',
         headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if(response.statusCode == 200){
       Utf8Decoder utf8decoder = Utf8Decoder();
@@ -86,7 +87,7 @@ class HomeDao{
   }
 
   static Future<HotDetailModel> fetchHotDetail(String channel,String type) async{
-    final response = await http.get('http://appapi.98nice.cn/api/topic/base?channel=${channel}&type=${type}&format=full',
+    final response = await http.get(BaseURL+'/topic/base?channel=${channel}&type=${type}&format=full',
         headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if(response.statusCode == 200){
       Utf8Decoder utf8decoder = Utf8Decoder();
