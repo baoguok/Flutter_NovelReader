@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/dao/bookinfo_data_manager.dart';
 import 'package:flutter_reader/model/book/book_cata_list_model.dart';
+import 'package:flutter_reader/pages/read_book/book_content.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gzx_dropdown_menu/gzx_dropdown_menu.dart';
 
@@ -30,6 +31,7 @@ class _BookCatalogPageState extends State<BookCatalogPage> {
 
   CataListModel _cataListModel;
   List<CataListData> _cataListData;
+  List<String> _cataListId = [];
   List<String> _cataListName = [];
   List<String> _cataListPrice = [];
 
@@ -98,6 +100,7 @@ class _BookCatalogPageState extends State<BookCatalogPage> {
   loadCataList(){
     _cataListName.clear();
     _cataListPrice.clear();
+    _cataListId.clear();
     BookDao.fetchCataList(widget._bookId, startCata).then((value){
       setState(() {
         _cataListModel = value;
@@ -105,6 +108,7 @@ class _BookCatalogPageState extends State<BookCatalogPage> {
         for(var i =0;i<_cataListData.length;i++){
           _cataListName.add(_cataListData[i].name);
           _cataListPrice.add(_cataListData[i].logo);
+          _cataListId.add(_cataListData[i].id);
         }
         _isLoadCataList = false;
       });
@@ -139,6 +143,11 @@ class _BookCatalogPageState extends State<BookCatalogPage> {
                       itemCount: _cataListName.length,
                       itemBuilder: (context, index){
                         return ListTile(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => BookContentPage(_cataListId[index], widget._bookId)
+                            ));
+                          },
                           title: Text('${_cataListName[index]}'),
                           trailing: _cataListPrice[index] == 'free' ? null : Image(
                             width: ScreenUtil().setWidth(60),
