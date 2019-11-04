@@ -52,6 +52,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
   BookInfoCaModel _bookInfoCaModel;
   List<BookInfoCaData> _bookInfoCaData;
   List<String> _bookCata = [];
+  List<String> _bookCataId = [];
 
   bool _isLoadGuess = true;
   GuessModel _guessModel;
@@ -113,6 +114,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
         _bookInfoCaData = value.data;
         for(var i = 0; i < _bookInfoCaData.length; i++){
           _bookCata.add(_bookInfoCaData[i].name);
+          _bookCataId.add(_bookInfoCaData[i].id);
         }
         _isLoadCata = false;
       });
@@ -399,7 +401,7 @@ BookHero(
 
   _dictionaryWidget(){
     return Container(
-      height: ScreenUtil().setHeight(1040),
+      height: ScreenUtil().setHeight(1200),
       color: Colors.white,
       margin:EdgeInsets.only(top: ScreenUtil().setHeight(40)),
       padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
@@ -444,40 +446,82 @@ BookHero(
             margin: EdgeInsets.only(left: ScreenUtil().setWidth(20)),
             child: _isLoadCata == true ? Center(child: Text('加载目录...'),) : Column(
               children: <Widget>[
-                Container(
-                  height: ScreenUtil().setHeight(120),
-                  child: ListTile(
-                    title: Text(_bookCata[0]),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => BookContentPage(_bookCataId[0],widget.bookId)
+                    ));
+                  },
+                  child: Container(
+                    height: ScreenUtil().setHeight(140),
+                    child: ListTile(
+                      title: Text(_bookCata[0]),
+                    ),
                   ),
                 ),
-                Container(
-                  height: ScreenUtil().setHeight(120),
-                  child: ListTile(
-                    title: Text(_bookCata[1]),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => BookContentPage(_bookCataId[1],widget.bookId)
+                    ));
+                  },
+                  child: Container(
+                    height: ScreenUtil().setHeight(140),
+                    child: ListTile(
+                      title: Text(_bookCata[1]),
+                    ),
                   ),
                 ),
-                Container(
-                  height: ScreenUtil().setHeight(120),
-                  child: ListTile(
-                    title: Text(_bookCata[2]),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => BookContentPage(_bookCataId[2],widget.bookId)
+                    ));
+                  },
+                  child: Container(
+                    height: ScreenUtil().setHeight(140),
+                    child: ListTile(
+                      title: Text(_bookCata[2]),
+                    ),
                   ),
                 ),
-                Container(
-                  height: ScreenUtil().setHeight(120),
-                  child: ListTile(
-                    title: Text(_bookCata[3]),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => BookContentPage(_bookCataId[3],widget.bookId)
+                    ));
+                  },
+                  child: Container(
+                    height: ScreenUtil().setHeight(140),
+                    child: ListTile(
+                      title: Text(_bookCata[3]),
+                    ),
                   ),
                 ),
-                Container(
-                  height: ScreenUtil().setHeight(120),
-                  child: ListTile(
-                    title: Text(_bookCata[4]),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => BookContentPage(_bookCataId[4],widget.bookId)
+                    ));
+                  },
+                  child: Container(
+                    height: ScreenUtil().setHeight(140),
+                    child: ListTile(
+                      title: Text(_bookCata[4]),
+                    ),
                   ),
                 ),
-                Container(
-                  height: ScreenUtil().setHeight(120),
-                  child: ListTile(
-                    title: Text(_bookCata[5]),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => BookContentPage(_bookCataId[5],widget.bookId)
+                    ));
+                  },
+                  child: Container(
+                    height: ScreenUtil().setHeight(140),
+                    child: ListTile(
+                      title: Text(_bookCata[5]),
+                    ),
                   ),
                 ),
               ],
@@ -584,10 +628,10 @@ BookHero(
           _isLoadGuess == true ? SizedBox() : Container(
               child: Column(
                 children: <Widget>[
-                  _getMainItem(_guessBookImage[0], _guessBookName[0],'[${_guessBookStatus[0]}]:', _guessBookDesc[0],_guessBookCat[0],_guessBookClicks[0]),
-                  _getMainItem(_guessBookImage[1], _guessBookName[1],'[${_guessBookStatus[1]}]:', _guessBookDesc[1],_guessBookCat[1],_guessBookClicks[1]),
-                  _getMainItem(_guessBookImage[2], _guessBookName[2],'[${_guessBookStatus[2]}]:', _guessBookDesc[2],_guessBookCat[2],_guessBookClicks[2]),
-                  _getMainItem(_guessBookImage[3], _guessBookName[3],'[${_guessBookStatus[3]}]:', _guessBookDesc[3],_guessBookCat[3],_guessBookClicks[3])
+                  _getMainItem(_guessBookId[0],_guessBookImage[0], _guessBookName[0],'[${_guessBookStatus[0]}]:', _guessBookDesc[0],_guessBookCat[0],_guessBookClicks[0]),
+                  _getMainItem(_guessBookId[1],_guessBookImage[1], _guessBookName[1],'[${_guessBookStatus[1]}]:', _guessBookDesc[1],_guessBookCat[1],_guessBookClicks[1]),
+                  _getMainItem(_guessBookId[2],_guessBookImage[2], _guessBookName[2],'[${_guessBookStatus[2]}]:', _guessBookDesc[2],_guessBookCat[2],_guessBookClicks[2]),
+                  _getMainItem(_guessBookId[3],_guessBookImage[3], _guessBookName[3],'[${_guessBookStatus[3]}]:', _guessBookDesc[3],_guessBookCat[3],_guessBookClicks[3])
                 ],
               )
           )
@@ -596,35 +640,44 @@ BookHero(
     );
   }
 
-  _getMainItem(String imageName, String title, String state, String introduce, String type, int readTimes){
-    return Container(
-      child: Row(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              boxShadow: <BoxShadow>[
-                new BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 5.0,
-                  spreadRadius: 1.0,
-                  offset: Offset(-2.0, 2.0),
-                ),
-              ],
+  _getMainItem(String bookId, String imageName, String title, String state, String introduce, String type, int readTimes){
+    return InkWell(
+      onTap: (){
+      Navigator.of(context).push(MaterialPageRoute<void>(
+          builder: (BuildContext context){
+            return BookInfoPage(channel:widget.channel,bookId: bookId,bookName: title,bookImage: imageName,isHorizontal: false,hasCollect: false,);
+          }
+      ));
+    },
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: <BoxShadow>[
+                  new BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 5.0,
+                    spreadRadius: 1.0,
+                    offset: Offset(-2.0, 2.0),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.fromLTRB(
+                  ScreenUtil().setWidth(40),
+                  ScreenUtil().setHeight(50),
+                  ScreenUtil().setWidth(20),
+                  ScreenUtil().setHeight(0)),
+              child: Image(
+                width: ScreenUtil().setWidth(280),
+                height: ScreenUtil().setHeight(350),
+                image: NetworkImage(imageName),
+                fit: BoxFit.fill,
+              ),
             ),
-            margin: EdgeInsets.fromLTRB(
-                ScreenUtil().setWidth(40),
-                ScreenUtil().setHeight(50),
-                ScreenUtil().setWidth(20),
-                ScreenUtil().setHeight(0)),
-            child: Image(
-              width: ScreenUtil().setWidth(280),
-              height: ScreenUtil().setHeight(350),
-              image: NetworkImage(imageName),
-              fit: BoxFit.fill,
-            ),
-          ),
-          _rightItem(title, state, introduce, type, readTimes)
-        ],
+            _rightItem(title, state, introduce, type, readTimes)
+          ],
+        ),
       ),
     );
   }
@@ -782,7 +835,7 @@ BookHero(
                 print('开始阅读');
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context){
-                      return BookContentPage();
+                      return BookContentPage(_bookCataId[0],widget.bookId);
                     }
                 ));
               },
