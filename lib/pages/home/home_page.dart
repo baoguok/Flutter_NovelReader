@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _banner,
         Padding(
           padding: EdgeInsets.fromLTRB(7, 10, 7, 4),
-          child: FuncWidget(),
+          child: FuncWidget(channel: channel,),
         ),
         _getIcon('images/热门@2x.png', '热门专区'),
         _isLoadingHot == true ? SizedBox() : HotWidget(channel,_hotType,_hotBookid,_hotImage,_hotTitle,_hotSubTitle),
@@ -308,8 +308,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: SearchBar(
                 searchBarType: appBarAlpha > 0.2 ? SearchBarType.homeLight :
                 SearchBarType.home,
-                inputBoxClick: _jumpToSearch,
-                speakClick: _jumpToSearch,
+                inputBoxClick: (){
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => SearchPage(channel: channel,)
+                  ));
+                },
+                speakClick: (){
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => SearchPage(channel: channel,)
+                  ));
+                },
                 defaultText: SEARCH_BAR_DEFAULT_TEXT,
                 leftButtonClick: (){
                 },
@@ -494,10 +502,5 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
 
-  _jumpToSearch(){
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) => SearchPage()
-    ));
-  }
 }
 

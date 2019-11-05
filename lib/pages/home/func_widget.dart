@@ -6,7 +6,9 @@ import 'package:flutter_reader/pages/home/recharge/recharge_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FuncWidget extends StatefulWidget {
-  FuncWidget({Key key}) : super(key: key);
+  final String channel;
+
+  const FuncWidget({Key key, this.channel}) : super(key: key);
 
   @override
   _FuncWidgetState createState() {
@@ -51,7 +53,11 @@ class _FuncWidgetState extends State<FuncWidget> {
     List<Widget> items = [
       _item(context, '充值', 'images/充值2@2x.png', _jumpToRecharge),
       _item(context, '分类', 'images/类目 品类 分类 类别.2.png', _jumpToCategory),
-      _item(context, '排行榜', 'images/排行榜.png', _jumpToRank),
+      _item(context, '排行榜', 'images/排行榜.png', (){
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => RankPage(channel: widget.channel,)
+        ));
+      }),
       _item(context, '签到', 'images/签到@2x.png', _jumpToCheck)
     ];
 
@@ -105,11 +111,6 @@ class _FuncWidgetState extends State<FuncWidget> {
     ));
   }
 
-  _jumpToRank(){
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) => RankPage()
-    ));
-  }
 }
 
 
