@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/dao/book_category_data_manager.dart';
+import 'package:flutter_reader/model/category/category_config_model.dart';
+import 'package:flutter_reader/model/category/category_list_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gzx_dropdown_menu/gzx_dropdown_menu.dart';
 
@@ -17,16 +20,63 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
 
+  int _nowSelectedChannel = -1;
+  int _nowSelectedCate = -1;
+  int _nowSelectedStatus = -1;
+  int _nowSelectedType = -1;
+
+  bool _isLoadingConfig = true;
+  bool _isLoadingBook = true;
+
   List<String> _dropDownHeaderItemStrings = ['性别', '类型', '进度', '价格'];
   List<SortCondition> _sexSortConditions = [];
   List<SortCondition> _categorySortConditions = [];
+  List<SortCondition> _categorySortConditions2 = [];
   List<SortCondition> _stateSortConditions = [];
   List<SortCondition> _priceSortConditions = [];
 
   SortCondition _selectSexSortCondition;
   SortCondition _selectCategorySortCondition;
+  SortCondition _selectCategorySortCondition2;
   SortCondition _selectStateSortCondition;
   SortCondition _selectPriceSortCondition;
+
+  CateConfigModel _cateConfigModel;
+  CateConfigData _cateConfigData;
+  CateConfigCate _cateConfigCate;
+  List<CateConfigChannel1> _cateConfigChannel1;
+  List<CateConfigChannel2> _cateConfigChannel2;
+  List<CateConfigChannels> _cateConfigChannels;
+  List<CateConfigStatus> _cateConfigStatus;
+  List<CateConfigTypes> _cateConfigTypes;
+
+  List<int> _category1k=[];
+  List<String> _category1v=[];
+  Map<String,int> _category1 = new Map();
+  List<int> _category2k=[];
+  List<String> _category2v=[];
+  Map<String,int> _category2 = new Map();
+  List<int> _channelsk=[];
+  List<String> _channelsv=[];
+  Map<String,int> _channels = new Map();
+  List<int> _statusk=[];
+  List<String> _statusv=[];
+  Map<String,int> _status = new Map();
+  List<int> _typek=[];
+  List<String> _typev=[];
+  Map<String,int> _types = new Map();
+
+
+  CateListModel _cateListModel;
+  List<CateListData> _cateListData;
+  List<String> _bookId = [];
+  List<String> _bookName = [];
+  List<String> _bookCat = [];
+  List<String> _bookImage = [];
+  List<String> _bookDesc = [];
+  List<String> _bookStatus = [];
+  List<int> _bookClicks = [];
+
 
   GZXDropdownMenuController _dropdownMenuController =
   GZXDropdownMenuController();
@@ -37,34 +87,136 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   void initState() {
     // TODO: implement initState
+    loadCateConfig();
+    loadCateList();
     super.initState();
+  }
+  
+  loadCateConfig(){
+    BookCategoryDao.fetchCateConfig().then((value){
+      _cateConfigModel = value;
+      _cateConfigData = value.data;
+      _cateConfigCate = _cateConfigData.category;
+      _cateConfigChannel1 = _cateConfigCate.lchannelOne;
+      _cateConfigChannel2 = _cateConfigCate.lchannelTwo;
+      _cateConfigChannels = _cateConfigData.channels;
+      _cateConfigStatus = _cateConfigData.status;
+      _cateConfigTypes = _cateConfigData.types;
+      setState(() {
+        for(var i = 0; i < _cateConfigChannel1.length; i++){
+          _category1k.add(_cateConfigChannel1[i].k);
+          _category1v.add(_cateConfigChannel1[i].v);
+          _category1[_cateConfigChannel1[i].v] = _cateConfigChannel1[i].k;
+        }
+        for(var i = 0; i < _cateConfigChannel2.length; i++){
+          _category2k.add(_cateConfigChannel2[i].k);
+          _category2v.add(_cateConfigChannel2[i].v);
+          _category2[_cateConfigChannel2[i].v] = _cateConfigChannel2[i].k;
+        }
+        for(var i = 0; i < _cateConfigChannels.length; i++){
+          _channelsk.add(_cateConfigChannels[i].k);
+          _channelsv.add(_cateConfigChannels[i].v);
+          _channels[_cateConfigChannels[i].v] = _cateConfigChannels[i].k;
+        }
+        for(var i = 0; i < _cateConfigStatus.length; i++){
+          _statusk.add(_cateConfigStatus[i].k);
+          _statusv.add(_cateConfigStatus[i].v);
+          _status[_cateConfigStatus[i].v] = _cateConfigStatus[i].k;
+        }
+        for(var i = 0; i < _cateConfigTypes.length; i++){
+          _typek.add(_cateConfigTypes[i].k);
+          _typev.add(_cateConfigTypes[i].v);
+          _types[_cateConfigTypes[i].v] = _cateConfigTypes[i].k;
+        }
 
-    _sexSortConditions.add(SortCondition(name: '全部', isSelected: true));
-    _sexSortConditions.add(SortCondition(name: '男生', isSelected: false));
-    _sexSortConditions.add(SortCondition(name: '女生', isSelected: false));
-    _selectSexSortCondition = _sexSortConditions[0];
+        for(int i = 0; i < _channelsv.length; i++){
+          if(i==0){
+            _sexSortConditions.add(SortCondition(name: _channelsv[i], isSelected: true));
+          }
+          else
+          {
+            _sexSortConditions.add(SortCondition(name: _channelsv[i], isSelected: false));
+          }
+        }
+        _selectSexSortCondition = _sexSortConditions[0];
 
-    _categorySortConditions.add(SortCondition(name: '全部', isSelected: true));
-    _categorySortConditions.add(SortCondition(name: '都市娱乐', isSelected: false));
-    _categorySortConditions.add(SortCondition(name: '玄幻魔法', isSelected: false));
-    _categorySortConditions.add(SortCondition(name: '恐怖悬疑', isSelected: false));
-    _categorySortConditions.add(SortCondition(name: '游戏竞技', isSelected: false));
-    _categorySortConditions.add(SortCondition(name: '武侠修真', isSelected: false));
-    _categorySortConditions.add(SortCondition(name: '科幻小说', isSelected: false));
-    _categorySortConditions.add(SortCondition(name: '军事历史', isSelected: false));
-    _selectCategorySortCondition = _categorySortConditions[0];
+        for(int i = 0; i < _statusv.length; i++){
+          if(i==0){
+            _stateSortConditions.add(SortCondition(name: _statusv[i], isSelected: true));
+          }
+          else
+          {
+            _stateSortConditions.add(SortCondition(name: _statusv[i], isSelected: false));
+          }
+        }
+        _selectStateSortCondition = _stateSortConditions[0];
 
-    _stateSortConditions.add(SortCondition(name: '全部', isSelected: true));
-    _stateSortConditions.add(SortCondition(name: '连载', isSelected: false));
-    _stateSortConditions.add(SortCondition(name: '完结', isSelected: false));
-    _selectStateSortCondition = _stateSortConditions[0];
+        for(int i = 0; i < _typev.length; i++){
+          if(i==0)
+          {
+            _priceSortConditions.add(SortCondition(name: _typev[i], isSelected: true));
+          }
+          else
+          {
+            _priceSortConditions.add(SortCondition(name: _typev[i], isSelected: false));
+          }
+        }
+        _selectPriceSortCondition = _priceSortConditions[0];
 
-    _priceSortConditions.add(SortCondition(name: '全部', isSelected: true));
-    _priceSortConditions.add(SortCondition(name: '精选', isSelected: false));
-    _priceSortConditions.add(SortCondition(name: '收费', isSelected: false));
-    _priceSortConditions.add(SortCondition(name: '免费', isSelected: false));
-    _selectPriceSortCondition = _priceSortConditions[0];
+        for(int i = 0; i < _category1v.length;i++){
+          if(i==0){
+            _categorySortConditions.add(SortCondition(name: _category1v[i], isSelected: true));
+          }
+          else
+          {
+            _categorySortConditions.add(SortCondition(name: _category1v[i], isSelected: false));
+          }
+        }
+        _selectCategorySortCondition = _categorySortConditions[0];
 
+        for(int i = 0; i < _category2v.length;i++){
+          if(i==0){
+            _categorySortConditions2.add(SortCondition(name: _category2v[i], isSelected: true));
+          }
+          else
+          {
+            _categorySortConditions2.add(SortCondition(name: _category2v[i], isSelected: false));
+          }
+        }
+        _selectCategorySortCondition2 = _categorySortConditions2[0];
+
+        _isLoadingConfig = false;
+      });
+    });
+  }
+
+  loadCateList(){
+    setState(() {
+      _isLoadingBook = true;
+    });
+    _bookId.clear();
+    _bookName.clear();
+    _bookDesc.clear();
+    _bookStatus.clear();
+    _bookCat.clear();
+    _bookImage.clear();
+    _bookClicks.clear();
+    BookCategoryDao.fetchCateList(_nowSelectedChannel, _nowSelectedCate, _nowSelectedStatus, _nowSelectedType).then((value){
+      setState(() {
+        _cateListModel = value;
+        _cateListData = value.data;
+        for(var i = 0; i < _cateListData.length; i++){
+          _bookId.add(_cateListData[i].id);
+          _bookName.add(_cateListData[i].name);
+          _bookImage.add(_cateListData[i].image);
+          _bookCat.add(_cateListData[i].cat);
+          _bookClicks.add(_cateListData[i].clicks);
+          _bookStatus.add(_cateListData[i].status);
+          _bookDesc.add(_cateListData[i].desc);
+        }
+        _isLoadingBook = false;
+      });
+    });
   }
 
   @override
@@ -77,7 +229,9 @@ class _CategoryPageState extends State<CategoryPage> {
             backgroundColor: Colors.redAccent,
           ),
       backgroundColor: Colors.white,
-      body: Stack(
+      body: _isLoadingConfig == true ? Center(
+        child: Text('正在加载分类配置'),
+      ) : Stack(
         key: _stackKey,
         children: <Widget>[
           Column(
@@ -100,45 +254,18 @@ class _CategoryPageState extends State<CategoryPage> {
                 onItemTap: (index) {
 
                 },
-//                // 头部的高度
-//                height: 40,
-//                // 头部背景颜色
-//                color: Colors.red,
-//                // 头部边框宽度
-//                borderWidth: 1,
-//                // 头部边框颜色
-//                borderColor: Color(0xFFeeede6),
-//                // 分割线高度
-//                dividerHeight: 20,
-//                // 分割线颜色
-//                dividerColor: Color(0xFFeeede6),
-//                // 文字样式
-//                style: TextStyle(color: Color(0xFF666666), fontSize: 13),
-//                // 下拉时文字样式
-//                dropDownStyle: TextStyle(
-//                  fontSize: 13,
-//                  color: Theme.of(context).primaryColor,
-//                ),
-//                // 图标大小
-//                iconSize: 20,
-//                // 图标颜色
-//                iconColor: Color(0xFFafada7),
-//                // 下拉时图标颜色
-//                iconDropDownColor: Theme.of(context).primaryColor,
               ),
-              Container(
+              _isLoadingBook == true ? Center(
+                child: Text('加载中'),
+              ) : Container(
                 height: ScreenUtil().setHeight(2000),
-                child: ListView(
-                  children: <Widget>[
-                    _getMainItem('bookImage/book19.jpg', '花前月下', '[已完结]:', '林小峰是村里出了名的大傻子，可是忽然某一天，他重新恢复了神智…各位书友要是觉得《花前月下》还不错的话请不要忘记向您QQ群和微博里的朋友推荐哦！', '都市娱乐', 6128),
-                    _getMainItem('bookImage/book20.jpg', '花露欲滴', '[已完结]:', '在面试时，发现主考官竟是和自己有关系的美女监狱长，走了好运的他进入女子监狱，成了这间监狱里面的唯一一个男管教。 在女子监狱里，女犯人，女管教，女领导，一大波女人接踵而至，让他眼花缭乱应接不暇。', '都市娱乐', 5567),
-                    _getMainItem('bookImage/book21.jpg', '一世情，两生缘', '[连载中]:', '三年前。在同四王爷楚靖祺大婚前一个月，太傅千金沈茹忽然身染重疾，消香玉陨。四王爷自此性子大变，亦不近女色。三年后。', '都市娱乐', 5736),
-                    _getMainItem('bookImage/book22.jpg', '迷途的羔羊', '[已完结]:', '命运曾赋予我们每人一双翅膀,鼓励我们在起风的日子里逆风翱翔。无论你曾经是幸运的宠儿还是悲惨的弃儿,都要少一点无用的矜持,多几分无憾的坚持', '都市娱乐', 7789),
-                    _getMainItem('bookImage/book23.jpg', '幼花的芳香', '[连载中]:', '主角老王,李芳芳《芳香依旧》是作者一身肥肉创作的都市类小说,开了家小卖部的老王,怎么都不会想到自己能与年轻的厂花,产生暧昧', '都市娱乐', 3477),
-                    _getMainItem('bookImage/book24.jpg', '女性开光师', '[连载中]:', '我所生活的地方，是一个很贫穷很落后的偏远山区。我们村自古就有一个习俗，新娘洞房花烛夜不能见红，否则会给丈夫带来血光之灾。因此，新娘出嫁前必须先由别人帮破瓜，俗称开光。', '都市娱乐', 1432),
-                  ],
+                child: ListView.builder(
+                  itemCount: _cateListData.length,
+                  itemBuilder: (context,index){
+                    return _getMainItem(_bookId[index], _bookImage[index], _bookName[index], _bookStatus[index], _bookDesc[index], _bookCat[index], _bookClicks[index]);
+                  },
                 ),
-              )
+              ),
             ],
           ),
           // 下拉菜单
@@ -153,21 +280,38 @@ class _CategoryPageState extends State<CategoryPage> {
                   dropDownHeight: 40.0 * _sexSortConditions.length,
                   dropDownWidget:
                   _buildConditionListWidget(_sexSortConditions, (value) {
+                    var i = _channels[value.name];
+                    setState(() {
+                      _nowSelectedChannel = i;
+                    });
+
+                    loadCateList();
+
                     _selectSexSortCondition = value;
                     _dropDownHeaderItemStrings[0] =
-                    _selectSexSortCondition.name == '全部'
-                        ? '男生'
-                        : _selectSexSortCondition.name;
+                    _selectSexSortCondition.name;
                     _dropdownMenuController.hide();
                     setState(() {});
                   })),
               GZXDropdownMenuBuilder(
-                  dropDownHeight: 40.0 * _categorySortConditions.length,
+                  dropDownHeight: _nowSelectedChannel == 1 ? 40.0 * _categorySortConditions.length : 40.0 * _categorySortConditions2.length,
                   dropDownWidget:
-                  _buildConditionListWidget(_categorySortConditions, (value) {
-                    _selectCategorySortCondition = value;
+                  _buildConditionListWidget(_nowSelectedChannel == 1 ?_categorySortConditions : _categorySortConditions2, (value) {
+                    var i;
+                    if(_nowSelectedChannel == 1){
+                       i = _category1[value.name];
+                    }
+                    else{
+                      i = _category2[value.name];
+                    }
+                    print('cate:${i}');
+                    _nowSelectedCate = i;
+
+                    loadCateList();
+
+                    _nowSelectedChannel == 1 ? _selectCategorySortCondition = value : _selectCategorySortCondition2 = value;
                     _dropDownHeaderItemStrings[1] =
-                        _selectCategorySortCondition.name;
+                    _nowSelectedChannel == 1 ? _selectCategorySortCondition.name : _selectCategorySortCondition2.name;
                     _dropdownMenuController.hide();
                     setState(() {});
                   })),
@@ -175,6 +319,12 @@ class _CategoryPageState extends State<CategoryPage> {
                   dropDownHeight: 40.0 * _stateSortConditions.length,
                   dropDownWidget: _buildConditionListWidget(
                       _stateSortConditions, (value) {
+                    var i = _status[value.name];
+                    print('status:${i}');
+                    _nowSelectedStatus = i;
+
+                    loadCateList();
+
                     _selectStateSortCondition = value;
                     _dropDownHeaderItemStrings[2] =
                         _selectStateSortCondition.name;
@@ -185,6 +335,12 @@ class _CategoryPageState extends State<CategoryPage> {
                   dropDownHeight: 40.0 * _priceSortConditions.length,
                   dropDownWidget: _buildConditionListWidget(
                       _priceSortConditions, (value) {
+                        var i = _types[value.name];
+                        print('type:${i}');
+                        _nowSelectedType = i;
+
+                        loadCateList();
+
                     _selectPriceSortCondition = value;
                     _dropDownHeaderItemStrings[3] =
                         _selectPriceSortCondition.name;
@@ -254,7 +410,7 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 
-  _getMainItem(String imageName, String title, String state, String introduce, String type, int readTimes){
+  _getMainItem(String bookId,String imageName, String title, String state, String introduce, String type, int readTimes){
     return Container(
       child: Row(
         children: <Widget>[
@@ -277,7 +433,7 @@ class _CategoryPageState extends State<CategoryPage> {
             child: Image(
               width: ScreenUtil().setWidth(280),
               height: ScreenUtil().setHeight(350),
-              image: AssetImage(imageName),
+              image: NetworkImage(imageName),
               fit: BoxFit.fill,
             ),
           ),
@@ -311,9 +467,9 @@ class _CategoryPageState extends State<CategoryPage> {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        state,
+                        '[${state}]:',
                         style: TextStyle(
-                            color: state == '[连载中]:' ? Colors.lightBlue : Colors.orangeAccent
+                            color: state == '连载中' ? Colors.lightBlue : Colors.orangeAccent
                         ),
                       ),
                     ),
