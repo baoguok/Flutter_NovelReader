@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/dao/book_rank_data_manager.dart';
+import 'package:flutter_reader/model/rank/book_rank_detail_model.dart';
+import 'package:flutter_reader/model/rank/book_rank_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RankPage extends StatefulWidget {
-  RankPage({Key key}) : super(key: key);
+  final String channel;
+
+  const RankPage({Key key, this.channel}) : super(key: key);
 
   @override
   _RankPageState createState() {
@@ -13,19 +18,35 @@ class RankPage extends StatefulWidget {
 
 class _RankPageState extends State<RankPage> {
 
+  bool _isLoadRankDetail = true;
+
+  String _selectedChannel = '1';
+
   String _selected = '本周畅销';
+  int _selectedId = 1;
   List<String> _sub = <String>['本周畅销','全年畅销','好文热搜','精品短片','经典完结'];
+  Map _rankMap = new Map<String,int>();
+  RankConfigModel _rankConfigModel;
+  List<RankConfigData> _rankConfigData;
+  List<int> _rankTypeInt = [];
+  List<String> _rankTypeName = [];
 
+  RankDetailModel _rankDetailModel;
+  List<RankDetailData> _rankDetailData;
+  List<String> _bookId = [];
+  List<String> _bookName = [];
+  List<String> _bookCat = [];
+  List<String> _bookImage = [];
+  List<String> _bookDesc = [];
+  List<String> _bookStatus = [];
+  List<int> _bookClicks = [];
 
-  final Map<int, Widget> children = const {
-    0: Text('男生'),
-    1: Text('女生'),
-  };
 
   int currentSex;
 
   @override
   void initState() {
+    loadRankConfig();
     super.initState();
   }
 
@@ -34,10 +55,61 @@ class _RankPageState extends State<RankPage> {
     super.dispose();
   }
 
+  loadRankConfig(){
+    _rankTypeInt.clear();
+    _rankTypeName.clear();
+    _rankMap.clear();
+    BookRankDao.fetchRankConfig().then((value){
+      setState(() {
+        _rankConfigModel = value;
+        _rankConfigData = value.data;
+        for(var i = 0;i < _rankConfigData.length;i++){
+          _rankTypeInt.add(_rankConfigData[i].k);
+          _rankTypeName.add(_rankConfigData[i].v);
+          _rankMap[_rankConfigData[i].v] = _rankConfigData[i].k;
+        }
+        _sub = _rankTypeName;
+        _selected = _rankTypeName[0];
+        _selectedId = _rankMap[_selected];
+        loadRankDetail(_selectedChannel);
+      });
+    });
+  }
+
+  loadRankDetail(String channel){
+    _isLoadRankDetail = true;
+    setState(() {
+      _isLoadRankDetail = true;
+    });
+    _bookId.clear();
+    _bookName.clear();
+    _bookDesc.clear();
+    _bookStatus.clear();
+    _bookCat.clear();
+    _bookImage.clear();
+    _bookClicks.clear();
+    BookRankDao.fetchRankDetail(channel, _selectedId).then((value){
+      setState(() {
+        _rankDetailModel = value;
+        _rankDetailData = value.data;
+        for(var i = 0; i < _rankDetailData.length; i++){
+          _bookId.add(_rankDetailData[i].id);
+          _bookName.add(_rankDetailData[i].name);
+          _bookImage.add(_rankDetailData[i].image);
+          _bookCat.add(_rankDetailData[i].cat);
+          _bookClicks.add(_rankDetailData[i].clicks);
+          _bookStatus.add(_rankDetailData[i].status);
+          _bookDesc.add(_rankDetailData[i].desc);
+        }
+        _isLoadRankDetail = false;
+      });
+    });
+  }
+
   Iterable<Widget> get rankCategory sync*{
     for (String choiceSub in _sub){
       yield Padding(
-        padding: EdgeInsets.only(left: ScreenUtil().setWidth(20),top: ScreenUtil().setHeight(40)),
+        padding: EdgeInsets.only(left: ScreenUtil().setWidth(10),top: ScreenUtil().setHeight(40)),
         child: ChoiceChip(
           backgroundColor: Colors.black26,
           selectedColor: Colors.redAccent,
@@ -45,9 +117,10 @@ class _RankPageState extends State<RankPage> {
           labelStyle: TextStyle(),
           materialTapTargetSize: MaterialTapTargetSize.padded,
           onSelected: (bool value){
-            print(choiceSub);
             setState(() {
-              _selected = value ? choiceSub : 'Colors.red';
+              _selected = choiceSub;
+              _selectedId = _rankMap[_selected];
+              loadRankDetail(_selectedChannel);
             });
           },
           selected: _selected == choiceSub,
@@ -75,7 +148,7 @@ class _RankPageState extends State<RankPage> {
         child: Row(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(left: ScreenUtil().setWidth(40),right: ScreenUtil().setWidth(40)),
+              padding: EdgeInsets.only(left: ScreenUtil().setWidth(30),right: ScreenUtil().setWidth(30)),
               decoration: BoxDecoration(
                   border: Border(right: BorderSide(
                       width: 1,
@@ -106,8 +179,9 @@ class _RankPageState extends State<RankPage> {
         onValueChanged: (value){
           setState(() {
             currentSex = value;
+            currentSex == 0 ? _selectedChannel = '1' : _selectedChannel = '2';
+            loadRankDetail(_selectedChannel);
           });
-          print(currentSex);
         },
         groupValue: currentSex,
         children: {
@@ -125,25 +199,22 @@ class _RankPageState extends State<RankPage> {
   }
 
   _bookList(){
-    return Container(
-      width: ScreenUtil().setWidth(779),
-      height: ScreenUtil().setHeight(1950),
-      child: ListView(
-        children: <Widget>[
-          _getMainItem('bookImage/book19.jpg', '花前月下', '[已完结]:', '林小峰是村里出了名的大傻子，可是忽然某一天，他重新恢复了神智…各位书友要是觉得《花前月下》还不错的话请不要忘记向您QQ群和微博里的朋友推荐哦！', '都市娱乐', 6128),
-          _getMainItem('bookImage/book20.jpg', '花露欲滴', '[已完结]:', '在面试时，发现主考官竟是和自己有关系的美女监狱长，走了好运的他进入女子监狱，成了这间监狱里面的唯一一个男管教。 在女子监狱里，女犯人，女管教，女领导，一大波女人接踵而至，让他眼花缭乱应接不暇。', '都市娱乐', 5567),
-          _getMainItem('bookImage/book21.jpg', '一世情，两生缘', '[连载中]:', '三年前。在同四王爷楚靖祺大婚前一个月，太傅千金沈茹忽然身染重疾，消香玉陨。四王爷自此性子大变，亦不近女色。三年后。', '都市娱乐', 5736),
-          _getMainItem('bookImage/book22.jpg', '迷途的羔羊', '[已完结]:', '命运曾赋予我们每人一双翅膀,鼓励我们在起风的日子里逆风翱翔。无论你曾经是幸运的宠儿还是悲惨的弃儿,都要少一点无用的矜持,多几分无憾的坚持', '都市娱乐', 7789),
-          _getMainItem('bookImage/book23.jpg', '幼花的芳香', '[连载中]:', '主角老王,李芳芳《芳香依旧》是作者一身肥肉创作的都市类小说,开了家小卖部的老王,怎么都不会想到自己能与年轻的厂花,产生暧昧', '都市娱乐', 3477),
-          _getMainItem('bookImage/book24.jpg', '女性开光师', '[连载中]:', '我所生活的地方，是一个很贫穷很落后的偏远山区。我们村自古就有一个习俗，新娘洞房花烛夜不能见红，否则会给丈夫带来血光之灾。因此，新娘出嫁前必须先由别人帮破瓜，俗称开光。', '都市娱乐', 1432),
-        ],
-      ),
+    return _isLoadRankDetail == true ? Container(
+      width: ScreenUtil().setWidth(805),
+      child: Text('正在加载...'),
+    ) : Container(
+        width: ScreenUtil().setWidth(805),
+        height: ScreenUtil().setHeight(1950),
+        child: ListView.builder(
+            itemCount: _rankDetailData.length,
+            itemBuilder: (context,index){
+              return _getMainItem(_bookId[index], _bookImage[index], _bookName[index], _bookStatus[index], _bookDesc[index], _bookCat[index], _bookClicks[index]);
+            })
     );
   }
 
-  _getMainItem(String imageName, String title, String state, String introduce, String type, int readTimes){
+  _getMainItem(String bookId,String imageName, String title, String state, String introduce, String type, int readTimes){
     return Container(
-      width: ScreenUtil().setWidth(800),
       child: Row(
         children: <Widget>[
           Container(
@@ -160,12 +231,12 @@ class _RankPageState extends State<RankPage> {
             margin: EdgeInsets.fromLTRB(
                 ScreenUtil().setWidth(40),
                 ScreenUtil().setHeight(50),
-                ScreenUtil().setWidth(20),
+                ScreenUtil().setWidth(0),
                 ScreenUtil().setHeight(0)),
             child: Image(
-              width: ScreenUtil().setWidth(200),
-              height: ScreenUtil().setHeight(280),
-              image: AssetImage(imageName),
+              width: ScreenUtil().setWidth(230),
+              height: ScreenUtil().setHeight(300),
+              image: NetworkImage(imageName),
               fit: BoxFit.fill,
             ),
           ),
@@ -177,34 +248,37 @@ class _RankPageState extends State<RankPage> {
 
   _rightItem(String title, String state, String introduce, String type, int readTimes){
     return Container(
-      width: ScreenUtil().setWidth(500),
-      margin: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
+      width: ScreenUtil().setWidth(510),
+      margin: EdgeInsets.only(left: ScreenUtil().setWidth(20)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(top: ScreenUtil().setHeight(60),right: ScreenUtil().setWidth(100)),
-            width: ScreenUtil().setWidth(350),
+            width: ScreenUtil().setWidth(420),
             height: ScreenUtil().setHeight(100),
             child:  Text(
               title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   fontSize: ScreenUtil().setSp(45),
                   fontWeight: FontWeight.w500
               ),),
           ),
           Container(
-            margin: EdgeInsets.only(right: ScreenUtil().setWidth(40)),
-              width: ScreenUtil().setWidth(400),
+              width: ScreenUtil().setWidth(500),
               height: ScreenUtil().setHeight(120),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        state,
+                        '[${state}]:',
                         style: TextStyle(
-                            color: state == '[连载中]:' ? Colors.lightBlue : Colors.orangeAccent,
+                            color: state == '连载中' ? Colors.lightBlue : Colors.orangeAccent,
                           fontSize: ScreenUtil().setSp(35)
                         ),
                       ),
@@ -212,7 +286,7 @@ class _RankPageState extends State<RankPage> {
                   ),
                   Container(
                     margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(35)),
-                      width: ScreenUtil().setWidth(260),
+                      width: ScreenUtil().setWidth(350),
                       height: ScreenUtil().setHeight(100),
                       child: Text(
                         introduce,
@@ -235,12 +309,12 @@ class _RankPageState extends State<RankPage> {
 
   _bottom(String type, int readTimes){
     return Container(
-      margin: EdgeInsets.only(right: ScreenUtil().setWidth(40),left: ScreenUtil().setWidth(30),bottom: ScreenUtil().setHeight(10)),
+      margin: EdgeInsets.only(right: ScreenUtil().setWidth(40),bottom: ScreenUtil().setHeight(10)),
         child: Row(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(0, ScreenUtil().setHeight(20), ScreenUtil().setWidth(150), 0),
-              width: ScreenUtil().setWidth(120),
+              margin: EdgeInsets.fromLTRB(0, ScreenUtil().setHeight(20), ScreenUtil().setWidth(160), 0),
+              width: ScreenUtil().setWidth(130),
               decoration: BoxDecoration(
                   border: Border.all(
                       color: Colors.grey,
