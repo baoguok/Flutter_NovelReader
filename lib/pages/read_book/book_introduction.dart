@@ -207,9 +207,14 @@ BookHero(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    child: Text(_isLoadData == true ? '书名' : _bookName,style: TextStyle(
+                    width: ScreenUtil().setWidth(450),
+                    child: Text(_isLoadData == true ? '书名' : _bookName,
+                      maxLines:1,
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
                         fontSize: ScreenUtil().setSp(55),
-                        fontWeight: FontWeight.w600
+                        fontWeight: FontWeight.w600,
                     ),),
                   ),
                   Container(
