@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reader/dao/search_data_manager.dart';
 import 'package:flutter_reader/model/home/search_result_model.dart';
 import 'package:flutter_reader/pages/home/home_page.dart';
+import 'package:flutter_reader/pages/read_book/book_introduction.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
@@ -27,12 +28,13 @@ const kTypes = [
 
 const kSearchUrl = "http://appapi.98nice.cn/api/search/book?name=";
 class SearchPage extends StatefulWidget {
+  final String channel;
   final bool hideLeft;
   final String searchUrl;
   final String keyword;
   final String hint;
 
-  SearchPage({this.hideLeft, this.searchUrl=kSearchUrl, this.keyword, this.hint});
+  SearchPage({this.channel,this.hideLeft, this.searchUrl=kSearchUrl, this.keyword, this.hint});
 
   @override
   State<StatefulWidget> createState() {
@@ -169,7 +171,9 @@ class _SearchPageState extends State<SearchPage> {
     return GestureDetector(
       onTap: (){
         ///点击每一个item跳转
-
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) => BookInfoPage(channel: widget.channel,bookId: item.id,bookImage: item.image,bookName: item.name,isHorizontal: false,hasCollect: false,)
+        ));
       },
       child: Container(
         padding: EdgeInsets.all(10),
