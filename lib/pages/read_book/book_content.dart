@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/dao/book_collect_data_manager.dart';
 import 'package:flutter_reader/dao/book_read_data_manager.dart';
 import 'package:flutter_reader/model/book/book_content_model.dart';
 import 'package:flutter_reader/pages/read_book/book_catelog.dart';
@@ -19,7 +20,9 @@ class BookContentPage extends StatefulWidget {
   final String _chaId;
   final String _bookId;
 
-  BookContentPage(this._chaId,this._bookId);
+  bool _onBookShelf;
+
+  BookContentPage(this._chaId,this._bookId,this._onBookShelf);
 
   @override
   _BookContentPageState createState() {
@@ -61,7 +64,7 @@ class _BookContentPageState extends State<BookContentPage> {
   ///底部导航栏
   double _bottomHeight = 0;
 
-  bool _isAddBookshelf = false;
+
 
   @override
   void initState() {
@@ -95,6 +98,15 @@ class _BookContentPageState extends State<BookContentPage> {
       setState(() {
         _content = value.replaceAll('<br />', '\n');
         _isLoading = false;
+      });
+    });
+  }
+
+  addToBookShelf(String id){
+    BookCollectDao.getForCollect(id).then((value){
+      Fluttertoast.showToast(msg: '已经添加到书架');
+      setState(() {
+        widget._onBookShelf = true;
       });
     });
   }
@@ -213,7 +225,7 @@ class _BookContentPageState extends State<BookContentPage> {
                               child: InkWell(
                                 onTap: (){
                                   Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => BookCatalogPage(widget._bookId)
+                                    builder: (context) => BookCatalogPage(widget._bookId,widget._onBookShelf)
                                   ));
                                 },
                                 child: Row(
@@ -277,7 +289,7 @@ class _BookContentPageState extends State<BookContentPage> {
                 ],
               ),
               _settingWidget(),
-              _isAddBookshelf ? Container()
+              widget._onBookShelf ? Container()
                   : Positioned(
                 top: ScreenUtil().setHeight(400),
                 right: 0,
@@ -288,13 +300,7 @@ class _BookContentPageState extends State<BookContentPage> {
                     duration: Duration(milliseconds: _duration),
                     child: GestureDetector(
                       onTap: (){
-                        Fluttertoast.showToast(msg: "加入书架成功", fontSize: 14.0);
-                        ///加入书架操作
-
-
-                        setState(() {
-                          _isAddBookshelf = true;
-                        });
+                        addToBookShelf(widget._bookId);
                       },
                       child: Container(
                         width: _addBookshelfWidth,
@@ -399,9 +405,12 @@ class _BookContentPageState extends State<BookContentPage> {
                   ),
                 ),
                 Container(
+                  width: ScreenUtil().setWidth(650),
                   margin: EdgeInsets.only(top: ScreenUtil().setHeight(80)),
                   child: Text(
                     _chaName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(55),
                       color: Color.fromRGBO(255, 255, 255, 0.9),
@@ -417,7 +426,7 @@ class _BookContentPageState extends State<BookContentPage> {
               onTap: (){
                 ///跳转至目录页
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => BookCatalogPage(widget._bookId)
+                  builder: (context) => BookCatalogPage(widget._bookId,widget._onBookShelf)
                 ));
               },
               child: Row(
