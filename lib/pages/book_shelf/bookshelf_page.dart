@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/dao/book_collect_data_manager.dart';
+import 'package:flutter_reader/pages/book_shelf/book_history_page.dart';
 import 'package:flutter_reader/pages/book_shelf/book_shelf_detail_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BookshelfPage extends StatefulWidget {
+
   BookshelfPage({Key key}) : super(key: key);
 
   @override
@@ -19,6 +23,9 @@ class _BookshelfPageState extends State<BookshelfPage> with
     TickerProviderStateMixin{
   TabController _controller;
   List _tabs = ['我的书架','阅读足迹'];
+  
+  bool _isEditing = false;
+
   @override
   void initState() {
     _controller = TabController(length: 2, vsync: this);
@@ -29,6 +36,26 @@ class _BookshelfPageState extends State<BookshelfPage> with
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+
+  deleteBook () async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<String> toDelete = preferences.getStringList("toDelete");
+    if(toDelete.length == 0){
+      setState(() {
+        _isEditing = false;
+      });
+    }
+    else {
+      BookCollectDao.deleteBook(toDelete).then((value) {
+        toDelete.clear();
+        preferences.setStringList("toDelete", toDelete);
+        setState(() {
+          _isEditing = false;
+        });
+      });
+    }
   }
 
   @override
@@ -43,8 +70,18 @@ class _BookshelfPageState extends State<BookshelfPage> with
         actions: <Widget>[
           FlatButton(
             textColor: Colors.white,
-            onPressed: (){},
-            child: Text('管理'),
+            onPressed: (){
+              setState(() {
+                if (_isEditing == true){
+                  deleteBook();
+                }
+                else{
+                  _isEditing = true;
+                }
+              });
+            },
+            child: Text(_isEditing ? '删除' : '管理',
+            style: TextStyle(fontSize: ScreenUtil().setSp(45)),),
         shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
           )
         ],
@@ -74,8 +111,8 @@ class _BookshelfPageState extends State<BookshelfPage> with
             child: TabBarView(
               controller: _controller,
               children: <Widget>[
-                bookShelfDetailPage(alertMessage: '我的书架',),
-                bookShelfDetailPage(alertMessage: '阅读足迹',)
+                bookShelfDetailPage(_isEditing),
+                BookHistoryPage()
               ],
             ),
           )
