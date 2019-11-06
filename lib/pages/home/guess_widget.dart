@@ -42,19 +42,25 @@ class _GuessWidgetState extends State<GuessWidget> {
       child: Container(
         child: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                _subItem(widget._bookId[0],widget._imageList[0], widget._titleList[0]),
-                _subItem(widget._bookId[1],widget._imageList[1], widget._titleList[1]),
-                _subItem(widget._bookId[2],widget._imageList[2], widget._titleList[2])
-              ],
+            Container(
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
+              child: Row(
+                children: <Widget>[
+                  _subItem(widget._bookId[0],widget._imageList[0], widget._titleList[0]),
+                  _subItem(widget._bookId[1],widget._imageList[1], widget._titleList[1]),
+                  _subItem(widget._bookId[2],widget._imageList[2], widget._titleList[2])
+                ],
+              ),
             ),
-            Row(
-              children: <Widget>[
-                _subItem(widget._bookId[3],widget._imageList[3], widget._titleList[3]),
-                _subItem(widget._bookId[4],widget._imageList[4], widget._titleList[4]),
-                _subItem(widget._bookId[5],widget._imageList[5], widget._titleList[5])
-              ],
+            Container(
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
+              child: Row(
+                children: <Widget>[
+                  _subItem(widget._bookId[3],widget._imageList[3], widget._titleList[3]),
+                  _subItem(widget._bookId[4],widget._imageList[4], widget._titleList[4]),
+                  _subItem(widget._bookId[5],widget._imageList[5], widget._titleList[5])
+                ],
+              ),
             )
           ],
         ),

@@ -39,12 +39,15 @@ class _RecommendWidgetState extends State<RecommendWidget> {
           color: Colors.white
       ),
       height: ScreenUtil().setHeight(600),
-      child: Row(
-        children: <Widget>[
-          _subItem(widget._bookId[0],widget._imageList[0], widget._titleList[0]),
-          _subItem(widget._bookId[1],widget._imageList[1], widget._titleList[1]),
-          _subItem(widget._bookId[2],widget._imageList[2], widget._titleList[2]),
-        ],
+      child: Container(
+        margin: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
+        child: Row(
+          children: <Widget>[
+            _subItem(widget._bookId[0],widget._imageList[0], widget._titleList[0]),
+            _subItem(widget._bookId[1],widget._imageList[1], widget._titleList[1]),
+            _subItem(widget._bookId[2],widget._imageList[2], widget._titleList[2]),
+          ],
+        ),
       ),
     );
   }
