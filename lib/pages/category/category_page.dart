@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reader/dao/book_category_data_manager.dart';
 import 'package:flutter_reader/model/category/category_config_model.dart';
 import 'package:flutter_reader/model/category/category_list_model.dart';
+import 'package:flutter_reader/pages/read_book/book_introduction.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gzx_dropdown_menu/gzx_dropdown_menu.dart';
 
@@ -27,6 +28,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
   bool _isLoadingConfig = true;
   bool _isLoadingBook = true;
+  bool _noBook = false;
 
   List<String> _dropDownHeaderItemStrings = ['性别', '类型', '进度', '价格'];
   List<SortCondition> _sexSortConditions = [];
@@ -203,17 +205,25 @@ class _CategoryPageState extends State<CategoryPage> {
     _bookClicks.clear();
     BookCategoryDao.fetchCateList(_nowSelectedChannel, _nowSelectedCate, _nowSelectedStatus, _nowSelectedType).then((value){
       setState(() {
-        _cateListModel = value;
-        _cateListData = value.data;
-        for(var i = 0; i < _cateListData.length; i++){
-          _bookId.add(_cateListData[i].id);
-          _bookName.add(_cateListData[i].name);
-          _bookImage.add(_cateListData[i].image);
-          _bookCat.add(_cateListData[i].cat);
-          _bookClicks.add(_cateListData[i].clicks);
-          _bookStatus.add(_cateListData[i].status);
-          _bookDesc.add(_cateListData[i].desc);
+        if(value.data != null) {
+          print('11');
+          _cateListModel = value;
+          _cateListData = value.data;
+          for (var i = 0; i < _cateListData.length; i++) {
+            _bookId.add(_cateListData[i].id);
+            _bookName.add(_cateListData[i].name);
+            _bookImage.add(_cateListData[i].image);
+            _bookCat.add(_cateListData[i].cat);
+            _bookClicks.add(_cateListData[i].clicks);
+            _bookStatus.add(_cateListData[i].status);
+            _bookDesc.add(_cateListData[i].desc);
+          }
         }
+        else
+          {
+            print('22');
+            _noBook = true;
+          }
         _isLoadingBook = false;
       });
     });
@@ -255,8 +265,16 @@ class _CategoryPageState extends State<CategoryPage> {
 
                 },
               ),
-              _isLoadingBook == true ? Center(
-                child: Text('加载中'),
+              _isLoadingBook == true ? Container(
+                height: ScreenUtil().setHeight(1900),
+                child: Center(
+                  child: Text('加载中...'),
+                ),
+              ) : _noBook == true ? Container(
+                height: ScreenUtil().setHeight(1900),
+                child: Center(
+                  child: Text('没有符合筛选条件的书籍'),
+                ),
               ) : Container(
                 height: ScreenUtil().setHeight(2000),
                 child: ListView.builder(
@@ -304,7 +322,6 @@ class _CategoryPageState extends State<CategoryPage> {
                     else{
                       i = _category2[value.name];
                     }
-                    print('cate:${i}');
                     _nowSelectedCate = i;
 
                     loadCateList();
@@ -411,34 +428,41 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   _getMainItem(String bookId,String imageName, String title, String state, String introduce, String type, int readTimes){
-    return Container(
-      child: Row(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              boxShadow: <BoxShadow>[
-                new BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 5.0,
-                  spreadRadius: 1.0,
-                  offset: Offset(-2.0, 2.0),
-                ),
-              ],
+    return InkWell(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) => BookInfoPage(channel: _nowSelectedChannel == 1 ? '1' : '2',bookId: bookId,bookName: title,bookImage: imageName,isHorizontal: false,hasCollect: false,)
+        ));
+      },
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: <BoxShadow>[
+                  new BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 5.0,
+                    spreadRadius: 1.0,
+                    offset: Offset(-2.0, 2.0),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.fromLTRB(
+                  ScreenUtil().setWidth(40),
+                  ScreenUtil().setHeight(50),
+                  ScreenUtil().setWidth(20),
+                  ScreenUtil().setHeight(0)),
+              child: Image(
+                width: ScreenUtil().setWidth(280),
+                height: ScreenUtil().setHeight(350),
+                image: NetworkImage(imageName),
+                fit: BoxFit.fill,
+              ),
             ),
-            margin: EdgeInsets.fromLTRB(
-                ScreenUtil().setWidth(40),
-                ScreenUtil().setHeight(50),
-                ScreenUtil().setWidth(20),
-                ScreenUtil().setHeight(0)),
-            child: Image(
-              width: ScreenUtil().setWidth(280),
-              height: ScreenUtil().setHeight(350),
-              image: NetworkImage(imageName),
-              fit: BoxFit.fill,
-            ),
-          ),
-          _rightItem(title, state, introduce, type, readTimes)
-        ],
+            _rightItem(title, state, introduce, type, readTimes)
+          ],
+        ),
       ),
     );
   }
