@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BookHero extends StatelessWidget {
 
@@ -13,7 +14,6 @@ class BookHero extends StatelessWidget {
     // TODO: implement build
     return Container(
       height: height,
-      margin: EdgeInsets.only(top: 7),
       decoration: BoxDecoration(
         boxShadow: <BoxShadow>[
           new BoxShadow(
