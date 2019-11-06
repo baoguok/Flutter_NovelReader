@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/dao/book_collect_data_manager.dart';
 import 'package:flutter_reader/dao/bookinfo_data_manager.dart';
 import 'package:flutter_reader/model/book/book_cata_info_model.dart';
 import 'package:flutter_reader/model/book/book_info_catalog_model.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_reader/pages/read_book/book_catelog.dart';
 import 'package:flutter_reader/pages/read_book/book_content.dart';
 import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class BookInfoPage extends StatefulWidget {
@@ -30,6 +32,7 @@ class BookInfoPage extends StatefulWidget {
 }
 
 class _BookInfoPageState extends State<BookInfoPage> {
+
   BookinfoModel _bookinfoModel;
   BookinfoData _bookinfoData;
   String _bookName;
@@ -39,6 +42,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
   int _bookClicks;
   int _bookWords;
   List<String> _bookTags = ['标签'];
+  List<String> _bookScope = [];
   bool _isLoadData = true;
 
   bool _isLoadCataInfo = true;
@@ -80,6 +84,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
 
   loadBookinfo(){
     BookDao.fetchBookinfo(widget.bookId).then((value){
+      print(widget.bookId);
       setState(() {
         _bookinfoModel = value;
         _bookinfoData = value.data;
@@ -90,9 +95,13 @@ class _BookInfoPageState extends State<BookInfoPage> {
         _bookWords = _bookinfoData.words;
         _bookTags = _bookinfoData.tags;
         _bookReloadImage = _bookinfoData.image;
+        _bookScope = _bookinfoData.scope;
+        if(_bookScope.length != 0){
+          widget.hasCollect = true;
+        }
         _isLoadData = false;
       });
-
+      print(widget.hasCollect);
     });
   }
 
@@ -143,6 +152,15 @@ class _BookInfoPageState extends State<BookInfoPage> {
           _guessBookImage.add(_guessData[i].image);
           _isLoadGuess = false;
         }
+      });
+    });
+  }
+
+  addToBookShelf(String id){
+    BookCollectDao.getForCollect(id).then((value){
+      Fluttertoast.showToast(msg: '已经添加到书架');
+      setState(() {
+        widget.hasCollect = true;
       });
     });
   }
@@ -436,6 +454,7 @@ BookHero(
                   textAlign: TextAlign.center,),
                 ),
                 Container(
+                  width: ScreenUtil().setWidth(500),
                   child: Text(_isLoadCataInfo == true ? '更新至' : '更新至 ${_bookCataName}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -454,7 +473,7 @@ BookHero(
                 InkWell(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => BookContentPage(_bookCataId[0],widget.bookId)
+                      builder: (context) => BookContentPage(_bookCataId[0],widget.bookId,widget.hasCollect)
                     ));
                   },
                   child: Container(
@@ -467,7 +486,7 @@ BookHero(
                 InkWell(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => BookContentPage(_bookCataId[1],widget.bookId)
+                        builder: (context) => BookContentPage(_bookCataId[1],widget.bookId,widget.hasCollect)
                     ));
                   },
                   child: Container(
@@ -480,7 +499,7 @@ BookHero(
                 InkWell(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => BookContentPage(_bookCataId[2],widget.bookId)
+                        builder: (context) => BookContentPage(_bookCataId[2],widget.bookId,widget.hasCollect)
                     ));
                   },
                   child: Container(
@@ -493,7 +512,7 @@ BookHero(
                 InkWell(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => BookContentPage(_bookCataId[3],widget.bookId)
+                        builder: (context) => BookContentPage(_bookCataId[3],widget.bookId,widget.hasCollect)
                     ));
                   },
                   child: Container(
@@ -506,7 +525,7 @@ BookHero(
                 InkWell(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => BookContentPage(_bookCataId[4],widget.bookId)
+                        builder: (context) => BookContentPage(_bookCataId[4],widget.bookId,widget.hasCollect)
                     ));
                   },
                   child: Container(
@@ -519,7 +538,7 @@ BookHero(
                 InkWell(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => BookContentPage(_bookCataId[5],widget.bookId)
+                        builder: (context) => BookContentPage(_bookCataId[5],widget.bookId,widget.hasCollect)
                     ));
                   },
                   child: Container(
@@ -542,7 +561,7 @@ BookHero(
                 child: InkWell(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => BookCatalogPage(widget.bookId)
+                      builder: (context) => BookCatalogPage(widget.bookId,widget.hasCollect)
                     ));
                   },
                   child: Row(
@@ -809,7 +828,34 @@ BookHero(
         children: <Widget>[
           Expanded(
           flex: 1,
-            child: Container(
+            child: widget.hasCollect == false ? InkWell(
+              onTap: (){
+                addToBookShelf(widget.bookId);
+              },
+              child: Container(
+                color: Colors.white,
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
+                      child: Image(
+                        width: ScreenUtil().setWidth(100),
+                        color: Colors.redAccent,
+                        image: AssetImage('images/标签.png'),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
+                      child: Text('加入书架',style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: ScreenUtil().setSp(50),
+                          fontWeight: FontWeight.w500
+                      ),),
+                    )
+                  ],
+                ),
+              ),
+            ) : Container(
               color: Colors.white,
               child: Row(
                 children: <Widget>[
@@ -823,10 +869,10 @@ BookHero(
                   ),
                   Container(
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
-                    child: Text('加入书架',style: TextStyle(
-                      color: Colors.redAccent,
-                      fontSize: ScreenUtil().setSp(50),
-                      fontWeight: FontWeight.w500
+                    child: Text('已在书架',style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: ScreenUtil().setSp(50),
+                        fontWeight: FontWeight.w500
                     ),),
                   )
                 ],
@@ -840,7 +886,7 @@ BookHero(
                 print('开始阅读');
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context){
-                      return BookContentPage(_bookCataId[0],widget.bookId);
+                      return BookContentPage(_bookCataId[0],widget.bookId,widget.hasCollect);
                     }
                 ));
               },
