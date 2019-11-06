@@ -15,8 +15,9 @@ class CataSortCondition {
 class BookCatalogPage extends StatefulWidget {
 
   final String _bookId;
+  final bool _hasCollect;
 
-  BookCatalogPage(this._bookId);
+  BookCatalogPage(this._bookId,this._hasCollect);
 
   @override
   _BookCatalogPageState createState() {
@@ -145,7 +146,7 @@ class _BookCatalogPageState extends State<BookCatalogPage> {
                         return ListTile(
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => BookContentPage(_cataListId[index], widget._bookId)
+                              builder: (context) => BookContentPage(_cataListId[index], widget._bookId,widget._hasCollect)
                             ));
                           },
                           title: Text('${_cataListName[index]}'),
