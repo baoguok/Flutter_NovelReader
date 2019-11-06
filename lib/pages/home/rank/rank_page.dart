@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reader/dao/book_rank_data_manager.dart';
 import 'package:flutter_reader/model/rank/book_rank_detail_model.dart';
 import 'package:flutter_reader/model/rank/book_rank_model.dart';
+import 'package:flutter_reader/pages/read_book/book_introduction.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RankPage extends StatefulWidget {
@@ -214,34 +215,41 @@ class _RankPageState extends State<RankPage> {
   }
 
   _getMainItem(String bookId,String imageName, String title, String state, String introduce, String type, int readTimes){
-    return Container(
-      child: Row(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              boxShadow: <BoxShadow>[
-                new BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 5.0,
-                  spreadRadius: 1.0,
-                  offset: Offset(-2.0, 2.0),
-                ),
-              ],
+    return InkWell(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) => BookInfoPage(channel: widget.channel,bookId: bookId,bookName: title,bookImage:imageName ,isHorizontal: false,hasCollect: false,)
+        ));
+      },
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: <BoxShadow>[
+                  new BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 5.0,
+                    spreadRadius: 1.0,
+                    offset: Offset(-2.0, 2.0),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.fromLTRB(
+                  ScreenUtil().setWidth(40),
+                  ScreenUtil().setHeight(50),
+                  ScreenUtil().setWidth(0),
+                  ScreenUtil().setHeight(0)),
+              child: Image(
+                width: ScreenUtil().setWidth(230),
+                height: ScreenUtil().setHeight(300),
+                image: NetworkImage(imageName),
+                fit: BoxFit.fill,
+              ),
             ),
-            margin: EdgeInsets.fromLTRB(
-                ScreenUtil().setWidth(40),
-                ScreenUtil().setHeight(50),
-                ScreenUtil().setWidth(0),
-                ScreenUtil().setHeight(0)),
-            child: Image(
-              width: ScreenUtil().setWidth(230),
-              height: ScreenUtil().setHeight(300),
-              image: NetworkImage(imageName),
-              fit: BoxFit.fill,
-            ),
-          ),
-          _rightItem(title, state, introduce, type, readTimes)
-        ],
+            _rightItem(title, state, introduce, type, readTimes)
+          ],
+        ),
       ),
     );
   }
