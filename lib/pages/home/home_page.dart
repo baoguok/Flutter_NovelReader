@@ -6,6 +6,7 @@ import 'package:flutter_reader/model/home/guess_like_model.dart';
 import 'package:flutter_reader/model/home/home_banner_model.dart';
 import 'package:flutter_reader/model/home/recommend_model.dart';
 import 'package:flutter_reader/pages/home/search/search_page.dart';
+import 'package:flutter_reader/pages/read_book/book_introduction.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   HomePageBannerModel _bannerModel;
   List _bannerImageExample = ["https://book-98nice.oss-cn-hangzhou.aliyuncs.com/XDYQ00/3AC256EE6C59096047A25AD75FBB1512/poster.jpg",];
   List _bannerImageLoad = [];
+  List<String> _bannerBookId = [];
   List<bannerData> _bannerData = [];
 
   bool _isLoadingHot = true;
@@ -128,6 +130,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 ///加载 轮播图 数据
   loadBannerData(){
     _bannerImageLoad.clear();
+    _bannerBookId.clear();
     HomeDao.fetchBanner(channel).then((value){
       setState(() {
         _bannerModel = value;
@@ -135,6 +138,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         var i;
         for(i=0;i<_bannerData.length;i++){
           _bannerImageLoad.add(_bannerData[i].image);
+          _bannerBookId.add(_bannerData[i].id);
         }
         _isLoadingBanner = false;
       });
@@ -399,14 +403,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           viewportFraction: 0.8,
           scale: 0.9,
           itemBuilder: (BuildContext context, int index) {
-            return Container(                     // 用Container实现图片圆角的效果
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(_isLoadingBanner == true ? _bannerImageExample[index] : _bannerImageLoad[index]),
-                    fit: BoxFit.fill
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
+            return InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => BookInfoPage(channel: channel,bookId: _bannerBookId[index], hasCollect: false,isHorizontal: true,)
+                ));
+              },
+              child: Container(                     // 用Container实现图片圆角的效果
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(_isLoadingBanner == true ? _bannerImageExample[index] : _bannerImageLoad[index]),
+                      fit: BoxFit.fill
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
                 ),
               ),
             );
