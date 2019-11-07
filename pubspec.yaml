@@ -35,6 +35,7 @@ dependencies:
   flutter_spinkit: ^4.0.0
   provider: ^3.1.0+1
   http: ^0.12.0+2
+  nice_button: ^0.1.7
 
 
 
