@@ -252,7 +252,14 @@ class _MePageState extends State<MePage> {
                 blurRadius: 10.0,
                 offset: Offset(3.0, 3.0),),
             ],
-            color: Colors.black87,
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                Color(0xff771D32),
+                Color(0xffE65758)
+              ],
+            ),
             borderRadius: BorderRadius.all(Radius.circular(10))
         ),
         child:Row(
