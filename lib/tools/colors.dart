@@ -34,7 +34,16 @@ class MyColors{
   static final Color paginationColor = Color(0xFFD8D8D8);
 
   static final Color MyWhite = Color.fromRGBO(255, 255, 255, 0.9);
+}
 
+class HexColor extends Color {
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    return int.parse(hexColor, radix: 16);
+  }
 
-
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
