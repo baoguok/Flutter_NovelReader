@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:circular_check_box/circular_check_box.dart';
@@ -15,7 +16,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class bookShelfDetailPage extends StatefulWidget {
   final bool _isEditing ;
 
-  bookShelfDetailPage(this._isEditing);
+  final Stream shouldTriggerChange;
+
+  bookShelfDetailPage(this._isEditing,this.shouldTriggerChange);
 
 
   @override
@@ -26,7 +29,8 @@ class bookShelfDetailPage extends StatefulWidget {
 
 class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
 
-  bool _hasBook = false;
+  bool _hasBook = true;
+  bool _isLoadingBook = true;
   BookShelfModel _bookShelfModel;
   List<BookShelfData> _bookShelfData = [];
   List<String> _bookId = [];
@@ -37,14 +41,29 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
 
   List<String> toDelete = [];
 
+  StreamSubscription streamSubscription;
+
+
   @override
   void initState() {
     loadBook();
+    streamSubscription = widget.shouldTriggerChange.listen((_) => loadBook());
     super.initState();
   }
 
   @override
+  didUpdateWidget(bookShelfDetailPage old) {
+    super.didUpdateWidget(old);
+    // in case the stream instance changed, subscribe to the new one
+    if (widget.shouldTriggerChange != old.shouldTriggerChange) {
+      streamSubscription.cancel();
+      streamSubscription = widget.shouldTriggerChange.listen((_) => loadBook());
+    }
+  }
+
+  @override
   void dispose() {
+    streamSubscription.cancel();
     super.dispose();
   }
 
@@ -54,6 +73,7 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
   }
 
   loadBook(){
+    _isLoadingBook = true;
     _bookId.clear();
     _bookName.clear();
     _bookImage.clear();
@@ -75,6 +95,7 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
           _hasBook = true;
         });
       }
+      _isLoadingBook = false;
     });
   }
 
@@ -147,25 +168,31 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
               )
           )
       ) :
-      SingleChildScrollView(
-        child: Container(
-          child: GridView.builder(
-            shrinkWrap: true,
-            itemCount: _bookShelfData.length,
-            physics: NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 0),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisSpacing: 0,
-              crossAxisSpacing: 0,
-              childAspectRatio: 0.65,
-            ),
-            itemBuilder: (context,index){
-              return _subItem(_bookId[index], _bookImage[index], _bookName[index], index);
-            },
-          ),
+      _isLoadingBook == true ? Container(
+        height: ScreenUtil().setHeight(1800),
+        width: ScreenUtil().setWidth(1125),
+        child: Center(
+          child: Text('正在载入您的书架...'),
         ),
-      ),
+      ) : SingleChildScrollView(
+    child: Container(
+    child: GridView.builder(
+    shrinkWrap: true,
+    itemCount: _bookShelfData.length,
+    physics: NeverScrollableScrollPhysics(),
+    padding: EdgeInsets.symmetric(horizontal: 0),
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 3,
+    mainAxisSpacing: 0,
+    crossAxisSpacing: 0,
+    childAspectRatio: 0.65,
+    ),
+    itemBuilder: (context,index){
+    return _subItem(_bookId[index], _bookImage[index], _bookName[index], index);
+    },
+    ),
+    ),
+    ),
     );
   }
 

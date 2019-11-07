@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/dao/book_collect_data_manager.dart';
 import 'package:flutter_reader/pages/book_shelf/book_history_page.dart';
@@ -23,8 +25,10 @@ class _BookshelfPageState extends State<BookshelfPage> with
     TickerProviderStateMixin{
   TabController _controller;
   List _tabs = ['我的书架','阅读足迹'];
-  
   bool _isEditing = false;
+  bool _hideButton = false;
+
+  final changeNotifier = new StreamController.broadcast();
 
   @override
   void initState() {
@@ -35,6 +39,7 @@ class _BookshelfPageState extends State<BookshelfPage> with
   @override
   void dispose() {
     _controller.dispose();
+    changeNotifier.close();
     super.dispose();
   }
 
@@ -51,6 +56,7 @@ class _BookshelfPageState extends State<BookshelfPage> with
       BookCollectDao.deleteBook(toDelete).then((value) {
         toDelete.clear();
         preferences.setStringList("toDelete", toDelete);
+        changeNotifier.sink.add(null);
         setState(() {
           _isEditing = false;
         });
@@ -68,7 +74,7 @@ class _BookshelfPageState extends State<BookshelfPage> with
             '书架'
         ),
         actions: <Widget>[
-          FlatButton(
+          _hideButton ? SizedBox() : FlatButton(
             textColor: Colors.white,
             onPressed: (){
               setState(() {
@@ -81,8 +87,8 @@ class _BookshelfPageState extends State<BookshelfPage> with
               });
             },
             child: Text(_isEditing ? '删除' : '管理',
-            style: TextStyle(fontSize: ScreenUtil().setSp(45)),),
-        shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+              style: TextStyle(fontSize: ScreenUtil().setSp(45)),),
+            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
           )
         ],
       ),
@@ -95,6 +101,18 @@ class _BookshelfPageState extends State<BookshelfPage> with
               height: ScreenUtil().setHeight(150),
               padding: EdgeInsets.only(top: ScreenUtil().setHeight(0)),
               child: TabBar(
+                onTap: (index){
+                  if(index == 0){
+                    setState(() {
+                      _hideButton = false;
+                    });
+                  }
+                  else{
+                    setState(() {
+                      _hideButton = true;
+                    });
+                  }
+                },
                 controller: _controller,
                 labelColor: Colors.redAccent,
                 unselectedLabelColor: Colors.grey,
@@ -111,7 +129,7 @@ class _BookshelfPageState extends State<BookshelfPage> with
             child: TabBarView(
               controller: _controller,
               children: <Widget>[
-                bookShelfDetailPage(_isEditing),
+                bookShelfDetailPage(_isEditing,changeNotifier.stream),
                 BookHistoryPage()
               ],
             ),
