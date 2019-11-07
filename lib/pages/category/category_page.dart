@@ -206,6 +206,7 @@ class _CategoryPageState extends State<CategoryPage> {
     BookCategoryDao.fetchCateList(_nowSelectedChannel, _nowSelectedCate, _nowSelectedStatus, _nowSelectedType).then((value){
       setState(() {
         if(value.data != null) {
+          _noBook = false;
           print('11');
           _cateListModel = value;
           _cateListData = value.data;
