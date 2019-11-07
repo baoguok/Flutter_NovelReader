@@ -19,6 +19,7 @@ class BookInfoPage extends StatefulWidget {
   final String channel;
   final String bookId;
 
+
   String bookName;
   String bookImage;
   bool isHorizontal;
@@ -48,8 +49,11 @@ class _BookInfoPageState extends State<BookInfoPage> {
   bool _isLoadCataInfo = true;
   CataInfoModel _cataInfoModel;
   CataInfoData _cataInfoData;
+  Current _current;
   Last _last;
   String _bookCataName;
+  String _currentCha;
+  bool _hasReadBefore;
 
   
   bool _isLoadCata = true;
@@ -107,9 +111,18 @@ class _BookInfoPageState extends State<BookInfoPage> {
 
   loadBookCataInfo(){
     BookDao.fetchCataInfo(widget.bookId).then((value){
+
       setState(() {
         _cataInfoData = value.data;
         _last = _cataInfoData.last;
+        _current = _cataInfoData.current;
+        if(_current != null){
+          _hasReadBefore = true;
+          _currentCha = _cataInfoData.current.id;
+        }
+        else{
+          _hasReadBefore = false;
+        }
         _bookCataName = _last.name;
         _isLoadCataInfo = false;
       });
@@ -886,7 +899,7 @@ BookHero(
                 print('开始阅读');
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context){
-                      return BookContentPage(_bookCataId[0],widget.bookId,widget.hasCollect);
+                      return BookContentPage(_hasReadBefore == true ? _currentCha : _bookCataId[0],widget.bookId,widget.hasCollect);
                     }
                 ));
               },
@@ -907,7 +920,7 @@ BookHero(
                     ),
                     Container(
                       margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
-                      child: Text('开始阅读',style: TextStyle(
+                      child: Text(_hasReadBefore == true ? '继续阅读' : '开始阅读',style: TextStyle(
                           color: Colors.white,
                           fontSize: ScreenUtil().setSp(50),
                           fontWeight: FontWeight.w500
