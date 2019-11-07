@@ -68,7 +68,8 @@ class _BookContentPageState extends State<BookContentPage> {
 
   @override
   void initState() {
-    print('id是：${widget._chaId}');
+    print('chaId：${widget._chaId}');
+    print('bookId:${widget._bookId}');
     loadContent(widget._chaId);
     super.initState();
   }
