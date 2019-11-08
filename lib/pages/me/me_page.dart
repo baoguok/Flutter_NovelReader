@@ -526,7 +526,7 @@ class _MePageState extends State<MePage> {
 
   _jumpToRechargeRecordPage(){
     Navigator.push(context, MaterialPageRoute(
-      builder: (context) => RechargeRecordingPage()
+      builder: (context) => RechargeRecordPage()
     ));
   }
 
