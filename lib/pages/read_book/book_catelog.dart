@@ -123,7 +123,7 @@ class _BookCatalogPageState extends State<BookCatalogPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text('章节目录'),
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Color(0xffe53935),
         ),
         body: _isLoadCataInfo == true || _isLoadCataList == true ? Center(child: Text('正在加载目录详情'),) :Stack(
           key: _stackKey,

@@ -7,6 +7,7 @@ import 'package:flutter_reader/model/home/home_banner_model.dart';
 import 'package:flutter_reader/model/home/recommend_model.dart';
 import 'package:flutter_reader/pages/home/search/search_page.dart';
 import 'package:flutter_reader/pages/read_book/book_introduction.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -278,13 +279,61 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: FuncWidget(channel: channel,),
         ),
         _getIcon('images/热门@2x.png', '热门专区'),
-        _isLoadingHot == true ? SizedBox() : HotWidget(channel,_hotType,_hotBookid,_hotImage,_hotTitle,_hotSubTitle),
+        _isLoadingHot == true ? Container(
+          width: ScreenUtil().setWidth(1125),
+          height: ScreenUtil().setHeight(750),
+          margin: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(20)),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(18))
+          ),
+          child: SpinKitWave(
+            color: Colors.redAccent,
+            size: 50,
+          ),
+        ) : HotWidget(channel,_hotType,_hotBookid,_hotImage,_hotTitle,_hotSubTitle),
         _getIcon('images/推荐@2x.png', '主编推荐'),
-        _isLoadingRecommend == true ? SizedBox() : RecommendWidget(channel,_recommendBookId,_recommendImage,_recommendTitle),
+        _isLoadingRecommend == true ? Container(
+          width: ScreenUtil().setWidth(1125),
+          height: ScreenUtil().setHeight(600),
+          margin: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(20)),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(18))
+          ),
+          child: SpinKitWave(
+            color: Colors.redAccent,
+            size: 50,
+          ),
+        ) : RecommendWidget(channel,_recommendBookId,_recommendImage,_recommendTitle),
         _getIcon('images/31_新品@2x.png', '新书抢先'),
-        _isLoadingNew == true ? SizedBox() : NewBookWidget(channel,_newBookId, _newName, _newImage, _newCat, _newDesc, _newStatus, _newClicks),
+        _isLoadingNew == true ? Container(
+          width: ScreenUtil().setWidth(1125),
+          height: ScreenUtil().setHeight(1250),
+          margin: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(20)),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(18))
+          ),
+          child: SpinKitWave(
+            color: Colors.redAccent,
+            size: 50,
+          ),
+        ) : NewBookWidget(channel,_newBookId, _newName, _newImage, _newCat, _newDesc, _newStatus, _newClicks),
         _getOtherIcon('images/喜欢@2x.png', '猜你喜欢', 'images/换一批红@2x.png', '换一批'),
-        _isLoadingGuess == true ? SizedBox() : GuessWidget(channel,_guessBookId, _guessImage, _guessTitle),
+        _isLoadingGuess == true ? Container(
+          width: ScreenUtil().setWidth(1125),
+          height: ScreenUtil().setHeight(1175),
+          margin: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(20)),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(18))
+          ),
+          child: SpinKitWave(
+            color: Colors.redAccent,
+            size: 50,
+          ),
+        ) : GuessWidget(channel,_guessBookId, _guessImage, _guessTitle),
         _getIcon('images/联系 (1).png', '联系我们'),
         _isLoadingHot == true ? SizedBox() : ConnectWidget(_connectTime, _connectQQ, _connectName, _connectImage)
       ],
@@ -341,14 +390,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
    _topPadding(double topPad){
     return Container(
       height: 40 + topPad,
-      color: Colors.redAccent,
+      color: Color(0xffe53935),
     );
   }
 
   Widget get _getCategory{
     return Container(
         decoration: BoxDecoration(
-            color: Colors.redAccent
+            color: Color(0xffe53935)
         ),
         child:
         TabBar(
@@ -490,7 +539,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     child: Text(
                       rightTitle,
                       style: TextStyle(
-                          color: Colors.redAccent,
+                          color: Color(0xffe53935),
                           fontSize: ScreenUtil().setSp(40)
                       ),
                     ),

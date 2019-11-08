@@ -11,6 +11,7 @@ import 'package:flutter_reader/pages/category/category_page.dart';
 import 'package:flutter_reader/pages/read_book/book_introduction.dart';
 import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class bookShelfDetailPage extends StatefulWidget {
@@ -150,7 +151,7 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
                                   )
                               );
                             },
-                            color: Colors.redAccent,
+                            color: Color(0xffe53935),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)
                             ),
@@ -172,7 +173,10 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
         height: ScreenUtil().setHeight(1800),
         width: ScreenUtil().setWidth(1125),
         child: Center(
-          child: Text('正在载入您的书架...'),
+          child: SpinKitPouringHourglass(
+            color: Color(0xffe53935),
+            size: 50,
+          )
         ),
       ) : SingleChildScrollView(
     child: Container(

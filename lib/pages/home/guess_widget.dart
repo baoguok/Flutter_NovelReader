@@ -36,8 +36,10 @@ class _GuessWidgetState extends State<GuessWidget> {
     // TODO: implement build
     return Container(
       height: ScreenUtil().setHeight(1175),
+      margin: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(20)),
       decoration: BoxDecoration(
-          color: Colors.white
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(18))
       ),
       child: Container(
         child: Column(
@@ -70,7 +72,7 @@ class _GuessWidgetState extends State<GuessWidget> {
 
   _subItem(String id, String image, String title){
     return Container(
-      margin: EdgeInsets.only(left: ScreenUtil().setWidth(50)),
+      margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
       width: ScreenUtil().setWidth(310),
       padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
       child: Column(

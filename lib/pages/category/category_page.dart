@@ -237,7 +237,7 @@ class _CategoryPageState extends State<CategoryPage> {
       key: _scaffoldKey,
       appBar:AppBar(
             title: Text('分类'),
-            backgroundColor: Colors.redAccent,
+            backgroundColor: Color(0xffe53935),
           ),
       backgroundColor: Colors.white,
       body: _isLoadingConfig == true ? Center(
@@ -559,7 +559,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 readTimes.toString(),
                 style: TextStyle(
                     fontSize: ScreenUtil().setSp(35),
-                    color: Colors.redAccent
+                    color: Color(0xffe53935)
                 ),
               ),
             )

@@ -41,7 +41,7 @@ class _FailureViewState extends State<FailureView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.redAccent,
+      color: Color(0xffe53935),
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +57,7 @@ class _FailureViewState extends State<FailureView> {
           ),
           Text(
             "咦？没网络啦~检查下设置吧",
-            style: TextStyle(fontSize: 12, color: Colors.redAccent),
+            style: TextStyle(fontSize: 12, color: Color(0xffe53935)),
           ),
           SizedBox(
             height: 25,
@@ -68,11 +68,11 @@ class _FailureViewState extends State<FailureView> {
             },
             minWidth: 150,
             height: 43,
-            color: Colors.redAccent,
+            color: Color(0xffe53935),
             child: Text(
               "重新加载",
               style: TextStyle(
-                color: Colors.redAccent,
+                color: Color(0xffe53935),
                 fontSize: 16,
               ),
             ),

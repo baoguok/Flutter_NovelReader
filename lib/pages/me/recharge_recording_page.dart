@@ -11,7 +11,7 @@ class RechargeRecordingPage extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Color(0xffe53935),
         title: Text('充值记录'),
       ),
       body: Container(

@@ -184,7 +184,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('小说主页'),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Color(0xffe53935),
       ),
       body: Container(
           child: Column(
@@ -281,7 +281,7 @@ BookHero(
                         Container(
                           margin: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
                           child: Text(_isLoadData == true ? '阅读量' : _bookClicks.toString(),style: TextStyle(
-                              color: Colors.redAccent,
+                              color: Color(0xffe53935),
                               fontSize: ScreenUtil().setSp(50)
                           ),),
                         )
@@ -298,8 +298,8 @@ BookHero(
 //                      height: ScreenUtil().setHeight(100),
 //                      width: ScreenUtil().setWidth(350),
 //                      decoration: BoxDecoration(
-//                        border: widget.hasCollect == false ? null : Border.all(width: 1,color: Colors.redAccent),
-//                          color: widget.hasCollect == false ? Colors.redAccent : Colors.white,
+//                        border: widget.hasCollect == false ? null : Border.all(width: 1,color: Color(0xffe53935)),
+//                          color: widget.hasCollect == false ? Color(0xffe53935) : Colors.white,
 //                          borderRadius: BorderRadius.all(Radius.circular(5))
 //                      ),
 //                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
@@ -321,7 +321,7 @@ BookHero(
 //                            margin: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
 //                            child: widget.hasCollect == false ? Text('加入书架',style: TextStyle(fontSize: ScreenUtil().setSp(50),
 //                                color: Colors.white),) : Text('已收藏',style: TextStyle(fontSize: ScreenUtil().setSp(50),
-//                                color: Colors.redAccent),),
+//                                color: Color(0xffe53935)),),
 //                          )
 //                        ],
 //                      ),
@@ -455,14 +455,14 @@ BookHero(
                     border: Border(
                       left: BorderSide(
                         width: 3,
-                        color: Colors.redAccent
+                        color: Color(0xffe53935)
                       )
                     )
                   ),
                   child: Text('目录',
                   style: TextStyle(
                     fontSize: ScreenUtil().setSp(50),
-                    color: Colors.redAccent
+                    color: Color(0xffe53935)
                   ),
                   textAlign: TextAlign.center,),
                 ),
@@ -583,13 +583,13 @@ BookHero(
                         child: Text('查看完整目录',
                           style: TextStyle(
                               fontSize: ScreenUtil().setSp(45),
-                              color: Colors.redAccent
+                              color: Color(0xffe53935)
                           ),),
                       ),
                       Container(
                         child: Icon(
                           Icons.chevron_right,
-                          color: Colors.redAccent,
+                          color: Color(0xffe53935),
                         ),
                       )
                     ],
@@ -622,14 +622,14 @@ BookHero(
                       border: Border(
                           left: BorderSide(
                               width: 3,
-                              color: Colors.redAccent
+                              color: Color(0xffe53935)
                           )
                       )
                   ),
                   child: Text('猜你喜欢',
                     style: TextStyle(
                         fontSize: ScreenUtil().setSp(50),
-                        color: Colors.redAccent
+                        color: Color(0xffe53935)
                     ),
                     textAlign: TextAlign.center,),
                 ),
@@ -810,7 +810,7 @@ BookHero(
                 readTimes.toString(),
                 style: TextStyle(
                     fontSize: ScreenUtil().setSp(35),
-                    color: Colors.redAccent
+                    color: Color(0xffe53935)
                 ),
               ),
             )
@@ -853,14 +853,14 @@ BookHero(
                       margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
                       child: Image(
                         width: ScreenUtil().setWidth(100),
-                        color: Colors.redAccent,
+                        color: Color(0xffe53935),
                         image: AssetImage('images/标签.png'),
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
                       child: Text('加入书架',style: TextStyle(
-                          color: Colors.redAccent,
+                          color: Color(0xffe53935),
                           fontSize: ScreenUtil().setSp(50),
                           fontWeight: FontWeight.w500
                       ),),
@@ -876,14 +876,14 @@ BookHero(
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
                     child: Image(
                       width: ScreenUtil().setWidth(100),
-                      color: Colors.redAccent,
+                      color: Color(0xffe53935),
                       image: AssetImage('images/标签.png'),
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
                     child: Text('已在书架',style: TextStyle(
-                        color: Colors.redAccent,
+                        color: Color(0xffe53935),
                         fontSize: ScreenUtil().setSp(50),
                         fontWeight: FontWeight.w500
                     ),),
@@ -906,7 +906,7 @@ BookHero(
               child: Container(
                 height: ScreenUtil().setHeight(236),
                 decoration: BoxDecoration(
-                    color: Colors.redAccent
+                    color: Color(0xffe53935)
                 ),
                 child: Row(
                   children: <Widget>[

@@ -69,7 +69,7 @@ class _BookshelfPageState extends State<BookshelfPage> with
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Color(0xffe53935),
         title: Text(
             '书架'
         ),
@@ -114,12 +114,12 @@ class _BookshelfPageState extends State<BookshelfPage> with
                   }
                 },
                 controller: _controller,
-                labelColor: Colors.redAccent,
+                labelColor: Color(0xffe53935),
                 unselectedLabelColor: Colors.grey,
                 indicator: UnderlineTabIndicator(
                   borderSide: BorderSide(
                     width: 3,
-                    color: Colors.redAccent
+                    color: Color(0xffe53935)
                   )
                 ),
                 tabs: _tabs.map((e) => Tab(text: e)).toList(),

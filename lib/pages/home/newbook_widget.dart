@@ -37,8 +37,10 @@ class _NewBookWidgetState extends State<NewBookWidget> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
+        margin: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(20)),
         decoration: BoxDecoration(
-            color: Colors.white
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(18))
         ),
         height: ScreenUtil().setHeight(1250),
         child: Container(
@@ -191,7 +193,7 @@ class _NewBookWidgetState extends State<NewBookWidget> {
                       readTimes.toString(),
                       style: TextStyle(
                           fontSize: ScreenUtil().setSp(35),
-                          color: Colors.redAccent
+                          color: Color(0xffe53935)
                       ),
                     ),
                   )

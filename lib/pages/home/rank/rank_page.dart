@@ -113,7 +113,7 @@ class _RankPageState extends State<RankPage> {
         padding: EdgeInsets.only(left: ScreenUtil().setWidth(10),top: ScreenUtil().setHeight(40)),
         child: ChoiceChip(
           backgroundColor: Colors.black26,
-          selectedColor: Colors.redAccent,
+          selectedColor: Color(0xffe53935),
           label: Text(choiceSub),
           labelStyle: TextStyle(),
           materialTapTargetSize: MaterialTapTargetSize.padded,
@@ -136,7 +136,7 @@ class _RankPageState extends State<RankPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('排行榜'),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Color(0xffe53935),
       ),
       body: Container(
         width: ScreenUtil().setWidth(1125),
@@ -355,7 +355,7 @@ class _RankPageState extends State<RankPage> {
                 readTimes.toString(),
                 style: TextStyle(
                     fontSize: ScreenUtil().setSp(35),
-                    color: Colors.redAccent
+                    color: Color(0xffe53935)
                 ),
               ),
             )

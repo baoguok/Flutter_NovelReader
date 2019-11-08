@@ -126,7 +126,7 @@ class _BookContentPageState extends State<BookContentPage> {
                 child: Column(
                   children: <Widget>[
                     SpinKitPouringHourglass(
-                      color: Colors.redAccent,
+                      color: Color(0xffe53935),
                       size: 50,
                     ),
                     Container(
@@ -204,13 +204,13 @@ class _BookContentPageState extends State<BookContentPage> {
                                     children: <Widget>[
                                       Icon(
                                           Icons.chevron_left,
-                                          color: _isNightModel ? Colors.white : Colors.redAccent
+                                          color: _isNightModel ? Colors.white : Color(0xffe53935)
                                       ),
                                       Text(
                                         '上一章',
                                         style: TextStyle(
                                             fontSize: ScreenUtil().setSp(50),
-                                            color: _isNightModel ? Colors.white : Colors.redAccent
+                                            color: _isNightModel ? Colors.white : Color(0xffe53935)
                                         ),
                                       )
                                     ],
@@ -235,7 +235,7 @@ class _BookContentPageState extends State<BookContentPage> {
                                       margin: EdgeInsets.only(left: ScreenUtil().setWidth(30)),
                                       child: Icon(
                                           Icons.menu,
-                                          color: _isNightModel ? Colors.white : Colors.redAccent
+                                          color: _isNightModel ? Colors.white : Color(0xffe53935)
                                       ),
                                     ),
                                     Container(
@@ -244,7 +244,7 @@ class _BookContentPageState extends State<BookContentPage> {
                                         '目录',
                                         style: TextStyle(
                                             fontSize: ScreenUtil().setSp(50),
-                                            color: _isNightModel ? Colors.white : Colors.redAccent
+                                            color: _isNightModel ? Colors.white : Color(0xffe53935)
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
@@ -271,12 +271,12 @@ class _BookContentPageState extends State<BookContentPage> {
                                       '下一章',
                                       style: TextStyle(
                                           fontSize: ScreenUtil().setSp(50),
-                                          color: _isNightModel ? Colors.white : Colors.redAccent
+                                          color: _isNightModel ? Colors.white : Color(0xffe53935)
                                       ),
                                     ),
                                     Icon(
                                         Icons.chevron_right,
-                                        color: _isNightModel ? Colors.white : Colors.redAccent
+                                        color: _isNightModel ? Colors.white : Color(0xffe53935)
                                     )
                                   ],
                                 ),

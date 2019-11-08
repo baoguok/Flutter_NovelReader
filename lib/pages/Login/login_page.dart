@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 /// 墨水瓶（`InkWell`）可用时使用的字体样式。
 final TextStyle _availableStyle = TextStyle(
   fontSize: 16.0,
-  color: Colors.redAccent,
+  color: Color(0xffe53935),
 );
 
 /// 墨水瓶（`InkWell`）不可用时使用的样式。
@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                         fontFamily: 'QFonts',
                         fontWeight: FontWeight.w400,
                         fontSize: ScreenUtil().setSp(140),
-                        color: Colors.redAccent
+                        color: Color(0xffe53935)
                     )),
               ),
             ),
@@ -180,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                     _hasLogin.goLogin();
                     Navigator.pop(context);
                   },
-                  color: Colors.redAccent,
+                  color: Color(0xffe53935),
                   child: Text('登录',
                   style: TextStyle(color: Colors.white,
                   fontSize: ScreenUtil().setSp(55)),),

@@ -138,7 +138,7 @@ class _BookHistoryPageState extends State<BookHistoryPage> {
                                 )
                             );
                           },
-                          color: Colors.redAccent,
+                          color: Color(0xffe53935),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)
                           ),

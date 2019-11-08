@@ -145,9 +145,9 @@ class _MePageState extends State<MePage> {
                   top: ScreenUtil().setHeight(150)),
               decoration: BoxDecoration(
                   border: Border.all(width: 1,
-                      color: haveCheck == true ? Colors.black12 : Colors.redAccent),
+                      color: haveCheck == true ? Colors.black12 : Color(0xffe53935)),
                   borderRadius: BorderRadius.all(Radius.circular(18)),
-                  color: haveCheck == true ? Colors.white : Colors.redAccent
+                  color: haveCheck == true ? Colors.white : Color(0xffe53935)
               ),
               child: Container(
                 child: Center(
@@ -248,16 +248,14 @@ class _MePageState extends State<MePage> {
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black26,
+                color: Colors.black38,
                 blurRadius: 10.0,
                 offset: Offset(3.0, 3.0),),
             ],
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
               colors: <Color>[
-                Color(0xff771D32),
-                Color(0xffE65758)
+                Color(0xffb31217),
+                Color(0xffe52d27)
               ],
             ),
             borderRadius: BorderRadius.all(Radius.circular(10))
@@ -296,12 +294,15 @@ class _MePageState extends State<MePage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: ScreenUtil().setWidth(160)),
+              margin: EdgeInsets.only(left: ScreenUtil().setWidth(50)),
               child: Text('开通vip畅销全站资源',
-                style: TextStyle(color: Color.fromRGBO(245, 226, 221, 1)),),
+                style: TextStyle(color: Color.fromRGBO(245, 226, 221, 1),
+                fontWeight: FontWeight.w500,
+                letterSpacing: 2),
+              ),
             ),
             Container(
-              margin: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
+              margin: EdgeInsets.only(left: ScreenUtil().setWidth(50)),
               child: Image(
                 width: ScreenUtil().setWidth(180),
                 image: AssetImage('images/backImage2.png'),
@@ -325,7 +326,7 @@ class _MePageState extends State<MePage> {
                 children: <Widget>[
                   Container(
                     child: Image(
-                      color: Colors.redAccent,
+                      color: Color(0xffe53935),
                       width: ScreenUtil().setWidth(110),
                       image: AssetImage('images/我签到.png'),
                     ),
@@ -347,7 +348,7 @@ class _MePageState extends State<MePage> {
                 children: <Widget>[
                   Container(
                     child: Image(
-                      color: Colors.redAccent,
+                      color: Color(0xffe53935),
                       width: ScreenUtil().setWidth(110),
                       image: AssetImage('images/记录.png'),
                     ),
@@ -369,7 +370,7 @@ class _MePageState extends State<MePage> {
                 children: <Widget>[
                   Container(
                     child: Image(
-                      color: Colors.redAccent,
+                      color: Color(0xffe53935),
                       width: ScreenUtil().setWidth(110),
                       image: AssetImage('images/记录-01.png'),
                     ),
@@ -391,7 +392,7 @@ class _MePageState extends State<MePage> {
                 children: <Widget>[
                   Container(
                     child: Image(
-                      color: Colors.redAccent,
+                      color: Color(0xffe53935),
                       width: ScreenUtil().setWidth(110),
                       image: AssetImage('images/兑换.png'),
                     ),

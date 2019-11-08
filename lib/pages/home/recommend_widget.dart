@@ -35,8 +35,10 @@ class _RecommendWidgetState extends State<RecommendWidget> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
+      margin: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(20)),
       decoration: BoxDecoration(
-          color: Colors.white
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(18))
       ),
       height: ScreenUtil().setHeight(600),
       child: Container(
@@ -53,7 +55,7 @@ class _RecommendWidgetState extends State<RecommendWidget> {
   }
   _subItem(String bookId, String image, String title){
     return Container(
-      margin: EdgeInsets.only(left: ScreenUtil().setWidth(50)),
+      margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
       width: ScreenUtil().setWidth(310),
       padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
       child: Column(

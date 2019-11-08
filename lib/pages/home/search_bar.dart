@@ -98,7 +98,7 @@ class _searchBarState extends State<SearchBar> {
                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                 child: Text(
                   '搜索',
-                  style: TextStyle(color: Colors.redAccent, fontSize: 17),
+                  style: TextStyle(color: Color(0xffe53935), fontSize: 17),
                 ),
               ),
               widget.rightButtonClick)
@@ -163,7 +163,7 @@ class _searchBarState extends State<SearchBar> {
                     width: ScreenUtil().setWidth(90),
                     height: ScreenUtil().setHeight(120),
                     image: AssetImage('images/福利.png'),
-                    color: Colors.redAccent,
+                    color: Color(0xffe53935),
                   )
               ),
               widget.rightButtonClick)
@@ -202,7 +202,7 @@ class _searchBarState extends State<SearchBar> {
             size: 20,
             color: widget.searchBarType == SearchBarType.normal
                 ? Color(0xffA9A9A9)
-                : Colors.redAccent,
+                : Color(0xffe53935),
           ),
           Expanded(
               flex: 1,
@@ -241,7 +241,7 @@ class _searchBarState extends State<SearchBar> {
                 Icons.mic,
                 size: 22,
                 color: widget.searchBarType == SearchBarType.normal
-                    ? Colors.redAccent
+                    ? Color(0xffe53935)
                     : Colors.grey,
               ),
               widget.speakClick)

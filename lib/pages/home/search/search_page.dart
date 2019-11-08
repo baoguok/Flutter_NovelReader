@@ -225,7 +225,7 @@ class _SearchPageState extends State<SearchPage> {
     if (word == null || word.length == 0) return spans;
     List<String> arr = word.split(keyword);
     TextStyle normalStyle = TextStyle(fontSize: 16,color: Colors.black87);
-    TextStyle keywordStyle = TextStyle(fontSize: 16,color: Colors.redAccent);
+    TextStyle keywordStyle = TextStyle(fontSize: 16,color: Color(0xffe53935));
 
     for (int i = 0; i < arr.length; i++) {
       if ((i + 1) % 2 == 0) {

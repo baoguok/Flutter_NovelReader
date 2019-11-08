@@ -10,7 +10,7 @@ class ExchangePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('兑换专区'),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Color(0xffe53935),
       ),
       body: Container(
         child: Column(
@@ -51,7 +51,7 @@ class ExchangePage extends StatelessWidget {
                           margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(40)),
                           child: Text('70',
                             style: TextStyle(fontSize: ScreenUtil().setSp(90),
-                            color: Colors.redAccent),),
+                            color: Color(0xffe53935)),),
                         ),
                         Text('我的书券')
                       ],
@@ -79,7 +79,7 @@ class ExchangePage extends StatelessWidget {
                             minWidth: ScreenUtil().setWidth(350),
                             height: ScreenUtil().setHeight(100),
                             child: RaisedButton(
-                                color: Colors.redAccent,
+                                color: Color(0xffe53935),
                                 child: Text("立即兑换",
                                   style: TextStyle(color: Colors.white),),
                                 onPressed: (){

@@ -220,7 +220,7 @@ class _HotDetailPageState extends State<HotDetailPage> {
                 readTimes.toString(),
                 style: TextStyle(
                     fontSize: ScreenUtil().setSp(35),
-                    color: Colors.redAccent
+                    color: Color(0xffe53935)
                 ),
               ),
             )

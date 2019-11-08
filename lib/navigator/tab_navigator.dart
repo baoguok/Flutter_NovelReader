@@ -17,7 +17,7 @@ class TabNavigator extends StatefulWidget {
 class _TabNavigatorState extends State<TabNavigator> {
   //底部图标颜色
   final _defaultColor = Colors.grey;
-  final _activeColor = Colors.redAccent;
+  final _activeColor = Color(0xffe53935);
   int _currentIndex = 0;
   //页面控制器
   final PageController _controller = PageController(

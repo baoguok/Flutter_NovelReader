@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.red,
-        accentColor: Colors.redAccent,
+        accentColor: Color(0xffe53935),
         buttonTheme: ButtonThemeData(
-          buttonColor: Colors.redAccent,
+          buttonColor: Color(0xffe53935),
           shape: RoundedRectangleBorder(),
         )
       ),

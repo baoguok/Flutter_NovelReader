@@ -69,7 +69,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
           border: Border.all(
-              color: Colors.redAccent,
+              color: Color(0xffe53935),
               width: 1
           ),
           color: currentSelectedLabel == widget.buttonLables[index]
@@ -119,7 +119,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
                       style: TextStyle(
                         color: currentSelectedLabel == widget.buttonLables[index]
                             ? Colors.white
-                            : Colors.redAccent,
+                            : Color(0xffe53935),
                           fontSize: ScreenUtil().setSp(40),
                           fontWeight: FontWeight.w400
                       ),
@@ -142,7 +142,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
           border: Border.all(
-              color: Colors.redAccent,
+              color: Color(0xffe53935),
               width: 1
           ),
           color: currentSelectedLabel == widget.buttonLables[index]
@@ -210,7 +210,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
                       style: TextStyle(
                           color: currentSelectedLabel == widget.buttonLables[index]
                               ? Colors.white
-                              : Colors.redAccent,
+                              : Color(0xffe53935),
                           fontSize: ScreenUtil().setSp(40),
                           fontWeight: FontWeight.w400
                       ),

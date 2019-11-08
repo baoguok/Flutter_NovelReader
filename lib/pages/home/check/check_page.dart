@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reader/pages/home/recharge/protocol_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intervalprogressbar/intervalprogressbar.dart';
+import 'package:rich_alert/rich_alert.dart';
 
 class CheckPage extends StatefulWidget {
   CheckPage({Key key}) : super(key: key);
@@ -44,7 +45,7 @@ class _CheckPageState extends State<CheckPage> {
 
   _topBackWidget(){
     return Container(
-      color: Colors.redAccent,
+      color: Color(0xffe53935),
       height: ScreenUtil().setHeight(700),
       width: ScreenUtil().setWidth(1125),
       child: Container(
@@ -241,7 +242,7 @@ class _CheckPageState extends State<CheckPage> {
                               intervalSize: 2,
                               size: Size(300, 10),
                               highlightColor: Colors.black26,
-                              defaultColor: Colors.redAccent,
+                              defaultColor: Color(0xffe53935),
                               intervalColor: Colors.transparent,
                               intervalHighlightColor: Colors.transparent,
                               reverse: true,
@@ -283,7 +284,7 @@ class _CheckPageState extends State<CheckPage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
-                color: Colors.redAccent,
+                color: Color(0xffe53935),
                 textColor: Colors.white,
                 child: Container(
                   width: ScreenUtil().setWidth(500),
@@ -291,7 +292,19 @@ class _CheckPageState extends State<CheckPage> {
                     child: Text('每日签到'),
                   ),
                 ),
-                onPressed: _pressCheckIn,
+                onPressed: (){
+                  _pressCheckIn();
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return RichAlertDialog( //uses the custom alert dialog
+                          alertTitle: richTitle("Alert title"),
+                          alertSubtitle: richSubtitle("Subtitle"),
+                          alertType: RichAlertType.SUCCESS,
+                        );
+                      }
+                  );
+                },
               ),
             )
           ],

@@ -5,6 +5,7 @@ import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HotWidget extends StatefulWidget {
+
   final String _channel;
   final String _hotType;
   final List<String> _bookId;
@@ -36,8 +37,10 @@ class _HotWidgetState extends State<HotWidget> {
     // TODO: implement build
     return Container(
       height: ScreenUtil().setHeight(750),
+      margin: EdgeInsets.only(left: ScreenUtil().setWidth(20),right: ScreenUtil().setWidth(20)),
       decoration: BoxDecoration(
-          color: Colors.white
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(18))
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

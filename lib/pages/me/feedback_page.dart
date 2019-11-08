@@ -30,7 +30,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Color(0xffe53935),
         title: Text('问题反馈'),
       ),
       body: Column(

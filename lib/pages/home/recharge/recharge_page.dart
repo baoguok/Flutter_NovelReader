@@ -75,7 +75,7 @@ class _RechargePageState extends State<RechargePage> {
   _coinWidget() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.redAccent,
+        color: Color(0xffe53935),
       ),
       margin: EdgeInsets.fromLTRB(0, 0, 0, ScreenUtil().setHeight(40)),
       height: ScreenUtil().setHeight(600),
@@ -176,7 +176,7 @@ class _RechargePageState extends State<RechargePage> {
             '每天1元，365天全站免费畅读',
           ],
           radioButtonValue: (value) => print(value),
-          selectedColor: Colors.redAccent,
+          selectedColor: Color(0xffe53935),
         ),
       ),
     );
@@ -313,7 +313,7 @@ class _RechargePageState extends State<RechargePage> {
       child: Container(
         width: ScreenUtil().setWidth(1125),
         height: ScreenUtil().setHeight(250),
-        color: Colors.redAccent,
+        color: Color(0xffe53935),
         margin: EdgeInsets.only(top: ScreenUtil().setHeight(112)),
         child: Center(
           child: Text(

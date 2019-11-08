@@ -319,6 +319,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  rich_alert:
+    dependency: "direct main"
+    description:
+      name: rich_alert
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.32"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -387,6 +394,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.6"
+  transparent_image:
+    dependency: "direct main"
+    description:
+      name: transparent_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   typed_data:
     dependency: transitive
     description:
