@@ -105,7 +105,7 @@ class _BookContentPageState extends State<BookContentPage> {
 
   addToBookShelf(String id){
     BookCollectDao.getForCollect(id).then((value){
-      Fluttertoast.showToast(msg: '已经添加到书架');
+      Fluttertoast.showToast(msg:'已经添加到书架');
       setState(() {
         widget._onBookShelf = true;
       });
@@ -197,7 +197,7 @@ class _BookContentPageState extends State<BookContentPage> {
                               child: InkWell(
                                 onTap: (){
                                   setState(() {
-                                    _preCha == '' ? Fluttertoast.showToast(msg: '已经是第一章了') : loadContent(_preCha);
+                                    _preCha == '' ? Fluttertoast.showToast(msg:'已经是第一章了') : loadContent(_preCha);
                                   });
                                 },
                                   child: Row(
@@ -262,7 +262,7 @@ class _BookContentPageState extends State<BookContentPage> {
                               child: InkWell(
                                 onTap: (){
                                   setState(() {
-                                    _nextCha == '' ? Fluttertoast.showToast(msg: '已经是最后一章了') : loadContent(_nextCha);
+                                    _nextCha == '' ? Fluttertoast.showToast(msg:'已经是最后一章了') : loadContent(_nextCha);
                                   });
                                 },
                                 child: Row(

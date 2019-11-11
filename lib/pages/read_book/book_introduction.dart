@@ -171,7 +171,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
 
   addToBookShelf(String id){
     BookCollectDao.getForCollect(id).then((value){
-      Fluttertoast.showToast(msg: '已经添加到书架');
+      Fluttertoast.showToast(msg:'已经添加到书架');
       setState(() {
         widget.hasCollect = true;
       });

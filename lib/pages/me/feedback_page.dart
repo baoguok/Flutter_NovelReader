@@ -74,7 +74,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
     ),
                 onPressed: (){
                   ///提交意见
-                  Fluttertoast.showToast(msg: '问题已反馈');
+                  Fluttertoast.showToast(msg:'问题已反馈');
                   print(_textController.text);
                 },
                 textColor: Colors.white,
