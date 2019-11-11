@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/dao/check_data_manager.dart';
+import 'package:flutter_reader/model/check/check_config_model.dart';
 import 'package:flutter_reader/pages/home/recharge/protocol_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intervalprogressbar/intervalprogressbar.dart';
 import 'package:rich_alert/rich_alert.dart';
 
@@ -14,11 +17,26 @@ class CheckPage extends StatefulWidget {
 }
 
 class _CheckPageState extends State<CheckPage> {
+  bool _isLoadingConfig = true;
+
+  CheckConfigModel _configModel;
+  CheckConfigData _checkConfigData;
+
+  int coin = 0;
+  int gift = 0;
+  int next = 0;
+  int current = 0;
+
+  bool canCheck = false;
+  bool todayCheck = false;
+
+
   //progress是反的
   var progressNow = 7;
   var now = DateTime.now();
   @override
   void initState() {
+    loadConfig();
     super.initState();
   }
 
@@ -27,11 +45,48 @@ class _CheckPageState extends State<CheckPage> {
     super.dispose();
   }
 
+  loadConfig(){
+    CheckDao.fetchCheckConfig().then((value){
+      setState(() {
+
+        coin = value.data.coin;
+        gift = value.data.gift;
+        next = value.data.daily.next;
+        current = value.data.daily.current;
+        todayCheck = value.data.daily.today;
+
+        _isLoadingConfig = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Container(
+      body: _isLoadingConfig ?Container(
+        width: ScreenUtil.screenWidth,
+        height: ScreenUtil.screenHeight,
+        child: Center(
+          child: Container(
+            padding: EdgeInsets.only(top: ScreenUtil().setHeight(1000)),
+            child: Column(
+              children: <Widget>[
+                SpinKitCircle(
+                  color: Colors.red,
+                  size: 50,
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(60)),
+                  child: Text(
+                      '正在为您生成签到页...'
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ) : Container(
         child: Stack(
           children: <Widget>[
             _topBackWidget(),
@@ -174,7 +229,7 @@ class _CheckPageState extends State<CheckPage> {
                           ),),
                       ),
                       Container(
-                        child: Text('连续签到赢好礼',style: TextStyle(
+                        child: Text('连续签到天数',style: TextStyle(
                           color: Colors.black54,
                           fontSize: ScreenUtil().setSp(45)
                         ),),
@@ -198,27 +253,42 @@ class _CheckPageState extends State<CheckPage> {
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(150)),
-                    child: Image(
-                      height: ScreenUtil().setHeight(60),
-                      width: ScreenUtil().setWidth(60),
-                      image: AssetImage('images/1 黄色.png'),),
+                    child: Text(
+                      (current + 1).toString(),
+                      style: TextStyle(
+                          fontFamily: 'QFonts',
+                          fontSize: ScreenUtil().setSp(80),
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromRGBO(241, 222, 100, 1)
+                      ),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(200)),
-                    child: Image(
-                      height: ScreenUtil().setHeight(60),
-                      width: ScreenUtil().setWidth(60),
-                      image: AssetImage('images/3 黄色.png'),),
+                    child: Text(
+                      (current + 3).toString(),
+                      style: TextStyle(
+                          fontFamily: 'QFonts',
+                          fontSize: ScreenUtil().setSp(80),
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromRGBO(241, 222, 100, 1)
+                      ),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(200)),
-                    child: Image(
-                      height: ScreenUtil().setHeight(60),
-                      width: ScreenUtil().setWidth(60),
-                      image: AssetImage('images/5 黄色.png'),),
+                    child: Text(
+                      (current + 5).toString(),
+                      style: TextStyle(
+                          fontFamily: 'QFonts',
+                          fontSize: ScreenUtil().setSp(80),
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromRGBO(241, 222, 100, 1)
+                      ),
+                    ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(170)),
+                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(150)),
                     child: Image(
                       height: ScreenUtil().setHeight(100),
                       width: ScreenUtil().setWidth(80),
@@ -256,30 +326,45 @@ class _CheckPageState extends State<CheckPage> {
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(280)),
-                    child: Image(
-                      height: ScreenUtil().setHeight(60),
-                      width: ScreenUtil().setWidth(60),
-                      image: AssetImage('images/2 黄色.png'),),
+                    child: Text(
+                      (current + 2).toString(),
+                      style: TextStyle(
+                        fontFamily: 'QFonts',
+                        fontSize: ScreenUtil().setSp(80),
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(241, 222, 100, 1)
+                      ),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(200)),
-                    child: Image(
-                      height: ScreenUtil().setHeight(60),
-                      width: ScreenUtil().setWidth(60),
-                      image: AssetImage('images/4 黄色.png'),),
+                    child: Text(
+                      (current + 4).toString(),
+                      style: TextStyle(
+                          fontFamily: 'QFonts',
+                          fontSize: ScreenUtil().setSp(80),
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromRGBO(241, 222, 100, 1)
+                      ),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(200)),
-                    child: Image(
-                      height: ScreenUtil().setHeight(60),
-                      width: ScreenUtil().setWidth(60),
-                      image: AssetImage('images/6 黄色.png'),),
+                    child: Text(
+                      (current + 6).toString(),
+                      style: TextStyle(
+                          fontFamily: 'QFonts',
+                          fontSize: ScreenUtil().setSp(80),
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromRGBO(241, 222, 100, 1)
+                      ),
+                    ),
                   )
                 ],
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
               child: RaisedButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -289,21 +374,11 @@ class _CheckPageState extends State<CheckPage> {
                 child: Container(
                   width: ScreenUtil().setWidth(500),
                   child: Center(
-                    child: Text('每日签到'),
+                    child: Text(todayCheck ? '花 ${next} 书币补签' : '每日签到'),
                   ),
                 ),
                 onPressed: (){
                   _pressCheckIn();
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return RichAlertDialog( //uses the custom alert dialog
-                          alertTitle: richTitle("Alert title"),
-                          alertSubtitle: richSubtitle("Subtitle"),
-                          alertType: RichAlertType.SUCCESS,
-                        );
-                      }
-                  );
                 },
               ),
             )
@@ -346,9 +421,9 @@ class _CheckPageState extends State<CheckPage> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          child: Text('410',
+                          child: Text(_isLoadingConfig == true ? '正在计算' : coin.toString(),
                             style: TextStyle(color: Colors.black54,
-                                fontSize: ScreenUtil().setSp(60),
+                                fontSize: _isLoadingConfig == true ? ScreenUtil().setSp(40) : ScreenUtil().setSp(60),
                                 fontWeight: FontWeight.w500),),
                           padding: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
                         ),
@@ -385,9 +460,9 @@ class _CheckPageState extends State<CheckPage> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          child: Text('770',
+                          child: Text(_isLoadingConfig == true ? '正在计算' : gift.toString(),
                             style: TextStyle(color: Colors.black54,
-                                fontSize: ScreenUtil().setSp(60),
+                                fontSize: _isLoadingConfig == true ? ScreenUtil().setSp(40) : ScreenUtil().setSp(60),
                                 fontWeight: FontWeight.w500),),
                           padding: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
                         ),
@@ -415,11 +490,37 @@ class _CheckPageState extends State<CheckPage> {
 
   //progress是反的
   _pressCheckIn(){
-    setState(() {
-      progressNow -= 1;
-      if(progressNow == -1){
-        progressNow = 7;
-      }
+    CheckDao.getToCheck().then((value){
+      setState(() {
+        if(value.success == true){
+            progressNow -= 1;
+            if(progressNow == -1){
+              progressNow = 7;
+            }
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return RichAlertDialog( //uses the custom alert dialog
+                    alertTitle: richTitle("签到成功"),
+                    alertSubtitle: richSubtitle("恭喜赢得书币"),
+                    alertType: RichAlertType.SUCCESS,
+                  );
+                }
+            );
+        }
+        else{
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return RichAlertDialog( //uses the custom alert dialog
+                  alertTitle: richTitle("签到失败"),
+                  alertSubtitle: richSubtitle("书币不足"),
+                  alertType: RichAlertType.WARNING,
+                );
+              }
+          );
+        }
+      });
     });
   }
 
