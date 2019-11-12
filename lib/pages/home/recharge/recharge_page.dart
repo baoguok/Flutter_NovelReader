@@ -48,7 +48,7 @@ class _RechargePageState extends State<RechargePage> {
       print("App ID:" + appID);
     });
 
-    _haveReadP rotocol = true;
+    _haveReadProtocol = true;
     _checkboxListChecked = true;
     super.initState();
   }
