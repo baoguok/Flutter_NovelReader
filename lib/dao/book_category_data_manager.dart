@@ -22,8 +22,8 @@ class BookCategoryDao{
     }
   }
 
-  static Future<CateListModel> fetchCateList(int channel,int cat,int status,int type) async{
-    final response = await http.get(BaseURL+'/search/filter?channel=${channel}&cat=${cat}&status=${status}&fee=${type}&page=1&format=full',
+  static Future<CateListModel> fetchCateList(int channel,int cat,int status,int type,int page) async{
+    final response = await http.get(BaseURL+'/search/filter?channel=${channel}&cat=${cat}&status=${status}&fee=${type}&page=${page}&format=full',
         headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if( response.statusCode == 200){
       //解决中文乱码

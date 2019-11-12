@@ -284,7 +284,8 @@ class _MePageState extends State<MePage> {
                             fontSize: ScreenUtil().setSp(40))),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(30)),
+                    margin: EdgeInsets.only(
+                    bottom: ScreenUtil().setHeight(10)),
                     child: Text('暂未开通',style: TextStyle(
                         color: Colors.white60,fontSize: ScreenUtil().setSp(35)
                     ),
@@ -418,7 +419,7 @@ class _MePageState extends State<MePage> {
       decoration: BoxDecoration(
         color: Colors.white
       ),
-      height: ScreenUtil().setHeight(304),
+      height: ScreenUtil().setHeight(340),
         child: Column(
           children: <Widget>[
             _ListLine(false, 'images/充值.png', '书币充值', _jumpToRecharge),
@@ -432,7 +433,7 @@ class _MePageState extends State<MePage> {
     return Container(
       color: Colors.white,
       margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
-      height: ScreenUtil().setHeight(609),
+      height: ScreenUtil().setHeight(660),
       child: Column(
         children: <Widget>[
           _ListLine(false, 'images/我签到.png', '签到有礼', _jumpToCheckPage),
@@ -448,7 +449,7 @@ class _MePageState extends State<MePage> {
     return Container(
       color: Colors.white,
       margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
-      height: ScreenUtil().setHeight(304),
+      height: ScreenUtil().setHeight(330),
       child: Column(
         children: <Widget>[
           _ListLine(false, 'images/手机我.png', '绑定手机', _jumpToRecharge),
@@ -470,6 +471,7 @@ class _MePageState extends State<MePage> {
                   left: ScreenUtil().setWidth(40)),
               child: Image(
                 width: ScreenUtil().setWidth(80),
+                height: ScreenUtil().setHeight(100),
                 image: AssetImage(image),
               ),
             ),

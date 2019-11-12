@@ -118,13 +118,13 @@ class _RechargePageState extends State<RechargePage> {
       ) : Container(
         child: Stack(
           children: <Widget>[
+            _confirmButton(),
             _coinWidget(),
             Column(
               children: <Widget>[
                 _chooseWidget(),
                 _showProtocolButton(),
                 _payment(),
-                _confirmButton(),
               ],
             ),
           ],
@@ -211,11 +211,11 @@ class _RechargePageState extends State<RechargePage> {
           borderRadius: BorderRadius.all(Radius.circular(5))),
       margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40),
           ScreenUtil().setHeight(450), ScreenUtil().setWidth(40), 0),
-      height: ScreenUtil().setHeight(1160),
+      height: ScreenUtil().setHeight(1200),
       width: ScreenUtil().setWidth(1100),
       child: Container(
         child: CustomRadioButton(
-          hight: ScreenUtil().setHeight(250),
+          hight: ScreenUtil().setHeight(260),
           width: ScreenUtil().setWidth(450),
           buttonColor: Colors.white,
           buttonLables: _buttonLables,
@@ -362,7 +362,7 @@ class _RechargePageState extends State<RechargePage> {
         width: ScreenUtil().setWidth(1125),
         height: ScreenUtil().setHeight(250),
         color: Color(0xffe53935),
-        margin: EdgeInsets.only(top: ScreenUtil().setHeight(112)),
+        margin: EdgeInsets.only(top: ScreenUtil().setHeight(2186)),
         child: Center(
           child: Text(
             '确认支付',

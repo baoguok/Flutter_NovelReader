@@ -30,6 +30,10 @@ class _CategoryPageState extends State<CategoryPage> {
   bool _isLoadingBook = true;
   bool _noBook = false;
 
+  int page = 1;
+  bool isPerformingRequest = false;
+  ScrollController _scrollController = new ScrollController();
+
   List<String> _dropDownHeaderItemStrings = ['性别', '类型', '进度', '价格'];
   List<SortCondition> _sexSortConditions = [];
   List<SortCondition> _categorySortConditions = [];
@@ -92,6 +96,18 @@ class _CategoryPageState extends State<CategoryPage> {
     loadCateConfig();
     loadCateList();
     super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        page += 1;
+        loadMore();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
   
   loadCateConfig(){
@@ -193,6 +209,7 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   loadCateList(){
+    page = 1;
     setState(() {
       _isLoadingBook = true;
     });
@@ -203,7 +220,7 @@ class _CategoryPageState extends State<CategoryPage> {
     _bookCat.clear();
     _bookImage.clear();
     _bookClicks.clear();
-    BookCategoryDao.fetchCateList(_nowSelectedChannel, _nowSelectedCate, _nowSelectedStatus, _nowSelectedType).then((value){
+    BookCategoryDao.fetchCateList(_nowSelectedChannel, _nowSelectedCate, _nowSelectedStatus, _nowSelectedType, 1).then((value){
       setState(() {
         if(value.data != null) {
           _noBook = false;
@@ -228,6 +245,57 @@ class _CategoryPageState extends State<CategoryPage> {
         _isLoadingBook = false;
       });
     });
+  }
+
+  loadMore(){
+    if(!isPerformingRequest){
+      setState(() => isPerformingRequest = true);
+      BookCategoryDao.fetchCateList(_nowSelectedChannel, _nowSelectedCate, _nowSelectedStatus, _nowSelectedType, page).then((value){
+        setState(() {
+          if(value.data != null) {
+            _noBook = false;
+            print('11');
+            _cateListModel = value;
+            _cateListData = value.data;
+            for (var i = 0; i < _cateListData.length; i++) {
+              _bookId.add(_cateListData[i].id);
+              _bookName.add(_cateListData[i].name);
+              _bookImage.add(_cateListData[i].image);
+              _bookCat.add(_cateListData[i].cat);
+              _bookClicks.add(_cateListData[i].clicks);
+              _bookStatus.add(_cateListData[i].status);
+              _bookDesc.add(_cateListData[i].desc);
+            }
+            print(_bookId.length);
+          }
+          else
+          {
+            double edge = 50.0;
+            double offsetFromBottom = _scrollController.position.maxScrollExtent - _scrollController.position.pixels;
+            if (offsetFromBottom < edge) {
+              _scrollController.animateTo(
+                  _scrollController.offset - (edge -offsetFromBottom),
+                  duration: new Duration(milliseconds: 500),
+                  curve: Curves.easeOut);
+            }
+          }
+          isPerformingRequest = false;
+          _isLoadingBook = false;
+        });
+      });
+    }
+  }
+
+  Widget _buildProgressIndicator() {
+    return new Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: new Center(
+        child: new Opacity(
+          opacity: isPerformingRequest ? 1.0 : 0.0,
+          child: new CircularProgressIndicator(),
+        ),
+      ),
+    );
   }
 
   @override
@@ -279,9 +347,22 @@ class _CategoryPageState extends State<CategoryPage> {
               ) : Container(
                 height: ScreenUtil().setHeight(2000),
                 child: ListView.builder(
-                  itemCount: _cateListData.length,
+                  controller: _scrollController,
+                  itemCount: _bookId.length + 1,
                   itemBuilder: (context,index){
-                    return _getMainItem(_bookId[index], _bookImage[index], _bookName[index], _bookStatus[index], _bookDesc[index], _bookCat[index], _bookClicks[index]);
+                    if (index == _bookId.length) {
+                      return _buildProgressIndicator();
+                    }
+                    else {
+                      return _getMainItem(
+                          _bookId[index],
+                          _bookImage[index],
+                          _bookName[index],
+                          _bookStatus[index],
+                          _bookDesc[index],
+                          _bookCat[index],
+                          _bookClicks[index]);
+                    }
                   },
                 ),
               ),
