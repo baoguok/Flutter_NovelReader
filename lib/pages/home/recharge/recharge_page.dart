@@ -1,9 +1,13 @@
+import 'package:app_review/app_review.dart';
 import 'package:circular_check_box/circular_check_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/dao/pay_data_manager.dart';
+import 'package:flutter_reader/model/pay/pay_config_model.dart';
 import 'package:flutter_reader/pages/home/recharge/Radio_Widget.dart';
 import 'package:flutter_reader/pages/home/recharge/protocol_dialog.dart';
 import 'package:flutter_reader/pages/home/recharge/radio_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'Radio_payment.dart';
 
@@ -25,11 +29,28 @@ class _RechargePageState extends State<RechargePage> {
   bool _selectWechat = true;
   bool _selectAlipay = false;
 
+  bool _isLoadingConfig = true;
+  int coin = 0;
+  List<PayConfigItem> _itemList = [];
+
+  List<String> _buttonLables = [];
+  List<String> _buttonSubLables = [];
+  List<String> _buttonRemarksLables = [];
+  List<String> _buttonLogo = [];
+
+
   @override
   void initState() {
-    super.initState();
-    _haveReadProtocol = true;
+    loadConfig();
+
+    AppReview.getAppID.then((onValue) {
+      String appID = onValue;
+      print("App ID:" + appID);
+    });
+
+    _haveReadP rotocol = true;
     _checkboxListChecked = true;
+    super.initState();
   }
 
   @override
@@ -37,12 +58,64 @@ class _RechargePageState extends State<RechargePage> {
     super.dispose();
   }
 
+  loadConfig(){
+    _itemList.clear();
+    _buttonLables.clear();
+    _buttonSubLables.clear();
+    _buttonRemarksLables.clear();
+    _buttonLogo.clear();
+    PayDao.fetchConfig().then((value){
+      setState(() {
+      coin = value.data.coin;
+      for(int i = 0;i < value.data.item.length; i++){
+          _itemList.add(value.data.item[i]);
+      }
+      print(_itemList.length);
+      for(int i = 0;i < _itemList.length; i++){
+        _buttonLables.add(_itemList[i].price);
+        _buttonSubLables.add(_itemList[i].name);
+        _buttonRemarksLables.add(_itemList[i].desc);
+        if(_itemList[i].logo == 'hot'){
+          _buttonLogo.add('hot');
+        }
+        else{
+          _buttonLogo.add('cold');
+        }
+      }
+      print(_buttonLogo);
+      _isLoadingConfig = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
+      body: _isLoadingConfig ? Container(
+        width: ScreenUtil.screenWidth,
+        height: ScreenUtil.screenHeight,
+        child: Center(
+          child: Container(
+            padding: EdgeInsets.only(top: ScreenUtil().setHeight(1000)),
+            child: Column(
+              children: <Widget>[
+                SpinKitCircle(
+                  color: Colors.red,
+                  size: 50,
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(60)),
+                  child: Text(
+                      '正在为您生成签到页...'
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ) : Container(
         child: Stack(
           children: <Widget>[
             _coinWidget(),
@@ -54,20 +127,8 @@ class _RechargePageState extends State<RechargePage> {
                 _confirmButton(),
               ],
             ),
-            _hotImage()
           ],
         ),
-      ),
-    );
-  }
-
-  _hotImage() {
-    return Container(
-      margin: EdgeInsets.only(
-          top: ScreenUtil().setHeight(450), left: ScreenUtil().setWidth(955)),
-      child: Image(
-        width: ScreenUtil().setWidth(100),
-        image: AssetImage('images/hot.png'),
       ),
     );
   }
@@ -130,7 +191,7 @@ class _RechargePageState extends State<RechargePage> {
                 Container(
                   margin: EdgeInsets.only(left: ScreenUtil().setWidth(5)),
                   child: Text(
-                    '410      书币',
+                    '${coin}      书币',
                     style: TextStyle(
                         color: Colors.white, fontSize: ScreenUtil().setSp(60)),
                   ),
@@ -157,24 +218,11 @@ class _RechargePageState extends State<RechargePage> {
           hight: ScreenUtil().setHeight(250),
           width: ScreenUtil().setWidth(450),
           buttonColor: Colors.white,
-          buttonLables: ['30元', '50元', '66元', '99元', 'vip包月', 'vip包年'],
-          buttonSubLables: [
-            '3000书币',
-            '5000+1500书币',
-            '6600+6600书币',
-            '9900+9900书币',
-            '128元',
-            '365元'
-          ],
+          buttonLables: _buttonLables,
+          buttonSubLables: _buttonSubLables,
+          buttonLogo: _buttonLogo,
           buttonValues: ['1', '2', '3', '4', '5', '6'],
-          buttonRemarksLables: [
-            '多送0元',
-            '多送15元',
-            '多送30元',
-            '多送50元',
-            '60天全站免费畅读',
-            '每天1元，365天全站免费畅读',
-          ],
+          buttonRemarksLables: _buttonRemarksLables,
           radioButtonValue: (value) => print(value),
           selectedColor: Color(0xffe53935),
         ),

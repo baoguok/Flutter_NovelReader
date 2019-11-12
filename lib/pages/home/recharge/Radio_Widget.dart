@@ -6,6 +6,7 @@ class CustomRadioButton extends StatefulWidget {
     this.buttonLables,
     this.buttonSubLables,
     this.buttonValues,
+    this.buttonLogo,
     this.radioButtonValue,
     this.buttonRemarksLables,
     this.buttonColor,
@@ -28,6 +29,8 @@ class CustomRadioButton extends StatefulWidget {
   final List<String> buttonSubLables;
 
   final List<String> buttonRemarksLables;
+
+  final List<String> buttonLogo;
 
   final Function(dynamic) radioButtonValue;
 
@@ -60,12 +63,98 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
   }
 
   _simpleItem(int index){
-    return Container(
+    return widget.buttonLogo[index] == 'hot' ? Container(
+      child: Stack(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.fromLTRB(
+                ScreenUtil().setWidth(48),
+                ScreenUtil().setHeight(40), 0, 0),
+            height: widget.hight,
+            width: ScreenUtil().setWidth(430),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                border: Border.all(
+                    color: Color(0xffe53935),
+                    width: 1
+                ),
+                color: currentSelectedLabel == widget.buttonLables[index]
+                    ? widget.selectedColor : widget.buttonColor
+            ),
+            child: MaterialButton(
+                onPressed: () {
+                  widget.radioButtonValue(widget.buttonValues[index]);
+                  setState(() {
+                    currentSelected = index;
+                    currentSelectedLabel = widget.buttonLables[index];
+                  });
+                },
+                child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                          child:Text(
+                            widget.buttonLables[index],
+                            style: TextStyle(
+                                color: currentSelectedLabel == widget.buttonLables[index]
+                                    ? Colors.white
+                                    : Colors.black54,
+                                fontSize: ScreenUtil().setSp(60),
+                                fontWeight: FontWeight.w500
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                          child: Text(
+                            widget.buttonSubLables[index],
+                            style: TextStyle(
+                                color: currentSelectedLabel == widget.buttonLables[index]
+                                    ? Colors.white
+                                    : Colors.black54,
+                                fontSize: ScreenUtil().setSp(40),
+                                fontWeight: FontWeight.w400
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                          child: Text(
+                            widget.buttonRemarksLables[index],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: currentSelectedLabel == widget.buttonLables[index]
+                                    ? Colors.white
+                                    : Color(0xffe53935),
+                                fontSize: ScreenUtil().setSp(30),
+                                fontWeight: FontWeight.w400
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                )
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: ScreenUtil().setWidth(400)),
+            child: Image(
+              width: ScreenUtil().setWidth(100),
+              height: ScreenUtil().setHeight(150),
+              image: AssetImage('images/hot.png',),
+            ),
+          )
+        ],
+      ),
+    ) :
+    Container(
       margin: EdgeInsets.fromLTRB(
-          ScreenUtil().setWidth(48),
+          ScreenUtil().setWidth(60),
           ScreenUtil().setHeight(40), 0, 0),
       height: widget.hight,
-      width: ScreenUtil().setWidth(450),
+      width: ScreenUtil().setWidth(430),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
           border: Border.all(
@@ -116,11 +205,13 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
                     margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
                     child: Text(
                       widget.buttonRemarksLables[index],
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: currentSelectedLabel == widget.buttonLables[index]
-                            ? Colors.white
-                            : Color(0xffe53935),
-                          fontSize: ScreenUtil().setSp(40),
+                          color: currentSelectedLabel == widget.buttonLables[index]
+                              ? Colors.white
+                              : Color(0xffe53935),
+                          fontSize: ScreenUtil().setSp(30),
                           fontWeight: FontWeight.w400
                       ),
                     ),
