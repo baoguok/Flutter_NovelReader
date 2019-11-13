@@ -22,8 +22,8 @@ class BookRankDao{
     }
   }
 
-  static Future<RankDetailModel> fetchRankDetail(String channel,int id) async{
-    final response = await http.get(BaseURL+'/rank/one?channel=${channel}&id=${id}&page=1&format=full',
+  static Future<RankDetailModel> fetchRankDetail(String channel,int id,int page) async{
+    final response = await http.get(BaseURL+'/rank/one?channel=${channel}&id=${id}&page=${page}&format=full',
         headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
     if( response.statusCode == 200){
       //解决中文乱码

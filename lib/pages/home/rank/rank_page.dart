@@ -54,6 +54,7 @@ class _RankPageState extends State<RankPage> {
   @override
   void dispose() {
     super.dispose();
+
   }
 
   loadRankConfig(){
@@ -89,7 +90,7 @@ class _RankPageState extends State<RankPage> {
     _bookCat.clear();
     _bookImage.clear();
     _bookClicks.clear();
-    BookRankDao.fetchRankDetail(channel, _selectedId).then((value){
+    BookRankDao.fetchRankDetail(channel, _selectedId,1).then((value){
       setState(() {
         _rankDetailModel = value;
         _rankDetailData = value.data;
@@ -106,6 +107,7 @@ class _RankPageState extends State<RankPage> {
       });
     });
   }
+
 
   Iterable<Widget> get rankCategory sync*{
     for (String choiceSub in _sub){
@@ -207,9 +209,16 @@ class _RankPageState extends State<RankPage> {
         width: ScreenUtil().setWidth(805),
         height: ScreenUtil().setHeight(1950),
         child: ListView.builder(
-            itemCount: _rankDetailData.length,
+            itemCount: _bookId.length + 1,
             itemBuilder: (context,index){
-              return _getMainItem(_bookId[index], _bookImage[index], _bookName[index], _bookStatus[index], _bookDesc[index], _bookCat[index], _bookClicks[index]);
+                return _getMainItem(
+                    _bookId[index],
+                    _bookImage[index],
+                    _bookName[index],
+                    _bookStatus[index],
+                    _bookDesc[index],
+                    _bookCat[index],
+                    _bookClicks[index]);
             })
     );
   }
@@ -346,13 +355,16 @@ class _RankPageState extends State<RankPage> {
                 width: ScreenUtil().setWidth(50),
                 height: ScreenUtil().setHeight(30),
                 fit: BoxFit.fill,
-                image: AssetImage('images/浏览眼睛@2x.png'),
+                image: AssetImage('images/fl_eye.png'),
               ),
             ),
             Container(
+              width: ScreenUtil().setWidth(100),
               margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(20), ScreenUtil().setHeight(20), 0, 0),
               child: Text(
                 readTimes.toString(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                     fontSize: ScreenUtil().setSp(35),
                     color: Color(0xffe53935)
