@@ -537,7 +537,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   ScreenUtil().setHeight(0)),
               child: Image(
                 width: ScreenUtil().setWidth(280),
-                height: ScreenUtil().setHeight(350),
+                height: 1.27*ScreenUtil().setWidth(280),
                 image: NetworkImage(imageName),
                 fit: BoxFit.fill,
               ),
@@ -568,6 +568,7 @@ class _CategoryPageState extends State<CategoryPage> {
               width: ScreenUtil().setWidth(700),
               height: ScreenUtil().setHeight(120),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     child: Align(
@@ -631,7 +632,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 width: ScreenUtil().setWidth(50),
                 height: ScreenUtil().setHeight(30),
                 fit: BoxFit.fill,
-                image: AssetImage('images/浏览眼睛@2x.png'),
+                image: AssetImage('images/fl_eye.png'),
               ),
             ),
             Container(

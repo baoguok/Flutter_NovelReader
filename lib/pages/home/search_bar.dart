@@ -130,7 +130,7 @@ class _searchBarState extends State<SearchBar> {
                   child: Image(
                     width: ScreenUtil().setWidth(90),
                     height: ScreenUtil().setHeight(120),
-                    image: AssetImage('images/福利.png'),
+                    image: AssetImage('images/fl_gift.png'),
                   )
               ),
               widget.rightButtonClick)
@@ -162,7 +162,7 @@ class _searchBarState extends State<SearchBar> {
                   child: Image(
                     width: ScreenUtil().setWidth(90),
                     height: ScreenUtil().setHeight(120),
-                    image: AssetImage('images/福利.png'),
+                    image: AssetImage('images/fl_gift.png'),
                     color: Color(0xffe53935),
                   )
               ),

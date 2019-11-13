@@ -16,7 +16,7 @@ class VipPage extends StatelessWidget {
               height: ScreenUtil().setHeight(2436),
               child: Image(
                 fit: BoxFit.fill,
-                image: AssetImage('images/VIP会员界面@2x.jpg'),
+                image: AssetImage('images/fl_vipBG.jpg'),
               ),
             ),
             Container(
@@ -53,7 +53,7 @@ class VipPage extends StatelessWidget {
                             fit: BoxFit.fill,
                             width: ScreenUtil().setWidth(900),
                             height: ScreenUtil().setHeight(300),
-                            image: AssetImage('images/会员2@2x.png'),
+                            image: AssetImage('images/fl_vip.png'),
                           ),
                         ),
                       ),
@@ -75,7 +75,7 @@ class VipPage extends StatelessWidget {
                             fit: BoxFit.fill,
                             width: ScreenUtil().setWidth(900),
                             height: ScreenUtil().setHeight(300),
-                            image: AssetImage('images/会员2@2x.png'),
+                            image: AssetImage('images/fl_vip.png'),
                           ),
                         ),
                       ),

@@ -201,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   Image(
                     width: ScreenUtil().setWidth(150),
-                    image: AssetImage('images/微信登录.png'),
+                    image: AssetImage('images/fl_WeChatLog.png'),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: ScreenUtil().setHeight(60)),
