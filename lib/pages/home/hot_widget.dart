@@ -123,6 +123,7 @@ class _HotWidgetState extends State<HotWidget> {
       child: Container(
         margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
@@ -157,7 +158,7 @@ class _HotWidgetState extends State<HotWidget> {
               margin: EdgeInsets.only(right: ScreenUtil().setWidth(60)),
               child: Image(
                 fit: BoxFit.fill,
-                width: ScreenUtil().setWidth(500),
+                width: 2.34*ScreenUtil().setHeight(200),
                 height: ScreenUtil().setHeight(200),
                 image: NetworkImage(image),
               ),

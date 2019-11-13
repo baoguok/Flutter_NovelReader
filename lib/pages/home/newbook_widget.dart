@@ -155,7 +155,8 @@ class _NewBookWidgetState extends State<NewBookWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
+              margin: EdgeInsets.fromLTRB(0, ScreenUtil().setHeight(50), ScreenUtil().setWidth(320), 0),
+              width: ScreenUtil().setWidth(150),
               decoration: BoxDecoration(
                   border: Border.all(
                       color: Colors.grey,
@@ -164,16 +165,14 @@ class _NewBookWidgetState extends State<NewBookWidget> {
                   ),
                   borderRadius:BorderRadius.all(Radius.circular(5.0))
               ),
-              child: Center(
-                child: new Text(
-                  type,
-                  style: TextStyle(
-                    fontSize: ScreenUtil().setSp(38),
-                    color: Colors.black54
-                  ),
-                  textAlign: TextAlign.justify,
+              child: Text(
+                type,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: ScreenUtil().setSp(30),
+                    color: Colors.grey
                 ),
-              )
+              ),
             ),
             Container(
               child: Row(
@@ -184,7 +183,7 @@ class _NewBookWidgetState extends State<NewBookWidget> {
                       width: ScreenUtil().setWidth(50),
                       height: ScreenUtil().setHeight(30),
                       fit: BoxFit.fill,
-                      image: AssetImage('images/浏览眼睛@2x.png'),
+                      image: AssetImage('images/fl_eye.png'),
                     ),
                   ),
                   Container(

@@ -61,7 +61,7 @@ class _MePageState extends State<MePage> {
   Widget _topLabBar(GlobalModel hasLogin){
     return Container(
       color: Colors.white,
-      height: ScreenUtil().setHeight(1000),
+      height: ScreenUtil().setHeight(1050),
       child: Container(
         child: Column(
           children: <Widget>[
@@ -76,6 +76,7 @@ class _MePageState extends State<MePage> {
 
   Widget _iconAndCheck(GlobalModel hasLogin){
     return Container(
+      height: ScreenUtil().setHeight(400),
       child:Row(
         children: <Widget>[
           InkWell(
@@ -90,7 +91,7 @@ class _MePageState extends State<MePage> {
               child: ClipOval(
                 child:Image(
                   width: ScreenUtil().setWidth(200),
-                  image: hasLogin.value == true ? AssetImage('images/userIcon.jpeg') : AssetImage('images/用户.png'),
+                  image: hasLogin.value == true ? AssetImage('images/userIcon.jpeg') : AssetImage('images/fl_user.png'),
                 ),
               ),
             ),
@@ -171,6 +172,7 @@ class _MePageState extends State<MePage> {
 
   Widget _coinAndTicket(GlobalModel hasLogin){
     return Container(
+      height: ScreenUtil().setHeight(150),
       margin: EdgeInsets.only(top: ScreenUtil().setHeight(70)),
       child: Row(
         children: <Widget>[
@@ -241,6 +243,7 @@ class _MePageState extends State<MePage> {
     return InkWell(
       onTap: _jumpToVipPage,
       child: Container(
+        width: ScreenUtil().setWidth(1045),
         height: ScreenUtil().setHeight(300),
         margin: EdgeInsets.only(top: ScreenUtil().setHeight(70),
             left: ScreenUtil().setWidth(40),
@@ -329,7 +332,7 @@ class _MePageState extends State<MePage> {
                     child: Image(
                       color: Color(0xffe53935),
                       width: ScreenUtil().setWidth(110),
-                      image: AssetImage('images/我签到.png'),
+                      image: AssetImage('images/fl_check.png'),
                     ),
                   ),
                   Container(
@@ -351,7 +354,7 @@ class _MePageState extends State<MePage> {
                     child: Image(
                       color: Color(0xffe53935),
                       width: ScreenUtil().setWidth(110),
-                      image: AssetImage('images/记录.png'),
+                      image: AssetImage('images/fl_recorder.png'),
                     ),
                   ),
                   Container(
@@ -395,7 +398,7 @@ class _MePageState extends State<MePage> {
                     child: Image(
                       color: Color(0xffe53935),
                       width: ScreenUtil().setWidth(110),
-                      image: AssetImage('images/兑换.png'),
+                      image: AssetImage('images/fl_change.png'),
                     ),
                   ),
                   Container(
@@ -419,11 +422,11 @@ class _MePageState extends State<MePage> {
       decoration: BoxDecoration(
         color: Colors.white
       ),
-      height: ScreenUtil().setHeight(340),
+      height: ScreenUtil().setHeight(300),
         child: Column(
           children: <Widget>[
-            _ListLine(false, 'images/充值.png', '书币充值', _jumpToRecharge),
-            _ListLine(true, 'images/皇冠.png', '开通会员', _jumpToVipPage)
+            _ListLine(false, 'images/fl_recharge.png', '书币充值', _jumpToRecharge),
+            _ListLine(true, 'images/fl_king.png', '开通会员', _jumpToVipPage)
           ],
         )
     );
@@ -433,13 +436,13 @@ class _MePageState extends State<MePage> {
     return Container(
       color: Colors.white,
       margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
-      height: ScreenUtil().setHeight(660),
+      height: ScreenUtil().setHeight(600),
       child: Column(
         children: <Widget>[
-          _ListLine(false, 'images/我签到.png', '签到有礼', _jumpToCheckPage),
-          _ListLine(false, 'images/记录.png', '充值记录', _jumpToRechargeRecordPage),
-          _ListLine(false, 'images/钱.png', '消费记录', _jumpToConsumptionPage),
-          _ListLine(true, 'images/兑换.png', '兑换专区', _jumpToExchangePage),
+          _ListLine(false, 'images/fl_check.png', '签到有礼', _jumpToCheckPage),
+          _ListLine(false, 'images/fl_recorder.png', '充值记录', _jumpToRechargeRecordPage),
+          _ListLine(false, 'images/fl_money.png', '消费记录', _jumpToConsumptionPage),
+          _ListLine(true, 'images/fl_change.png', '兑换专区', _jumpToExchangePage),
         ],
       ),
     );
@@ -449,11 +452,11 @@ class _MePageState extends State<MePage> {
     return Container(
       color: Colors.white,
       margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
-      height: ScreenUtil().setHeight(330),
+      height: ScreenUtil().setHeight(300),
       child: Column(
         children: <Widget>[
-          _ListLine(false, 'images/手机我.png', '绑定手机', _jumpToRecharge),
-          _ListLine(true, 'images/_意见反馈.png', '意见反馈', _jumpToFeedbackPage),
+          _ListLine(false, 'images/fl_phone.png', '绑定手机', _jumpToRecharge),
+          _ListLine(true, 'images/fl_review.png', '意见反馈', _jumpToFeedbackPage),
         ],
       ),
     );
@@ -464,6 +467,7 @@ class _MePageState extends State<MePage> {
     return InkWell(
       onTap: jumpFunc,
       child: Container(
+        height: ScreenUtil().setHeight(150),
         child: Row(
           children: <Widget>[
             Container(
@@ -502,7 +506,7 @@ class _MePageState extends State<MePage> {
                     child: Image(
                       width: ScreenUtil().setWidth(80),
                       height: ScreenUtil().setHeight(50),
-                      image: AssetImage('images/箭头.png'),
+                      image: AssetImage('images/fl_arrow.png'),
                     ),
                   )
                 ],

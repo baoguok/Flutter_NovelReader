@@ -51,14 +51,14 @@ class _FuncWidgetState extends State<FuncWidget> {
   _items(BuildContext context){
 
     List<Widget> items = [
-      _item(context, '充值', 'images/充值2@2x.png', _jumpToRecharge),
-      _item(context, '分类', 'images/类目 品类 分类 类别.2.png', _jumpToCategory),
-      _item(context, '排行榜', 'images/排行榜.png', (){
+      _item(context, '充值', 'images/fl_recharge2.png', _jumpToRecharge),
+      _item(context, '分类', 'images/fl_category.png', _jumpToCategory),
+      _item(context, '排行榜', 'images/fl_rank.png', (){
         Navigator.push(context, MaterialPageRoute(
             builder: (context) => RankPage(channel: widget.channel,)
         ));
       }),
-      _item(context, '签到', 'images/签到@2x.png', _jumpToCheck)
+      _item(context, '签到', 'images/fl_check3.png', _jumpToCheck)
     ];
 
 

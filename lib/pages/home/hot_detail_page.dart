@@ -211,7 +211,7 @@ class _HotDetailPageState extends State<HotDetailPage> {
                 width: ScreenUtil().setWidth(50),
                 height: ScreenUtil().setHeight(30),
                 fit: BoxFit.fill,
-                image: AssetImage('images/浏览眼睛@2x.png'),
+                image: AssetImage('images/fl_eye.png'),
               ),
             ),
             Container(

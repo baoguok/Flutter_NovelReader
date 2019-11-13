@@ -278,7 +278,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           padding: EdgeInsets.fromLTRB(7, 10, 7, 4),
           child: FuncWidget(channel: channel,),
         ),
-        _getIcon('images/热门@2x.png', '热门专区'),
+        _getIcon('images/fl_hot.png', '热门专区'),
         _isLoadingHot == true ? Container(
           width: ScreenUtil().setWidth(1125),
           height: ScreenUtil().setHeight(750),
@@ -292,7 +292,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             size: 50,
           ),
         ) : HotWidget(channel,_hotType,_hotBookid,_hotImage,_hotTitle,_hotSubTitle),
-        _getIcon('images/推荐@2x.png', '主编推荐'),
+        _getIcon('images/fl_recommend.png', '主编推荐'),
         _isLoadingRecommend == true ? Container(
           width: ScreenUtil().setWidth(1125),
           height: ScreenUtil().setHeight(600),
@@ -306,7 +306,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             size: 50,
           ),
         ) : RecommendWidget(channel,_recommendBookId,_recommendImage,_recommendTitle),
-        _getIcon('images/31_新品@2x.png', '新书抢先'),
+        _getIcon('images/fl_new.png', '新书抢先'),
         _isLoadingNew == true ? Container(
           width: ScreenUtil().setWidth(1125),
           height: ScreenUtil().setHeight(1250),
@@ -320,7 +320,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             size: 50,
           ),
         ) : NewBookWidget(channel,_newBookId, _newName, _newImage, _newCat, _newDesc, _newStatus, _newClicks),
-        _getOtherIcon('images/喜欢@2x.png', '猜你喜欢', 'images/换一批红@2x.png', '换一批'),
+        _getOtherIcon('images/fl_like.png', '猜你喜欢', 'images/fl_loadOther.png', '换一批'),
         _isLoadingGuess == true ? Container(
           width: ScreenUtil().setWidth(1125),
           height: ScreenUtil().setHeight(1175),
@@ -334,7 +334,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             size: 50,
           ),
         ) : GuessWidget(channel,_guessBookId, _guessImage, _guessTitle),
-        _getIcon('images/联系 (1).png', '联系我们'),
+        _getIcon('images/fl_connect1.png', '联系我们'),
         _isLoadingHot == true ? SizedBox() : ConnectWidget(_connectTime, _connectQQ, _connectName, _connectImage)
       ],
     );

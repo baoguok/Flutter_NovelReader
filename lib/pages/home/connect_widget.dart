@@ -58,7 +58,7 @@ class _ConnectWidgetState extends State<ConnectWidget> {
                 Container(
                   margin: EdgeInsets.only(top: ScreenUtil().setHeight(70)),
                   child: Image(
-                    image: AssetImage('images/联系.png'),
+                    image: AssetImage('images/fl_connect.png'),
                     width: ScreenUtil().setWidth(55),
                     height: ScreenUtil().setWidth(55),
                   ),
@@ -92,7 +92,7 @@ class _ConnectWidgetState extends State<ConnectWidget> {
                 Container(
                   margin: EdgeInsets.only(left: 0),
                   child: Image(
-                    image: AssetImage('images/时间.png'),
+                    image: AssetImage('images/fl_time.png'),
                     width: ScreenUtil().setWidth(55),
                     height: ScreenUtil().setWidth(55),
                   ),
