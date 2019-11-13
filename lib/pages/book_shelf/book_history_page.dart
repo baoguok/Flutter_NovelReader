@@ -195,7 +195,7 @@ class _BookHistoryPageState extends State<BookHistoryPage> {
                   ScreenUtil().setHeight(0)),
               child: Image(
                 width: ScreenUtil().setWidth(280),
-                height: ScreenUtil().setHeight(350),
+                height: 1.27*ScreenUtil().setWidth(280),
                 image: NetworkImage(bookImage),
                 fit: BoxFit.fill,
               ),
