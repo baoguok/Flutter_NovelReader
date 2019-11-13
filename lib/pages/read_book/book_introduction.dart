@@ -190,7 +190,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
           child: Column(
             children: <Widget>[
               Container(
-                height: ScreenUtil().setHeight(1900),
+                height: ScreenUtil().setHeight(1950),
                 child: ListView(
                   children: <Widget>[
                     _topWidget(),
@@ -221,10 +221,10 @@ class _BookInfoPageState extends State<BookInfoPage> {
 child: widget.isHorizontal == false ?
 BookHero(
   book: widget.bookImage,
-  height: ScreenUtil().setHeight(500),
+  height: 1.27*ScreenUtil().setWidth(400),
 ) : _isLoadData == true ? SizedBox() : BookHero(
   book: _bookReloadImage,
-  height: ScreenUtil().setHeight(500),
+  height: 1.27*ScreenUtil().setWidth(400),
 ),
 //              child: Image(
 //                width: ScreenUtil().setWidth(500),
@@ -652,7 +652,7 @@ BookHero(
                             child: Image(
                               width: ScreenUtil().setWidth(50),
                               color: Colors.black54,
-                              image: AssetImage('images/刷新.png'),
+                              image: AssetImage('images/fl_reload.png'),
                             ),
                           )
                         ],
@@ -707,7 +707,7 @@ BookHero(
                   ScreenUtil().setHeight(0)),
               child: Image(
                 width: ScreenUtil().setWidth(280),
-                height: ScreenUtil().setHeight(350),
+                height: 1.27*ScreenUtil().setWidth(280),
                 image: NetworkImage(imageName),
                 fit: BoxFit.fill,
               ),
@@ -738,6 +738,7 @@ BookHero(
               width: ScreenUtil().setWidth(700),
               height: ScreenUtil().setHeight(120),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     child: Align(
@@ -773,7 +774,9 @@ BookHero(
 
   _bottom(String type, int readTimes){
     return Container(
+      width: ScreenUtil().setWidth(700),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
               margin: EdgeInsets.fromLTRB(0, ScreenUtil().setHeight(50), ScreenUtil().setWidth(320), 0),
@@ -801,11 +804,11 @@ BookHero(
                 width: ScreenUtil().setWidth(50),
                 height: ScreenUtil().setHeight(30),
                 fit: BoxFit.fill,
-                image: AssetImage('images/浏览眼睛@2x.png'),
+                image: AssetImage('images/fl_eye.png'),
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(30), ScreenUtil().setHeight(60), 0, 0),
+              margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(0), ScreenUtil().setHeight(60), ScreenUtil().setWidth(20), 0),
               child: Text(
                 readTimes.toString(),
                 style: TextStyle(
@@ -820,118 +823,122 @@ BookHero(
   }
   
   _bottomReadButton(){
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 20.0, // has the effect of softening the shadow
-            spreadRadius: 5.0, // has the effect of extending the shadow
-            offset: Offset(
-              10.0, // horizontal, move right 10
-              10.0, // vertical, move down 10
-            ),
-          )
-        ]
-      ),
-      width: ScreenUtil().setWidth(1125),
-      height: ScreenUtil().setHeight(236),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-          flex: 1,
-            child: widget.hasCollect == false ? InkWell(
-              onTap: (){
-                addToBookShelf(widget.bookId);
-              },
-              child: Container(
-                color: Colors.white,
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
-                      child: Image(
-                        width: ScreenUtil().setWidth(100),
-                        color: Color(0xffe53935),
-                        image: AssetImage('images/标签.png'),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
-                      child: Text('加入书架',style: TextStyle(
-                          color: Color(0xffe53935),
-                          fontSize: ScreenUtil().setSp(50),
-                          fontWeight: FontWeight.w500
-                      ),),
-                    )
-                  ],
-                ),
-              ),
-            ) : Container(
+    return Expanded(
+      child: Align(
+        alignment: FractionalOffset.bottomCenter,
+        child: Container(
+          decoration: BoxDecoration(
               color: Colors.white,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
-                    child: Image(
-                      width: ScreenUtil().setWidth(100),
-                      color: Color(0xffe53935),
-                      image: AssetImage('images/标签.png'),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 20.0, // has the effect of softening the shadow
+                  spreadRadius: 5.0, // has the effect of extending the shadow
+                  offset: Offset(
+                    10.0, // horizontal, move right 10
+                    10.0, // vertical, move down 10
+                  ),
+                )
+              ]
+          ),
+          width: ScreenUtil().setWidth(1125),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: widget.hasCollect == false ? InkWell(
+                  onTap: (){
+                    addToBookShelf(widget.bookId);
+                  },
+                  child: Container(
+                    color: Colors.white,
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
+                          child: Image(
+                            width: ScreenUtil().setWidth(100),
+                            color: Color(0xffe53935),
+                            image: AssetImage('images/fl_symbol.png'),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
+                          child: Text('加入书架',style: TextStyle(
+                              color: Color(0xffe53935),
+                              fontSize: ScreenUtil().setSp(50),
+                              fontWeight: FontWeight.w500
+                          ),),
+                        )
+                      ],
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
-                    child: Text('已在书架',style: TextStyle(
-                        color: Color(0xffe53935),
-                        fontSize: ScreenUtil().setSp(50),
-                        fontWeight: FontWeight.w500
-                    ),),
-                  )
-                ],
-              ),
-            ),
-        ),
-          Expanded(
-            flex: 1,
-            child: InkWell(
-              onTap: (){
-                print('开始阅读');
-                Navigator.push(context, MaterialPageRoute(
-                    builder: (context){
-                      return BookContentPage(_hasReadBefore == true ? _currentCha : _bookCataId[0],widget.bookId,widget.hasCollect);
-                    }
-                ));
-              },
-              child: Container(
-                height: ScreenUtil().setHeight(236),
-                decoration: BoxDecoration(
-                    color: Color(0xffe53935)
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
-                      child: Image(
-                        width: ScreenUtil().setWidth(100),
-                        color: Colors.white,
-                        image: AssetImage('images/看书.png'),
+                ) : Container(
+                  color: Colors.white,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
+                        child: Image(
+                          width: ScreenUtil().setWidth(100),
+                          color: Color(0xffe53935),
+                          image: AssetImage('images/fl_symbol.png'),
+                        ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
-                      child: Text(_hasReadBefore == true ? '继续阅读' : '开始阅读',style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ScreenUtil().setSp(50),
-                          fontWeight: FontWeight.w500
-                      ),),
-                    )
-                  ],
+                      Container(
+                        margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
+                        child: Text('已在书架',style: TextStyle(
+                            color: Color(0xffe53935),
+                            fontSize: ScreenUtil().setSp(50),
+                            fontWeight: FontWeight.w500
+                        ),),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          )
-        ],
+              Expanded(
+                flex: 1,
+                child: InkWell(
+                  onTap: (){
+                    print('开始阅读');
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context){
+                          return BookContentPage(_hasReadBefore == true ? _currentCha : _bookCataId[0],widget.bookId,widget.hasCollect);
+                        }
+                    ));
+                  },
+                  child: Container(
+                    height: ScreenUtil().setHeight(236),
+                    decoration: BoxDecoration(
+                        color: Color(0xffe53935)
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
+                          child: Image(
+                            width: ScreenUtil().setWidth(100),
+                            color: Colors.white,
+                            image: AssetImage('images/fl_read.png'),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
+                          child: Text(_hasReadBefore == true ? '继续阅读' : '开始阅读',style: TextStyle(
+                              color: Colors.white,
+                              fontSize: ScreenUtil().setSp(50),
+                              fontWeight: FontWeight.w500
+                          ),),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
