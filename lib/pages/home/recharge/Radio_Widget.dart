@@ -258,7 +258,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
                         Container(
                           child: Image(
                             width:ScreenUtil().setWidth(100),
-                            image: AssetImage('images/皇冠-VIP.png'),
+                            image: AssetImage('images/fl_King2.png'),
                           ),
                         ),
                         Container(

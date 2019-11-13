@@ -132,7 +132,7 @@ class _CheckPageState extends State<CheckPage> {
                     child: Image(
                       width: ScreenUtil().setWidth(70),
                       height: ScreenUtil().setHeight(90),
-                      image: AssetImage('images/疑问.png'),
+                      image: AssetImage('images/fl_question.png'),
                     ),
                   ),
                 )
@@ -182,7 +182,7 @@ class _CheckPageState extends State<CheckPage> {
                     child: Image(
                       height: ScreenUtil().setHeight(100),
                       width: ScreenUtil().setWidth(100),
-                      image: AssetImage('images/签到.png'),
+                      image: AssetImage('images/fl_check2.png'),
                     ),
                   )
                 ],
@@ -292,7 +292,7 @@ class _CheckPageState extends State<CheckPage> {
                     child: Image(
                       height: ScreenUtil().setHeight(100),
                       width: ScreenUtil().setWidth(80),
-                      image: AssetImage('images/礼物.png'),),
+                      image: AssetImage('images/fl_gift2.png'),),
                   ),
                 ],
               ),
@@ -412,7 +412,7 @@ class _CheckPageState extends State<CheckPage> {
                     child: Image(
                       width: ScreenUtil().setWidth(100),
                       height: ScreenUtil().setHeight(100),
-                      image: AssetImage('images/64-金币.png'),
+                      image: AssetImage('images/fl_coin.png'),
                     ),
                   ),
                   Container(
@@ -451,7 +451,7 @@ class _CheckPageState extends State<CheckPage> {
                     child: Image(
                       width: ScreenUtil().setWidth(100),
                       height: ScreenUtil().setHeight(100),
-                      image: AssetImage('images/优惠券 (1).png'),
+                      image: AssetImage('images/fl_bucket.png'),
                     ),
                   ),
                   Container(

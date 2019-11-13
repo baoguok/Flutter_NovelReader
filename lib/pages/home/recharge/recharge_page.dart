@@ -175,7 +175,7 @@ class _RechargePageState extends State<RechargePage> {
                 Container(
                   margin: EdgeInsets.only(left: ScreenUtil().setWidth(60)),
                   child: Image(
-                    image: AssetImage('images/64-金币.png'),
+                    image: AssetImage('images/fl_coin.png'),
                     width: ScreenUtil().setWidth(100),
                     height: ScreenUtil().setHeight(100),
                   ),
@@ -291,7 +291,7 @@ class _RechargePageState extends State<RechargePage> {
                   margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
                   child: Image(
                     width: ScreenUtil().setWidth(100),
-                    image: AssetImage('images/微信.png'),
+                    image: AssetImage('images/fl_WeChat.png'),
                   ),
                 ),
                 Container(
@@ -326,7 +326,7 @@ class _RechargePageState extends State<RechargePage> {
                   margin: EdgeInsets.only(left: ScreenUtil().setWidth(40)),
                   child: Image(
                     width: ScreenUtil().setWidth(100),
-                    image: AssetImage('images/支付宝.png'),
+                    image: AssetImage('images/fl_AliPay.png'),
                   ),
                 ),
                 Container(
