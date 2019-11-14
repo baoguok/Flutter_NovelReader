@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/dao/user_callBack_data_manager.dart';
+import 'package:flutter_reader/tools/rich_alert.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -24,6 +26,25 @@ class _FeedbackPageState extends State<FeedbackPage> {
     _textController.dispose();
     super.dispose();
   }
+
+  postMsgl(Map msg){
+    callBackDao.postSuggestion(msg).then((value){
+      if(value == true){
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return RichAlertDialog( //uses the custom alert dialog
+                alertTitle: richTitle("反馈成功"),
+                alertSubtitle: richSubtitle("我们已收到您的问题，将及时处理"),
+                alertType: RichAlertType.SUCCESS,
+              );
+            }
+        );
+        _textController.clear();
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +95,14 @@ class _FeedbackPageState extends State<FeedbackPage> {
     ),
                 onPressed: (){
                   ///提交意见
-                  Fluttertoast.showToast(msg:'问题已反馈');
                   print(_textController.text);
+                  if(_textController.text == ''){
+                    Fluttertoast.showToast(msg: '请先填写您的意见');
+                  }
+                  else
+                    {
+                      postMsgl({'msg':_textController.text});
+                    }
                 },
                 textColor: Colors.white,
                 child: Text('提交',
