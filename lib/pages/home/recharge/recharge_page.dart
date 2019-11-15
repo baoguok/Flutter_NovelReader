@@ -8,6 +8,9 @@ import 'package:flutter_reader/pages/home/recharge/protocol_dialog.dart';
 import 'package:flutter_reader/pages/home/recharge/radio_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import 'package:fluwx/fluwx.dart' as fluwx;
 
 import 'Radio_payment.dart';
 
@@ -51,12 +54,26 @@ class _RechargePageState extends State<RechargePage> {
     _haveReadProtocol = true;
     _checkboxListChecked = true;
     super.initState();
+    _initFluwx();
+
   }
 
   @override
   void dispose() {
     super.dispose();
   }
+
+  _initFluwx() async{
+    await fluwx.registerWxApi(appId: 'wxd930ea5d5a258f4f',doOnAndroid: true,doOnIOS: true);
+  }
+
+  void _checkInstalledWechat() async{
+    var isInstalled = await fluwx.isWeChatInstalled();
+    setState(() {
+      Fluttertoast.showToast(msg: "${isInstalled}");
+    });
+  }
+
 
   loadConfig(){
     _itemList.clear();
@@ -193,7 +210,8 @@ class _RechargePageState extends State<RechargePage> {
                   child: Text(
                     '${coin}      书币',
                     style: TextStyle(
-                        color: Colors.white, fontSize: ScreenUtil().setSp(60)),
+                        color: Colors.white, fontSize: ScreenUtil().setSp(60)
+                    ),
                   ),
                 )
               ],
@@ -356,6 +374,7 @@ class _RechargePageState extends State<RechargePage> {
   _confirmButton() {
     return InkWell(
       onTap: () {
+        _checkInstalledWechat();
         print('确认支付');
       },
       child: Container(
@@ -392,4 +411,5 @@ class _RechargePageState extends State<RechargePage> {
           );
         });
   }
+
 }

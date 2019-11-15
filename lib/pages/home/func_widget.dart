@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/pages/category/category_page.dart';
 import 'package:flutter_reader/pages/home/check/check_page.dart';
+import 'package:flutter_reader/pages/home/promotion/promotion_page.dart';
 import 'package:flutter_reader/pages/home/rank/rank_page.dart';
 import 'package:flutter_reader/pages/home/recharge/recharge_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -52,7 +53,11 @@ class _FuncWidgetState extends State<FuncWidget> {
 
     List<Widget> items = [
       _item(context, '充值', 'images/fl_recharge2.png', _jumpToRecharge),
-      _item(context, '分类', 'images/fl_category.png', _jumpToCategory),
+      _item(context, '特价', 'images/fl_price.png', (){
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => PromotionPage(channel: widget.channel,)
+        ));
+      }),
       _item(context, '排行榜', 'images/fl_rank.png', (){
         Navigator.push(context, MaterialPageRoute(
             builder: (context) => RankPage(channel: widget.channel,)
@@ -93,9 +98,9 @@ class _FuncWidgetState extends State<FuncWidget> {
     );
   }
 
-  _jumpToCategory(){
+  _jumpToPromotion(){
     Navigator.push(context, MaterialPageRoute(
-        builder: (context) => CategoryPage()
+        builder: (context) => PromotionPage()
     ));
   }
 

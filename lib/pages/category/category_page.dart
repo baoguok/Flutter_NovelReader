@@ -345,7 +345,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   child: Text('没有符合筛选条件的书籍'),
                 ),
               ) : Container(
-                height: ScreenUtil().setHeight(2000),
+                height: ScreenUtil().setHeight(1761),
                 child: ListView.builder(
                   controller: _scrollController,
                   itemCount: _bookId.length + 1,

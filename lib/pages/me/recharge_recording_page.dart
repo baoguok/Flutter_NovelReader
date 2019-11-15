@@ -69,7 +69,7 @@ class _RechargeRecordPageState extends State<RechargeRecordPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffe53935),
-        title: Text('消费记录'),
+        title: Text('充值记录'),
       ),
       body: _isLoadData ? Container(
         width: ScreenUtil().setWidth(1125),
