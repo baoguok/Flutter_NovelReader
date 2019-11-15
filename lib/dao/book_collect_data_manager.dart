@@ -41,7 +41,6 @@ class BookCollectDao{
   }
 
   static Future<BookDeleteModel> deleteBook(List<String> list) async{
-    print(list);
     String idlist = '';
     for(int i = 0; i < list.length;i++){
       if(i==0){
