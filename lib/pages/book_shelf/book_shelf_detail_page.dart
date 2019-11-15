@@ -48,7 +48,7 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
   @override
   void initState() {
     loadBook();
-    streamSubscription = widget.shouldTriggerChange.listen((_) => loadBook());
+    streamSubscription = widget.shouldTriggerChange.listen((_) => reload());
     super.initState();
   }
 
@@ -74,6 +74,7 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
   }
 
   loadBook(){
+    print('load');
     _isLoadingBook = true;
     _bookId.clear();
     _bookName.clear();
@@ -100,6 +101,40 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
     });
   }
 
+  reload(){
+    print('load');
+    for(int i = 0 ;i<toDelete.length; i++){
+      someBooleanValue.removeAt(int.parse(toDelete[i]));
+    }
+    toDelete = [];
+    saveData();
+    _isLoadingBook = true;
+    _bookId.clear();
+    _bookName.clear();
+    _bookImage.clear();
+    BookCollectDao.fetchBookShelf().then((value){
+      if(value.data == null){
+        setState(() {
+          _hasBook = false;
+        });
+      }
+      else{
+        setState(() {
+          _bookShelfModel = value;
+          _bookShelfData = value.data;
+          for(int i =0 ; i < _bookShelfData.length;i++){
+            _bookId.add(_bookShelfData[i].id);
+            _bookName.add(_bookShelfData[i].name);
+            _bookImage.add(_bookShelfData[i].image);
+          }
+          _hasBook = true;
+        });
+      }
+      _isLoadingBook = false;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -114,7 +149,7 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
                       child: Image(
                         height: ScreenUtil().setHeight(400),
                         width: ScreenUtil().setWidth(350),
-                        image: AssetImage('images/暂无书籍@2x.png'),
+                        image: AssetImage('images/fl_nobook.png'),
                       )
                   ),
                   Padding(
@@ -244,7 +279,7 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
                             }
                             else
                             {
-                              toDelete.remove(index);
+                              toDelete.removeAt(index);
                             }
                             saveData();
                           }

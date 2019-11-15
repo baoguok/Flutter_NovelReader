@@ -101,7 +101,7 @@ class _BookHistoryPageState extends State<BookHistoryPage> {
                     child: Image(
                       height: ScreenUtil().setHeight(400),
                       width: ScreenUtil().setWidth(350),
-                      image: AssetImage('images/暂无书籍@2x.png'),
+                      image: AssetImage('images/fl_nobook.png'),
                     )
                 ),
                 Padding(
