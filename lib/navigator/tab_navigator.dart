@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/pages/book_shelf/bookshelf_page.dart';
+import 'package:flutter_reader/pages/category/category_page.dart';
 import 'package:flutter_reader/pages/gift/gift_page.dart';
 import 'package:flutter_reader/pages/home/home_page.dart';
 import 'package:flutter_reader/pages/me/me_page.dart';
@@ -44,7 +45,7 @@ class _TabNavigatorState extends State<TabNavigator> {
         children: <Widget>[
           BookshelfPage(),
           HomePage(),
-          GiftPage(),
+          CategoryPage(),
           MePage()
         ],
         //静止左右滑动
@@ -63,7 +64,7 @@ class _TabNavigatorState extends State<TabNavigator> {
         items: [
           _bottomItem(Icons.book, '书架', 0),
           _bottomItem(Icons.home, '首页', 1),
-          _bottomItem(Icons.cake, '福利', 2),
+          _bottomItem(Icons.photo_library, '分类', 2),
           _bottomItem(Icons.account_box, '我', 3)
         ],
       ),
