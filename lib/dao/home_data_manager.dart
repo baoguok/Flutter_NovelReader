@@ -8,6 +8,8 @@ import 'package:flutter_reader/model/home/NewModel.dart';
 import 'package:flutter_reader/model/home/guess_like_model.dart';
 import 'package:flutter_reader/model/home/hot_detail_model.dart';
 import 'package:flutter_reader/model/home/recommend_model.dart';
+import 'package:flutter_reader/model/promotion/promotion_config_model.dart';
+import 'package:flutter_reader/model/promotion/promotion_data_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_reader/model/home/home_banner_model.dart';
 
@@ -97,6 +99,34 @@ class HomeDao{
     else
     {
       throw Exception('加载hotdetail接口失败');
+    }
+  }
+
+  static Future<ProConfigModel> fetchPromotionConfig() async{
+    final response = await http.get(BaseURL+'/config/whole',
+        headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
+    if(response.statusCode == 200){
+      Utf8Decoder utf8decoder = Utf8Decoder();
+      final json = jsonDecode(utf8decoder.convert(response.bodyBytes));
+      return ProConfigModel.fromJson(json);
+    }
+    else
+    {
+      throw Exception('加载proconfig接口失败');
+    }
+  }
+
+  static Future<ProDataModel> fetchPromotionBook(int channel) async{
+    final response = await http.get(BaseURL+'/topic/whole?channel=${channel}&key=k1,k2,k3&format=price',
+        headers: {'BSAuthorization':BSAuthorization,'READING':'API'});
+    if(response.statusCode == 200){
+      Utf8Decoder utf8decoder = Utf8Decoder();
+      final json = jsonDecode(utf8decoder.convert(response.bodyBytes));
+      return ProDataModel.fromJson(json);
+    }
+    else
+    {
+      throw Exception('加载prodata接口失败');
     }
   }
 }
