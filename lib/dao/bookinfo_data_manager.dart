@@ -38,7 +38,7 @@ class BookDao{
     }
     else
     {
-      throw Exception('加载bookinfo接口失败');
+      throw Exception('加载bookinfoCa接口失败');
     }
   }
 
