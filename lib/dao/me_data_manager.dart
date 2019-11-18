@@ -2,7 +2,7 @@ import 'package:flutter_reader/model/me/consum_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-const BSAuthorization = 'BF644685979E325A028C368104F2C2F2';
+const BSAuthorization = 'C2B92CBAA2B92328A330DC3D50B73CEE';
 const BaseURL = 'http://appapi.98nice.cn/api';
 
 class MeDao{
