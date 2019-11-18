@@ -54,8 +54,6 @@ class _RechargePageState extends State<RechargePage> {
     _haveReadProtocol = true;
     _checkboxListChecked = true;
     super.initState();
-    _initFluwx();
-
   }
 
   @override
@@ -100,6 +98,8 @@ class _RechargePageState extends State<RechargePage> {
         }
       }
       print(_buttonLogo);
+      print(_buttonLables);
+
       _isLoadingConfig = false;
       });
     });
