@@ -65,12 +65,14 @@ class _BookContentPageState extends State<BookContentPage> {
   double _bottomHeight = 0;
 
 
+  bool _canBuy = true;
 
   @override
   void initState() {
     print('chaId：${widget._chaId}');
     print('bookId:${widget._bookId}');
     loadContent(widget._chaId);
+    print(widget._chaId);
     super.initState();
   }
 
@@ -85,11 +87,19 @@ class _BookContentPageState extends State<BookContentPage> {
       setState(() {
         _bookContentModel = value;
         _bookContentData = _bookContentModel.data;
-        _bookContentUrl = _bookContentData.url;
         _chaName = _bookContentData.name;
         _nextCha = _bookContentData.next;
         _preCha = _bookContentData.pre;
-        loadFromUrl();
+        if(_bookContentData.visible == 'U100004')
+          {
+            _canBuy = false;
+            _isLoading = false;
+          }
+        else
+          {
+            _bookContentUrl = _bookContentData.url;
+            loadFromUrl();
+          }
       });
     });
   }
@@ -168,7 +178,7 @@ class _BookContentPageState extends State<BookContentPage> {
           child:Stack(
             children: <Widget>[
               _bookBgWidget(),
-              ListView(
+              _canBuy ? ListView(
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(
@@ -178,7 +188,7 @@ class _BookContentPageState extends State<BookContentPage> {
                     child: Text(
                       _content,
                       style: TextStyle(
-                        letterSpacing: 1.5,
+                          letterSpacing: 1.5,
                           height: 1.8,
                           fontSize: _textSize,
                           color: _isNightModel ? Colors.grey : Colors.black
@@ -195,11 +205,11 @@ class _BookContentPageState extends State<BookContentPage> {
                           child: MaterialButton(
                             child: Container(
                               child: InkWell(
-                                onTap: (){
-                                  setState(() {
-                                    _preCha == '' ? Fluttertoast.showToast(msg:'已经是第一章了') : loadContent(_preCha);
-                                  });
-                                },
+                                  onTap: (){
+                                    setState(() {
+                                      _preCha == '' ? Fluttertoast.showToast(msg:'已经是第一章了') : loadContent(_preCha);
+                                    });
+                                  },
                                   child: Row(
                                     children: <Widget>[
                                       Icon(
@@ -226,7 +236,7 @@ class _BookContentPageState extends State<BookContentPage> {
                               child: InkWell(
                                 onTap: (){
                                   Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => BookCatalogPage(widget._bookId,widget._onBookShelf)
+                                      builder: (context) => BookCatalogPage(widget._bookId,widget._onBookShelf)
                                   ));
                                 },
                                 child: Row(
@@ -288,6 +298,34 @@ class _BookContentPageState extends State<BookContentPage> {
                     ),
                   )
                 ],
+              ) : Container(
+                  width: ScreenUtil().setWidth(1045),
+                  height: ScreenUtil().setHeight(300),
+                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(800),
+                      left: ScreenUtil().setWidth(40),
+                      right: ScreenUtil().setWidth(40)),
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black38,
+                          blurRadius: 10.0,
+                          offset: Offset(3.0, 3.0),),
+                      ],
+                      gradient: LinearGradient(
+                        colors: <Color>[
+                          Color(0xffb31217),
+                          Color(0xffe52d27)
+                        ],
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                child: Center(
+                  child: Text('-  书币不足 请充值后阅读  -',
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(50),
+                    color: Colors.white
+                  ),),
+                ),
               ),
               _settingWidget(),
               widget._onBookShelf ? Container()
