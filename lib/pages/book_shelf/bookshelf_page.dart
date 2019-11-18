@@ -48,7 +48,7 @@ class _BookshelfPageState extends State<BookshelfPage> with
     SharedPreferences preferences = await SharedPreferences.getInstance();
     List<String> toDelete = preferences.getStringList("toDelete");
     print(toDelete);
-    if(toDelete.length == 0){
+    if(toDelete == null){
       setState(() {
         _isEditing = false;
       });
