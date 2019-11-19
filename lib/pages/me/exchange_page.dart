@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/dao/me_data_manager.dart';
+import 'package:flutter_reader/tools/custom_notification.dart';
 import 'package:flutter_reader/tools/dot_type.dart';
 import 'package:flutter_reader/tools/point_loader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class ExchangePage extends StatefulWidget {
   ExchangePage({Key key}) : super(key: key);
@@ -36,6 +38,56 @@ class _ExchangePageState extends State<ExchangePage> {
         needCoupon = value.data.gtv;
         
         _isLoadingConfig = false;
+      });
+    });
+  }
+
+  exchangeGift(){
+    MeDao.exchange('gift').then((value){
+      setState(() {
+        if(value['success'] == true){
+          toast('兑换成功！');
+          setState(() {
+            userCoin = value['data']['coin'];
+            userCoupon = value['data']['gift'];
+          });
+        }
+        else
+          {
+            showOverlayNotification((context) {
+              return MessageNotification(
+                message: messages[0],
+                onReply: () {
+                  OverlaySupportEntry.of(context).dismiss();
+                },
+              );
+            }, duration: Duration(milliseconds: 3000));
+          }
+      });
+    });
+  }
+
+  exchangeVIP(){
+    MeDao.exchange('vip').then((value){
+      setState(() {
+        if(value['success'] == true){
+          toast('兑换成功！');
+          setState(() {
+            userCoin = value['data']['coin'];
+            userCoupon = value['data']['gift'];
+          });
+        }
+        else
+        {
+          showOverlayNotification((context) {
+            return MessageNotification(
+              message: messages1[0],
+              onReply: () {
+                OverlaySupportEntry.of(context).dismiss();
+              },
+            );
+          }, duration: Duration(milliseconds: 3000));
+        }
       });
     });
   }
@@ -166,7 +218,7 @@ class _ExchangePageState extends State<ExchangePage> {
                                 child: Text("立即兑换",
                                   style: TextStyle(color: Colors.white),),
                                 onPressed: (){
-
+                                  exchangeVIP();
                                 },
                                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
                             ),
@@ -201,7 +253,7 @@ class _ExchangePageState extends State<ExchangePage> {
                                 child: Text("立即兑换",
                                   style: TextStyle(color: Colors.white),),
                                 onPressed: (){
-
+                                  exchangeGift();
                                 },
                                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
                             ),
