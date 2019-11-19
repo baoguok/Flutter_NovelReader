@@ -4,7 +4,8 @@
 <a href="https://www.npmjs.com/package/drone"><img src=https://img.shields.io/badge/license-MIT-brightgreen></a>
 <a href="https://www.npmjs.com/package/drone"><img src=https://img.shields.io/badge/platforms-iOS,Android-lightgrey></a>
 <a href="https://www.npmjs.com/package/drone"><img src=https://img.shields.io/badge/Language-Dart-orange></a>
-<a href="https://www.npmjs.com/package/drone"><img src=https://img.shields.io/badge/Flutter-v1.10.16-informational></a>
+<a href="https://www.flutter.dev"><img src=https://img.shields.io/badge/Flutter-v1.10.16-informational></a>
+  <a href="https://www.npmjs.com/package/drone"><img src=https://img.shields.io/badge/Dart-v2.4.1-informational></a>
 <a href="https://www.npmjs.com/package/drone"><img src=https://img.shields.io/badge/AiKan-v0.0.8-success></a>
 </p>
 
