@@ -64,8 +64,8 @@ $ flutter run
 * Warning:⚠️You can refer to the interface of this project or some widgets, but you can't use the data in the project interface for any commercial purposes, otherwise I will reserve the right to pursue related responsibilities, thanks for understanding
 
 ## Contact information
-QQ:964997115<br/>
-Wechat:tys19971122<br/>
+* QQ:964997115<br/>
+* Wechat:tys19971122<br/>
 <p align="center">
-<img src=https://github.com/tongyangsheng/flutter_reader/blob/master/showImage/6.jpg>
+<img src=https://github.com/tongyangsheng/flutter_reader/blob/master/showImage/6.jpg = 20*20>
 </p>
