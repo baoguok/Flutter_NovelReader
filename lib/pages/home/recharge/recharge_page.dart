@@ -8,9 +8,9 @@ import 'package:flutter_reader/pages/home/recharge/protocol_dialog.dart';
 import 'package:flutter_reader/pages/home/recharge/radio_model.dart';
 import 'package:flutter_reader/tools/color_loader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:overlay_support/overlay_support.dart';
 
 import 'Radio_payment.dart';
 
@@ -68,7 +68,7 @@ class _RechargePageState extends State<RechargePage> {
   void _checkInstalledWechat() async{
     var isInstalled = await fluwx.isWeChatInstalled();
     setState(() {
-      Fluttertoast.showToast(msg: "${isInstalled}");
+      toast("$isInstalled");
     });
   }
 

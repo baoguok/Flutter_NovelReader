@@ -11,7 +11,6 @@ import 'package:flutter_reader/pages/read_book/book_content.dart';
 import 'package:flutter_reader/tools/custom_notification.dart';
 import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 class BookInfoPage extends StatefulWidget {
@@ -80,6 +79,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
   List<int> _guessBookClicks = [];
 
   bool _canBuyWhole = false;
+  bool _haveBuyBook = false;
 
   String _bookBuyData;
 
@@ -116,6 +116,9 @@ class _BookInfoPageState extends State<BookInfoPage> {
           _bookSellprice = _bookinfoData.sellPrice;
           _bookOriginalprice = _bookinfoData.originalPrice;
           _canBuyWhole = true;
+          if(_bookScope.contains('bought')){
+            _haveBuyBook = true;
+          }
         }
         if (_bookScope.contains('fav')) {
           widget.hasCollect = true;
@@ -186,7 +189,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
 
   addToBookShelf(String id) {
     BookCollectDao.getForCollect(id).then((value) {
-      Fluttertoast.showToast(msg: '已经添加到书架');
+      toast('已经添加到书架');
       setState(() {
         widget.hasCollect = true;
       });
@@ -197,6 +200,9 @@ class _BookInfoPageState extends State<BookInfoPage> {
     BookDao.buyBook(widget.bookId).then((value){
       if(value == true){
         toast('购买成功');
+        setState(() {
+          _haveBuyBook = true;
+        });
       }
       else{
         showOverlayNotification((context) {
@@ -438,7 +444,35 @@ class _BookInfoPageState extends State<BookInfoPage> {
   }
 
   _suggestBuyWidget(){
-    return InkWell(
+    return _haveBuyBook ?  Container(
+      width: ScreenUtil().setWidth(1045),
+      height: ScreenUtil().setHeight(200),
+      margin: EdgeInsets.only(top: ScreenUtil().setHeight(20),
+          left: ScreenUtil().setWidth(50),
+          right: ScreenUtil().setWidth(50)),
+      decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black38,
+              blurRadius: 10.0,
+              offset: Offset(3.0, 3.0),),
+          ],
+          gradient: LinearGradient(
+            colors: <Color>[
+              Color(0xfffdfcfb),
+              Color(0xffe2d1c3)
+            ],
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(10))
+      ),
+      child: Center(
+        child: Text('您已购买全书  可全文免费阅读',
+        style: TextStyle(
+          color: Color(0xff536976),
+          fontWeight: FontWeight.w600,
+          fontSize: ScreenUtil().setSp(45)
+        ),),
+      ),) : InkWell(
       onTap: (){
         buyThisBook();
       },

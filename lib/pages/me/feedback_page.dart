@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reader/dao/user_callBack_data_manager.dart';
 import 'package:flutter_reader/tools/rich_alert.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class FeedbackPage extends StatefulWidget {
   FeedbackPage({Key key}) : super(key: key);
@@ -97,7 +97,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   ///提交意见
                   print(_textController.text);
                   if(_textController.text == ''){
-                    Fluttertoast.showToast(msg: '请先填写您的意见');
+                    toast('请先填写您的意见');
                   }
                   else
                     {

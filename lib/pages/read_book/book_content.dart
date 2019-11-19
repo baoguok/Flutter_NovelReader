@@ -10,8 +10,8 @@ import 'package:flutter_reader/tools/colors.dart';
 import 'package:flutter_reader/tools/size.dart';
 import 'package:flutter_reader/widget/Bubbles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:html/parser.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -115,7 +115,7 @@ class _BookContentPageState extends State<BookContentPage> {
 
   addToBookShelf(String id){
     BookCollectDao.getForCollect(id).then((value){
-      Fluttertoast.showToast(msg:'已经添加到书架');
+      toast('已经添加到书架');
       setState(() {
         widget._onBookShelf = true;
       });
@@ -208,7 +208,7 @@ class _BookContentPageState extends State<BookContentPage> {
                               child: InkWell(
                                   onTap: (){
                                     setState(() {
-                                      _preCha == '' ? Fluttertoast.showToast(msg:'已经是第一章了') : loadContent(_preCha);
+                                      _preCha == '' ? toast('已经是第一章了') : loadContent(_preCha);
                                     });
                                   },
                                   child: Row(
@@ -273,7 +273,7 @@ class _BookContentPageState extends State<BookContentPage> {
                               child: InkWell(
                                 onTap: (){
                                   setState(() {
-                                    _nextCha == '' ? Fluttertoast.showToast(msg:'已经是最后一章了') : loadContent(_nextCha);
+                                    _nextCha == '' ? toast('已经是最后一章了') : loadContent(_nextCha);
                                   });
                                 },
                                 child: Row(
