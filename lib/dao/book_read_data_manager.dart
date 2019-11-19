@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter_reader/model/book/book_content_model.dart';
 import 'package:http/http.dart' as http;
 
-const BSAuthorization = '7A6F15DB487FCF68156B4489C0189FB0';
+const BSAuthorization = 'C2B92CBAA2B92328A330DC3D50B73CEE';
 const BaseURL = 'http://appapi.98nice.cn/api';
 
 class BookReadDao{
