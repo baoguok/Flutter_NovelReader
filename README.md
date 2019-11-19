@@ -38,8 +38,22 @@ In the bookshelf page, you can freely read and collect books from the bookshelf,
 <img src=https://github.com/tongyangsheng/flutter_reader/blob/master/showImage/4.png>
 </p>
 
-## How to start
-<pre>
-pub get
-flutter start
-</pre>
+## Getting Started🏃
+
+For help getting started with Flutter, view online
+[documentation](https://flutter.io/).
+
+#### 1. [Setup Flutter](https://flutter.io/setup/)
+
+#### 2. Clone the repo
+
+```sh
+$ git clone https:///github.com/tongyangsheng/flutter_reader.git
+$ cd flutter_reader/
+```
+
+#### 4. Run the app
+
+```sh
+$ flutter run
+```
