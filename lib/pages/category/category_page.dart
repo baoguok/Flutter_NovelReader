@@ -335,7 +335,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 },
               ),
               _isLoadingBook == true ? Container(
-                height: ScreenUtil().setHeight(1900),
+                height: ScreenUtil().setHeight(1700),
                 child: Center(
                   child: Text('加载中...'),
                 ),

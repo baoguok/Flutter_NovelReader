@@ -139,7 +139,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           child: Container(
             padding: EdgeInsets.only(top: 20),
-            height: 80,
+            height: ScreenUtil().setHeight(300),
             decoration: BoxDecoration(
                 color: Colors.white
             ),

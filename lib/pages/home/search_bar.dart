@@ -220,7 +220,7 @@ class _searchBarState extends State<SearchBar> {
                     fontWeight: FontWeight.w300),
                 //输入文本样式
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                  contentPadding: EdgeInsets.fromLTRB(5, 0, 5, ScreenUtil().setHeight(45)),
                   border: InputBorder.none,
                   //提示文字
                   hintText: widget.hint ?? '',
