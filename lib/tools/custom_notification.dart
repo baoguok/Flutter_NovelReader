@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 const messages = [
-  '请前往书币充值中心进行充值'
+  '当前书币不足，请及时充值'
+  '当前书券不足，请先将书币兑换至书券'
+];
+
+const messages1 = [
+  '当前书券不足，请先将书币兑换至书券'
 ];
 
 class MessageNotification extends StatelessWidget {
