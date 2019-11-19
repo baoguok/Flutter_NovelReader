@@ -10,7 +10,7 @@
 <a href="https://github.com/tongyangsheng/flutter_reader"><img src=https://img.shields.io/badge/AiKan-v0.0.8-success></a>
 </p>
 
-This is a novel reading software. All the mobile pages of the novel are developed by myself, and the data is provided by the company's back-end group.
+This is a novel reading software. All the mobile pages of the novel are developed by myself, and the data is provided by the company's back-end group🚀.
 
 ## PlatForm
 
