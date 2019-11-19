@@ -14,10 +14,10 @@ This is a novel reading software. All the mobile pages of the novel are develope
 
 ## PlatForm
 
-The project uses Google's mobile framework Flutter, language support - Dart, the final version can run on both iOS and Android
+The project uses Google's mobile framework Flutter🤔, language support - Dart, the final version can run on both iOS and Android
 
 ## Interface Display
-The theme color of the whole software is warm red color, you can feel the overall style of the software UI part in multiple main interfaces.
+The theme color of the whole software is warm red color, you can feel the overall style of the software UI part in multiple main interfaces😄.
 <p align="center">
 <img src=https://github.com/tongyangsheng/flutter_reader/blob/master/showImage/1.png>
 </p>
@@ -29,7 +29,7 @@ The user's various consumption records will be displayed and fed back in detail 
 <p align="center">
 <img src=https://github.com/tongyangsheng/flutter_reader/blob/master/showImage/5.png>
 </p>
-And, in order to ensure the user experience, the font size customization and the dark mode adaptation are made in the reading interface.
+And, in order to ensure the user experience, the font size customization and the dark mode adaptation are made in the reading interface🙏.
 <p align="center">
 <img src=https://github.com/tongyangsheng/flutter_reader/blob/master/showImage/2.png>
 </p>
