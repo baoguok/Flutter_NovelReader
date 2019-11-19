@@ -37,3 +37,9 @@ In the bookshelf page, you can freely read and collect books from the bookshelf,
 <p align="center">
 <img src=https://github.com/tongyangsheng/flutter_reader/blob/master/showImage/4.png>
 </p>
+
+## How to start
+<pre>
+pub get
+flutter start
+</pre>
