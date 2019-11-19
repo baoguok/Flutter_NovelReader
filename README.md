@@ -1,16 +1,17 @@
-# flutter_reader
+# AiKan/爱看
 
-A new Flutter application.
+<p>
+<a href="https://www.npmjs.com/package/drone"><img src=https://img.shields.io/badge/license-MIT-brightgreen></a>
+<a href="https://www.apple.com/lae/ios/ios-13/"><img src=https://img.shields.io/badge/platform-ios-lightgrey></a>
+<a href="https://www.Android.com/package/drone"><img src=https://img.shields.io/badge/platform-Android-lightgrey></a>
+<a href="https://www.dart.dev"><img src=https://img.shields.io/badge/Language-Dart-orange></a>
+<a href="https://www.flutter.dev"><img src=https://img.shields.io/badge/Flutter-v1.10.16-informational></a>
+<a href="https://www.dart.dev"><img src=https://img.shields.io/badge/Dart-v2.4.1-informational></a>
+<a href="https://github.com/tongyangsheng/flutter_reader"><img src=https://img.shields.io/badge/AiKan-v0.0.8-success></a>
+</p>
 
-## Getting Started
+This is a novel reading software. All the mobile pages of the novel are developed by myself, and the data is provided by the company's back-end group.
 
-This project is a starting point for a Flutter application.
+## PlatForm
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The project uses Google's mobile framework Flutter, language support - Dart, the final version can run on both iOS and Android
