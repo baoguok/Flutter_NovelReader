@@ -9,9 +9,10 @@ import 'package:flutter_reader/model/book/bookshelf_model.dart';
 import 'package:flutter_reader/pages/book_shelf/bookshelf_page.dart';
 import 'package:flutter_reader/pages/category/category_page.dart';
 import 'package:flutter_reader/pages/read_book/book_introduction.dart';
+import 'package:flutter_reader/tools/dot_type.dart';
+import 'package:flutter_reader/tools/point_loader.dart';
 import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class bookShelfDetailPage extends StatefulWidget {
@@ -208,9 +209,12 @@ class _bookShelfDetailPageState extends State<bookShelfDetailPage>  {
         height: ScreenUtil().setHeight(1800),
         width: ScreenUtil().setWidth(1125),
         child: Center(
-          child: SpinKitPouringHourglass(
-            color: Color(0xffe53935),
-            size: 50,
+          child: ColorLoader4(
+            dotOneColor: Colors.pink,
+            dotTwoColor: Colors.amber,
+            dotThreeColor: Colors.deepOrange,
+            dotType: DotType.square,
+            duration: Duration(seconds: 2),
           )
         ),
       ) : SingleChildScrollView(

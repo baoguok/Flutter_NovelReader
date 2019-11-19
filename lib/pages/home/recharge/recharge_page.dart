@@ -6,8 +6,8 @@ import 'package:flutter_reader/model/pay/pay_config_model.dart';
 import 'package:flutter_reader/pages/home/recharge/Radio_Widget.dart';
 import 'package:flutter_reader/pages/home/recharge/protocol_dialog.dart';
 import 'package:flutter_reader/pages/home/recharge/radio_model.dart';
+import 'package:flutter_reader/tools/color_loader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:fluwx/fluwx.dart' as fluwx;
@@ -118,9 +118,10 @@ class _RechargePageState extends State<RechargePage> {
             padding: EdgeInsets.only(top: ScreenUtil().setHeight(1000)),
             child: Column(
               children: <Widget>[
-                SpinKitCircle(
-                  color: Colors.red,
-                  size: 50,
+                ColorLoader(
+                  color1: Colors.redAccent,
+                  color2: Colors.green,
+                  color3: Colors.amber,
                 ),
                 Container(
                   margin: EdgeInsets.only(top: ScreenUtil().setHeight(60)),

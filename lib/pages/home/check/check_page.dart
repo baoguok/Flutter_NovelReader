@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reader/dao/check_data_manager.dart';
 import 'package:flutter_reader/model/check/check_config_model.dart';
 import 'package:flutter_reader/pages/home/recharge/protocol_dialog.dart';
+import 'package:flutter_reader/tools/color_loader.dart';
 import 'package:flutter_reader/tools/rich_alert.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intervalprogressbar/intervalprogressbar.dart';
 
 class CheckPage extends StatefulWidget {
@@ -72,9 +72,10 @@ class _CheckPageState extends State<CheckPage> {
             padding: EdgeInsets.only(top: ScreenUtil().setHeight(1000)),
             child: Column(
               children: <Widget>[
-                SpinKitCircle(
-                  color: Colors.red,
-                  size: 50,
+                ColorLoader(
+                  color1: Colors.redAccent,
+                  color2: Colors.green,
+                  color3: Colors.amber,
                 ),
                 Container(
                   margin: EdgeInsets.only(top: ScreenUtil().setHeight(60)),

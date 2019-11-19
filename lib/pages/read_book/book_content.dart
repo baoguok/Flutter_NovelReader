@@ -5,11 +5,11 @@ import 'package:flutter_reader/dao/book_collect_data_manager.dart';
 import 'package:flutter_reader/dao/book_read_data_manager.dart';
 import 'package:flutter_reader/model/book/book_content_model.dart';
 import 'package:flutter_reader/pages/read_book/book_catelog.dart';
+import 'package:flutter_reader/tools/color_loader.dart';
 import 'package:flutter_reader/tools/colors.dart';
 import 'package:flutter_reader/tools/size.dart';
 import 'package:flutter_reader/widget/Bubbles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:html/parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -135,9 +135,10 @@ class _BookContentPageState extends State<BookContentPage> {
                 margin: EdgeInsets.only(top: ScreenUtil().setHeight(1100)),
                 child: Column(
                   children: <Widget>[
-                    SpinKitPouringHourglass(
-                      color: Color(0xffe53935),
-                      size: 50,
+                    ColorLoader(
+                      color1: Colors.redAccent,
+                      color2: Colors.green,
+                      color3: Colors.amber,
                     ),
                     Container(
                       margin: EdgeInsets.only(top: ScreenUtil().setHeight(80)),
@@ -395,7 +396,7 @@ class _BookContentPageState extends State<BookContentPage> {
                 child: ClipOval(
                   child: Container(
                     child:Image(
-                      image: AssetImage(_isNightModel ? 'images/白天.png' : 'images/夜间勿扰.png'),
+                      image: AssetImage(_isNightModel ? 'images/白天.png' : 'images/fl_night.png'),
                       width: ScreenUtil().setWidth(120),
                     ),
                   )
@@ -438,7 +439,7 @@ class _BookContentPageState extends State<BookContentPage> {
                         child: Image(
                           width: ScreenUtil().setWidth(80),
                           color: Color.fromRGBO(255, 255, 255, 0.9),
-                          image: AssetImage('images/向左.png'),
+                          image: AssetImage('images/fl_left.png'),
                         )
                     ),
                   ),
@@ -483,7 +484,7 @@ class _BookContentPageState extends State<BookContentPage> {
                     child: Image(
                       width: ScreenUtil().setWidth(70),
                       color: Color.fromRGBO(255, 255, 255, 0.9),
-                      image: AssetImage('images/目录@2x.png',
+                      image: AssetImage('images/fl_catalog.png',
                       ),
                     ),
                   )

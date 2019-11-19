@@ -4,9 +4,10 @@ import 'package:flutter_reader/model/home/HotModel.dart';
 import 'package:flutter_reader/model/promotion/promotion_config_model.dart';
 import 'package:flutter_reader/model/promotion/promotion_data_model.dart';
 import 'package:flutter_reader/pages/read_book/book_introduction.dart';
+import 'package:flutter_reader/tools/dot_type.dart';
+import 'package:flutter_reader/tools/point_loader.dart';
 import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class PromotionPage extends StatefulWidget {
   final String channel;
@@ -129,10 +130,13 @@ class _PromotionPageState extends State<PromotionPage> {
       width: ScreenUtil().setWidth(1125),
       height: ScreenUtil().setHeight(600),
       child: Center(
-        child: SpinKitCircle(
-          color: Colors.red,
-          size: 30,
-        ),
+        child: ColorLoader4(
+          dotOneColor: Colors.pink,
+          dotTwoColor: Colors.amber,
+          dotThreeColor: Colors.deepOrange,
+          dotType: DotType.square,
+          duration: Duration(seconds: 2),
+        )
       ),
     );
   }
@@ -149,10 +153,13 @@ class _PromotionPageState extends State<PromotionPage> {
         width: ScreenUtil().setWidth(1125),
         height: ScreenUtil().setHeight(1800),
         child: Center(
-          child: SpinKitCircle(
-            color: Colors.red,
-            size: 50,
-          ),
+          child: ColorLoader4(
+            dotOneColor: Colors.pink,
+            dotTwoColor: Colors.amber,
+            dotThreeColor: Colors.deepOrange,
+            dotType: DotType.square,
+            duration: Duration(seconds: 2),
+          )
         ),
       ) : Container(
         child: ListView(

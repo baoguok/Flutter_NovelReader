@@ -8,9 +8,11 @@ import 'package:flutter_reader/model/book/bookinfo_model.dart';
 import 'package:flutter_reader/model/home/guess_like_model.dart';
 import 'package:flutter_reader/pages/read_book/book_catelog.dart';
 import 'package:flutter_reader/pages/read_book/book_content.dart';
+import 'package:flutter_reader/tools/custom_notification.dart';
 import 'package:flutter_reader/widget/book_hero.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class BookInfoPage extends StatefulWidget {
   final String channel;
@@ -78,6 +80,8 @@ class _BookInfoPageState extends State<BookInfoPage> {
   List<int> _guessBookClicks = [];
 
   bool _canBuyWhole = false;
+
+  String _bookBuyData;
 
   @override
   void initState() {
@@ -186,6 +190,24 @@ class _BookInfoPageState extends State<BookInfoPage> {
       setState(() {
         widget.hasCollect = true;
       });
+    });
+  }
+
+  buyThisBook(){
+    BookDao.buyBook(widget.bookId).then((value){
+      if(value == true){
+        toast('购买成功');
+      }
+      else{
+        showOverlayNotification((context) {
+          return MessageNotification(
+            message: messages[0],
+            onReply: () {
+              OverlaySupportEntry.of(context).dismiss();
+            },
+          );
+        }, duration: Duration(milliseconds: 3000));
+      }
     });
   }
 
@@ -416,70 +438,85 @@ class _BookInfoPageState extends State<BookInfoPage> {
   }
 
   _suggestBuyWidget(){
-    return Container(
-      width: ScreenUtil().setWidth(1045),
-      height: ScreenUtil().setHeight(200),
-      margin: EdgeInsets.only(top: ScreenUtil().setHeight(20),
-          left: ScreenUtil().setWidth(40),
-          right: ScreenUtil().setWidth(40)),
-      decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black38,
-              blurRadius: 10.0,
-              offset: Offset(3.0, 3.0),),
-          ],
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xffb31217),
-              Color(0xffe52d27)
+    return InkWell(
+      onTap: (){
+        buyThisBook();
+      },
+      child: Container(
+        width: ScreenUtil().setWidth(1045),
+        height: ScreenUtil().setHeight(200),
+        margin: EdgeInsets.only(top: ScreenUtil().setHeight(20),
+            left: ScreenUtil().setWidth(40),
+            right: ScreenUtil().setWidth(40)),
+        decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black38,
+                blurRadius: 10.0,
+                offset: Offset(3.0, 3.0),),
             ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(10))
-      ),
-    child: Row(
-      children: <Widget>[
-        Container(
-          width: ScreenUtil().setWidth(700),
-          height: ScreenUtil().setHeight(150),
-          decoration: BoxDecoration(
-            border: Border(
-              right: BorderSide(
-                width: 1,
-                color: Colors.white54
-              )
-            )
-          ),
-          margin: EdgeInsets.only(left: ScreenUtil().setWidth(40),top: ScreenUtil().setHeight(10)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: Text(
-                  '现在全本购买仅需${_bookSellprice.toString()}书币',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    fontSize: ScreenUtil().setSp(50)
-                  ),
-                ),
+            gradient: LinearGradient(
+              colors: <Color>[
+                Color(0xffb31217),
+                Color(0xffe52d27)
+              ],
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(10))
+        ),
+        child: Row(
+          children: <Widget>[
+            Container(
+              width: ScreenUtil().setWidth(700),
+              height: ScreenUtil().setHeight(150),
+              decoration: BoxDecoration(
+                  border: Border(
+                      right: BorderSide(
+                          width: 1,
+                          color: Colors.white54
+                      )
+                  )
               ),
-              Container(
-                margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
-                child: Text(
-                  '原价： ${_bookOriginalprice.toString()}书币',
-                  style: TextStyle(
-                      color: Colors.white54,
-                      fontWeight: FontWeight.w400,
-                      fontSize: ScreenUtil().setSp(45)
+              margin: EdgeInsets.only(left: ScreenUtil().setWidth(40),top: ScreenUtil().setHeight(10)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      '现在全本购买仅需${_bookSellprice.toString()}书币',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: ScreenUtil().setSp(50)
+                      ),
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
-        )
-       ],
-    ),);
+                  Container(
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                    child: Text(
+                      '原价： ${_bookOriginalprice.toString()}书币',
+                      style: TextStyle(
+                          color: Colors.white54,
+                          fontWeight: FontWeight.w400,
+                          fontSize: ScreenUtil().setSp(45)
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              width: ScreenUtil().setWidth(300),
+              child: Center(
+                child: Text('立即购买',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontWeight: FontWeight.w600,
+                  ),),
+              ),
+            )
+          ],
+        ),),
+    );
   }
 
   _rewardWidget() {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/dao/me_data_manager.dart';
 import 'package:flutter_reader/model/me/consum_model.dart';
+import 'package:flutter_reader/tools/color_loader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ConsumptionPage extends StatefulWidget {
   ConsumptionPage({Key key}) : super(key: key);
@@ -75,10 +75,11 @@ class _ConsumptionPageState extends State<ConsumptionPage> {
         width: ScreenUtil().setWidth(1125),
         height: ScreenUtil().setHeight(1900),
         child: Center(
-          child: SpinKitRing(
-            color: Colors.red,
-            size: 50,
-          ),
+          child: ColorLoader(
+            color1: Colors.redAccent,
+            color2: Colors.green,
+            color3: Colors.amber,
+          )
         ),
       ) : _hasData ? Container(
         child: ListView.builder(

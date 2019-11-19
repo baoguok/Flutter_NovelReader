@@ -7,7 +7,8 @@ import 'package:flutter_reader/model/home/home_banner_model.dart';
 import 'package:flutter_reader/model/home/recommend_model.dart';
 import 'package:flutter_reader/pages/home/search/search_page.dart';
 import 'package:flutter_reader/pages/read_book/book_introduction.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_reader/tools/dot_type.dart';
+import 'package:flutter_reader/tools/point_loader.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -172,7 +173,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _hotSubTitle.add(_shortcut[i].hint);
         _hotBookid.add(_shortcut[i].bookId);
       }
-      _isLoadingHot = false;
+      _isLoadingHot =false;
     });
   }
 
@@ -287,9 +288,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(18))
           ),
-          child: SpinKitWave(
-            color: Colors.redAccent,
-            size: 50,
+          child: ColorLoader4(
+            dotOneColor: Colors.pink,
+            dotTwoColor: Colors.amber,
+            dotThreeColor: Colors.deepOrange,
+            dotType: DotType.square,
+            duration: Duration(seconds: 2),
           ),
         ) : HotWidget(channel,_hotType,_hotBookid,_hotImage,_hotTitle,_hotSubTitle),
         _getIcon('images/fl_recommend.png', '主编推荐'),
@@ -301,10 +305,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(18))
           ),
-          child: SpinKitWave(
-            color: Colors.redAccent,
-            size: 50,
-          ),
+          child: ColorLoader4(
+            dotOneColor: Colors.pink,
+            dotTwoColor: Colors.amber,
+            dotThreeColor: Colors.deepOrange,
+            dotType: DotType.square,
+            duration: Duration(seconds: 2),
+          )
         ) : RecommendWidget(channel,_recommendBookId,_recommendImage,_recommendTitle),
         _getIcon('images/fl_new.png', '新书抢先'),
         _isLoadingNew == true ? Container(
@@ -315,9 +322,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(18))
           ),
-          child: SpinKitWave(
-            color: Colors.redAccent,
-            size: 50,
+          child: ColorLoader4(
+            dotOneColor: Colors.pink,
+            dotTwoColor: Colors.amber,
+            dotThreeColor: Colors.deepOrange,
+            dotType: DotType.square,
+            duration: Duration(seconds: 2),
           ),
         ) : NewBookWidget(channel,_newBookId, _newName, _newImage, _newCat, _newDesc, _newStatus, _newClicks),
         _getOtherIcon('images/fl_like.png', '猜你喜欢', 'images/fl_loadOther.png', '换一批'),
@@ -329,10 +339,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(18))
           ),
-          child: SpinKitWave(
-            color: Colors.redAccent,
-            size: 50,
-          ),
+          child: ColorLoader4(
+            dotOneColor: Colors.pink,
+            dotTwoColor: Colors.amber,
+            dotThreeColor: Colors.deepOrange,
+            dotType: DotType.square,
+            duration: Duration(seconds: 2),
+          )
         ) : GuessWidget(channel,_guessBookId, _guessImage, _guessTitle),
         _getIcon('images/fl_connect1.png', '联系我们'),
         _isLoadingHot == true ? SizedBox() : ConnectWidget(_connectTime, _connectQQ, _connectName, _connectImage)
