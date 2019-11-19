@@ -67,5 +67,5 @@ $ flutter run
 * QQ:964997115<br/>
 * Wechat:tys19971122<br/>
 <p align="center">
-<img src=https://github.com/tongyangsheng/flutter_reader/blob/master/showImage/6.jpg alt="drawing" width="50">
+<img src=https://github.com/tongyangsheng/flutter_reader/blob/master/showImage/6.jpg alt="drawing" width="200">
 </p>
