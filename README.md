@@ -61,4 +61,5 @@ $ flutter run
 ## Supplement
 * Due to the privacy of the payment interface, the payment interface will be hidden in this project. At the same time, the payment function and login registration function will be completed in the follow-up. Now you are not seeing the final version.
 * At the end of the article, I will post my personal contact information. Any questions you may have during the browsing process can contact me or create a new issue. I will reply as soon as possible.
+* Warning:⚠️You can refer to the interface of this project or some widgets, but you can't use the data in the project interface for any commercial purposes, otherwise I will reserve the right to pursue related responsibilities, thanks for understanding
 
