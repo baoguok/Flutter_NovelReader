@@ -15,3 +15,11 @@ This is a novel reading software. All the mobile pages of the novel are develope
 ## PlatForm
 
 The project uses Google's mobile framework Flutter, language support - Dart, the final version can run on both iOS and Android
+
+## Interface Display
+<p align="center">
+<img src=https://github.com/tongyangsheng/flutter_reader/blob/master/showImage/8.png>
+</p>
+<p align="center">
+<img src=https://github.com/tongyangsheng/flutter_reader/blob/master/showImage/2.png>
+</p>
