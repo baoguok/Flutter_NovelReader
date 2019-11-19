@@ -1,8 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/dao/me_data_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ExchangePage extends StatelessWidget {
+class ExchangePage extends StatefulWidget {
   ExchangePage({Key key}) : super(key: key);
+
+  @override
+  _ExchangePageState createState() {
+    return _ExchangePageState();
+  }
+}
+
+class _ExchangePageState extends State<ExchangePage> {
+
+  bool _isLoadingConfig = true;
+  int userCoin;
+  int userCoupon;
+  int needCoin;
+  int needCoupon;
+
+  @override
+  void initState() {
+    loadConfig();
+    super.initState();
+  }
+
+  loadConfig(){
+    MeDao.fetchExchangeConfig().then((value){
+      setState(() {
+        userCoin = value.data.coin;
+        userCoupon = value.data.gift;
+        needCoin = value.data.ctg;
+        needCoupon = value.data.gtv;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,20 +60,20 @@ class ExchangePage extends StatelessWidget {
                     flex: 1,
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border(
-                          right: BorderSide(
-                            width: 1,
-                            color: Colors.black12
+                          border: Border(
+                              right: BorderSide(
+                                  width: 1,
+                                  color: Colors.black12
+                              )
                           )
-                        )
                       ),
                       child: Column(
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(40)),
-                            child: Text('375',
+                            child: Text(userCoin.toString(),
                               style: TextStyle(fontSize: ScreenUtil().setSp(90),
-                              color: Colors.orangeAccent),),
+                                  color: Colors.orangeAccent),),
                           ),
                           Text('我的书币')
                         ],
@@ -49,9 +86,9 @@ class ExchangePage extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(40)),
-                          child: Text('70',
+                          child: Text(userCoupon.toString(),
                             style: TextStyle(fontSize: ScreenUtil().setSp(90),
-                            color: Color(0xffe53935)),),
+                                color: Color(0xffe53935)),),
                         ),
                         Text('我的书券')
                       ],
@@ -70,10 +107,10 @@ class ExchangePage extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.only(left: ScreenUtil().setWidth(550),
-                    top: ScreenUtil().setHeight(60)),
+                        top: ScreenUtil().setHeight(60)),
                     child: Column(
                       children: <Widget>[
-                        Text('需要1000书券'),
+                        Text('需要${needCoupon.toString()}书券'),
                         Container(
                           child:  ButtonTheme(
                             minWidth: ScreenUtil().setWidth(350),
@@ -108,7 +145,7 @@ class ExchangePage extends StatelessWidget {
                         top: ScreenUtil().setHeight(60)),
                     child: Column(
                       children: <Widget>[
-                        Text('需要1000书券'),
+                        Text('需要${needCoin.toString()}书币'),
                         Container(
                           child:  ButtonTheme(
                             minWidth: ScreenUtil().setWidth(350),
@@ -136,3 +173,4 @@ class ExchangePage extends StatelessWidget {
     );
   }
 }
+
