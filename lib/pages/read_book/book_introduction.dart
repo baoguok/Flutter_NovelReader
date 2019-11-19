@@ -455,7 +455,8 @@ class _BookInfoPageState extends State<BookInfoPage> {
             BoxShadow(
               color: Colors.black38,
               blurRadius: 10.0,
-              offset: Offset(3.0, 3.0),),
+              offset: Offset(3.0, 3.0),
+            ),
           ],
           gradient: LinearGradient(
             colors: <Color>[
