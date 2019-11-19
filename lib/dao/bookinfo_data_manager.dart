@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
+import 'package:flutter_reader/model/book/book_buy_model.dart';
 import 'package:flutter_reader/model/book/book_cata_info_model.dart';
 import 'package:flutter_reader/model/book/book_cata_list_model.dart';
 import 'package:flutter_reader/model/book/book_info_catalog_model.dart';
@@ -81,6 +83,23 @@ class BookDao{
     else
     {
       throw Exception('加载catalist接口失败');
+    }
+  }
+
+  static Future<bool> buyBook(String id) async {
+    Dio dio = Dio();
+    final response = await dio.get(BaseURL+'/book/buy?id=${id}',
+        options: Options(
+            headers: {
+              'BSAuthorization':BSAuthorization,
+              'READING':'API',
+              }));
+    if (response.statusCode == 200) {
+      return response.data['success'];
+    }
+    else {
+      print(response.statusCode);
+      throw Exception('加载buybook接口失败');
     }
   }
 }
