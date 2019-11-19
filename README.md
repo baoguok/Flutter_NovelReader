@@ -1,16 +1,7 @@
-# flutter_reader
+# AiKan/爱看
 
-A new Flutter application.
+This is a novel reading software. All the mobile pages of the novel are developed by myself, and the data is provided by the company's back-end group.
 
-## Getting Started
+## PlatForm
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The project uses Google's mobile framework Flutter, language support - Dart, the final version can run on both iOS and Android
